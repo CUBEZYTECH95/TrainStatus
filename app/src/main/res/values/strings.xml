@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">TrainLiveStatus</string>
+    <string name="fare_detail">Fare Details</string>
+    <string name="get_details">Get Details</string>
+    <string name="search_trains">Search Trains</string>
+    <string name="first_ac">First AC</string>
+    <string name="second_ac">Second AC</string>
+    <string name="third_ac">Third AC</string>
+    <string name="second_seating">Second Seating</string>
+    <string name="ac_economy">3 Ac Economy</string>
+    <string name="ac_chair_car">Ac chair car</string>
+    <string name="seat_availability">Seat Availability</string>
+    <string name="get_availability">Get Availability</string>
+    <string name="data_availabele">Data not Available</string>
+    <string name="internet_not">Internet not Available</string>
+    <string name="findstation">FindStation</string>
+    <string name="please_enter_start_station">Please Enter Starting Station</string>
+    <string name="enter_destinations_station">Please Enter Destinations Station</string>
+    <string name="please_enter_date">Please Enter Date</string>
+    <string name="same_destinations">Same Destinations</string>
+
+
+    <string name="search_train">Search Train</string>
+    <string name="fare_inquiry">Fare Inquiry</string>
+    <string name="train_schedule">Train Schedule</string>
+
+    <string name="where_are_you_going_right_now">Where are you Going Right Now?</string>
+    <string name="todo">TODO</string>
+    <string name="route_details">Route Details</string>
+    <string name="parasnath_sf_express_pt_12941">Parasnath SF Express(PT) - 12941</string>
+    <string name="fare_details">Fare Details</string>
+    <string name="select_date">Select Date</string>
+    <string name="to">To</string>
+
+    <string name="seat_availability_calender">Seat Availability Calender</string>
+    <string name="live_status">Live Status</string>
+    <string name="route_schedule">Route/Schedule</string>
+    <string name="seat_availablity">Seat Availablity</string>
+    <string name="source">Source</string>
+    <string name="st">ST</string>
+    <string name="destination">Destination</string>
+    <string name="adi">ADI</string>
+    <string name="sun">Sun</string>
+
+    <string name="secound_ac">Second A/C</string>
+
+    <string name="chair_car">Chair Car</string>
+    <string name="executive_chair">Executive Chair</string>
+    <string name="excutive_anubhuti">Executive Anubhuti</string>
+    <string name="secound_seating">Second Seating</string>
+    <string name="sleeper">Sleeper</string>
+    <string name="please_internet">Check your Internet Connection</string>
+    <string name="No_Train_Available">No Train Available</string>
+    <string name="live_station">Live Station</string>
+    <string name="search_by_train_no_or_name">Search by train no. or name</string>
+    <string name="coach_position">Coach Position</string>
+    <string name="departed_udvada_uvd_at_19_02_delay_05_minutes">Departed Udvada - UVD at 19:02 Delay: 05 minutes</string>
+    <string-array name="daysofrun">
+        <item>M</item>
+        <item>T</item>
+        <item>W</item>
+        <item>T</item>
+        <item>F</item>
+        <item>S</item>
+        <item>S</item>
+
+    </string-array>
+</resources>

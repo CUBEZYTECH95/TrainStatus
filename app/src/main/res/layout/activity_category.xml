@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        tools:context=".livestatus.CategoryActivity">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <RelativeLayout
+                     android:id="@+id/na"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent">
+
+                     <FrameLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent">
+
+                         <ImageView
+                             android:id="@+id/img_background"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:src="@drawable/ic_start_screen" />
+
+                         <LinearLayout
+                             android:id="@+id/setting"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="end"
+                             android:layout_marginTop="10dp"
+                             android:layout_marginEnd="10dp"
+                             android:background="@drawable/circle_shape"
+                             android:gravity="center"
+                             android:stateListAnimator="@animator/card_down_animation">
+
+                             <ImageView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:padding="5dp"
+                                 android:src="@drawable/ic_setting" />
+
+                         </LinearLayout>
+
+
+                     </FrameLayout>
+
+
+                 </RelativeLayout>
+
+                 <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/iv_rc"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@id/na"
+                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                     app:spanCount="2"
+                     tools:listitem="@layout/item_category_icon" />
+
+             </RelativeLayout>-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/iv_rc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_dashboard" />
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </RelativeLayout>
+
+</layout>
