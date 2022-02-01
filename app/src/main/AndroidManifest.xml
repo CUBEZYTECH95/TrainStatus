@@ -18,10 +18,45 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".livestatus.IntermediatestnActivity"
+            android:name=".livestatus.CallLiveStationActivity"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status"
+            android:exported="false" />
+
+        <activity
+            android:name=".livestatus.LiveStationActivity"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status"
+            android:exported="false" />
+
+        <activity
+            android:name=".livestatus.ScheduleActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
 
+        <activity
+            android:name=".livestatus.TrainscheduleActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
+        <activity
+            android:name=".livestatus.TrainTimeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+        <activity
+            android:name=".livestatus.SeatAvailableActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+        <activity
+            android:name=".livestatus.LiveTrainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+        <activity
+            android:name=".livestatus.TrainListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+        <activity
+            android:name=".livestatus.IntermediatestnActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
             android:name=".livestatus.SearchTrainActivity"
             android:exported="false"

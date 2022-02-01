@@ -16,7 +16,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trainbooking.util.CommonUtil
+import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.FindStationAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface

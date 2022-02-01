@@ -1,6 +1,7 @@
 package com.example.trainlivestatus.adapter
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -9,22 +10,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.databinding.TrainCoachItemBinding
 
-class TrainCoachRecoAdapter(val context: Context, val img: ArrayList<String>) :
+class TrainCoachRecoAdapter(val context: Context, private val img: ArrayList<String>) :
     RecyclerView.Adapter<TrainCoachRecoAdapter.CoachViewHolder>() {
 
     var pxWidth = 0
     var layoutParams: LinearLayout.LayoutParams? = null
 
 
+
+
     init {
 
-        this.layoutParams = LinearLayout.LayoutParams(
+        layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
         val display = context.resources.displayMetrics
-        this.pxWidth = display.widthPixels
+        pxWidth = display.widthPixels
 
     }
 
@@ -52,7 +55,6 @@ class TrainCoachRecoAdapter(val context: Context, val img: ArrayList<String>) :
 
     override fun onBindViewHolder(holder: CoachViewHolder, position: Int) {
 
-
         holder.itemLayoutBinding.apply {
 
             if (position == 0) {
@@ -62,6 +64,7 @@ class TrainCoachRecoAdapter(val context: Context, val img: ArrayList<String>) :
                 layoutParams!!.setMargins(0, 0, 0, 0)
                 trainCoachCon.layoutParams = layoutParams
             }
+
             when {
 
                 img[position] == "L" -> {

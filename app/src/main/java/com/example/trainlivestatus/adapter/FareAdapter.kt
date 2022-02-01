@@ -80,12 +80,10 @@ class FareAdapter(
         val binding: FareItemBinding = itemView
     }
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): FareItemViewHolder {
-
 
         return FareItemViewHolder(
             DataBindingUtil.inflate(

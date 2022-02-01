@@ -15,12 +15,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         window.setFlags(
+
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
         setContentView(R.layout.activity_splash)
-
 
         findViewById<LinearLayout>(R.id.li_start).setOnClickListener {
 

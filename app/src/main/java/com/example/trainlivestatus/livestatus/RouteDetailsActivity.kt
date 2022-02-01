@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trainbooking.util.CommonUtil
+import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.RouteDetailsAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
@@ -45,13 +45,13 @@ class RouteDetailsActivity : AppCompatActivity() {
                 ModelFactory(MainRespository(apiInterface))
             )[MainViewModel::class.java]
 
+
         mainViewModel?.safeBreakingNewsCall(from, to, date)
 
-        mainViewModel?.topcalModelList?.observe(this, {
+        mainViewModel?.topcalmodellist?.observe(this, {
 
             binding.rvRoutDetails.layoutManager = LinearLayoutManager(this@RouteDetailsActivity)
-            binding.rvRoutDetails.adapter =
-                RouteDetailsAdapter(this@RouteDetailsActivity, it, date)
+            binding.rvRoutDetails.adapter = RouteDetailsAdapter(this@RouteDetailsActivity, it, date)
 
         })
 

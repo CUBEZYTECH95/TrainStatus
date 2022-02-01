@@ -2,6 +2,7 @@ package com.example.trainlivestatus.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -167,6 +168,9 @@ class RouteDetailsListAdapter(
     }
 
     override fun getItemCount(): Int {
+
         return filteredList.size
     }
+
+
 }

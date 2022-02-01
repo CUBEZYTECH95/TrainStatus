@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.model.CategoryModel
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 open class BaseClass : AppCompatActivity() {
 
@@ -47,6 +51,17 @@ open class BaseClass : AppCompatActivity() {
 
     fun moveNextActivity(context: Context?, aClass: Class<*>?) {
         startActivity(Intent(context, aClass))
+    }
+
+    fun getclient(url: String): Retrofit {
+
+        val client = OkHttpClient().newBuilder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build();
+        return Retrofit.Builder().baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
     }
 
 }

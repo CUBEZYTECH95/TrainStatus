@@ -61,7 +61,7 @@ class TrainQuota {
             return categoriesListName
         }
 
-        fun getQutoscode(i: Int): String? {
+        fun getQutoscode(i: Int): String {
             return qutosName[i]
         }
 

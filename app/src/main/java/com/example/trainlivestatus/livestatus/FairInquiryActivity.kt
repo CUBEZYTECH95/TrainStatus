@@ -35,8 +35,6 @@ class FairInquiryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fair_inquiry)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_fair_inquiry)
-
 
         binding.etfrom.setText(SharedPref.getString(facebook_url))
         binding.etto.setText(SharedPref.getString(day_count))
@@ -55,6 +53,7 @@ class FairInquiryActivity : AppCompatActivity() {
         binding.tvSelectDate.setTextIsSelectable(true)
         binding.tvSelectDate.isFocusable = false
         binding.tvSelectDate.isFocusableInTouchMode = false
+
         binding.tvSelectDate.setOnClickListener {
             val calendar = Calendar.getInstance()
             val day = calendar[Calendar.DAY_OF_MONTH]
@@ -79,13 +78,19 @@ class FairInquiryActivity : AppCompatActivity() {
         }
 
         binding.tvGetStart.setOnClickListener {
+
             val validations = Validation()
+
             if (!validations.isStartingP(binding.etfrom)) {
+
                 citycode = binding.etfrom.text.toString().trim()
                 SharedPref.putString(facebook_url, citycode)
+
                 if (!validations.isEndingP(binding.etto)) {
+
                     citycode1 = binding.etto.text.toString().trim()
                     SharedPref.putString(day_count, citycode1)
+
                     if (!validations.isEmpty(binding.tvSelectDate)) {
 
                         date = binding.tvSelectDate.text.toString()
@@ -136,7 +141,6 @@ class FairInquiryActivity : AppCompatActivity() {
             }
         }
 
-
         binding.ivBack.setOnClickListener { finish() }
 
         binding.etfrom.setOnClickListener {
@@ -150,7 +154,6 @@ class FairInquiryActivity : AppCompatActivity() {
             startActivityForResult(intent, 2)
         }
 
-        binding.swip.setOnClickListener { }
 
         binding.swip.setOnClickListener {
             val from = binding.etfrom.text.toString().trim()
@@ -170,7 +173,6 @@ class FairInquiryActivity : AppCompatActivity() {
         cityname1 = SharedPref.getString(city_to_st)
         binding.tvSelectDate.setText(SharedPref.getString(is_date))
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.example.trainlivestatus.databinding.TrainDayViewItemBinding
 import com.example.trainlivestatus.databinding.TrainDetailsViewItemBinding
 import com.example.trainlivestatus.databinding.TrainNameViewItemBinding
 import com.example.trainlivestatus.model.InterstnModel
-import kotlin.collections.ArrayList
+import com.example.trainlivestatus.model.ScheduleItem
 
 class TrainScheduleAdapter(
     val context: Context,
@@ -154,18 +155,91 @@ class TrainScheduleAdapter(
 
                         coachPositionViewHolder.binding.rv.layoutManager =
                             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                        coachPositionViewHolder.binding.rv.adapter = TrainCoachRecoAdapter(context, img)
+                        coachPositionViewHolder.binding.rv.adapter =
+                            TrainCoachRecoAdapter(context, img)
                     }
                 }
 
             }
 
+            TRAIN_DAY_TYPE -> {
 
+                val trainDayViewHolder = holder as TrainDayViewHolder
+
+                trainDayViewHolder.binding.apply {
+
+                    if (interstnModel.daysOfRun?.sun == true) {
+
+                        sun.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        sun.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.mon == true) {
+
+                        mon.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        mon.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.tue == true) {
+
+                        tue.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        tue.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.wed == true) {
+
+                        wed.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        wed.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.thu == true) {
+                        thu.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        thu.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.fri == true) {
+                        fri.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        fri.setTextColor(context.resources.getColor(R.color.white))
+                    }
+                    if (interstnModel.daysOfRun?.sat == true) {
+
+                        sat.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        sat.setTextColor(context.resources.getColor(R.color.white))
+                    }
+
+
+                }
+
+            }
+
+            TRAIN_DETAILS_TYPE -> {
+
+                val trainDetailsViewHolder = holder as TrainDetailsListViewHolder
+
+                trainDetailsViewHolder.binding.apply {
+
+                    rvTrainDetails.layoutManager = LinearLayoutManager(context)
+                    rvTrainDetails.adapter = TrainDetailsListAdapter(
+                        context,
+                        interstnModel.schedule as List<ScheduleItem>
+                    )
+
+                }
+
+
+            }
         }
     }
 
     override fun getItemCount(): Int {
 
         return 4
+    }
+
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == TRAIN_NAME_TYPE) TRAIN_NAME_TYPE else if (position == COACH_POSITION_TYPE) COACH_POSITION_TYPE else if (position == TRAIN_DAY_TYPE) TRAIN_DAY_TYPE else TRAIN_DETAILS_TYPE
     }
 }

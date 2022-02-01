@@ -19,7 +19,7 @@ class WsClients {
         const val destStnCode = "destStnCode"
         const val token = "token"
         const val androidid = "androidid"
-        const val appVersion = "appVersion"
+        const val appVersion = "api_appVersion"
         const val trainno = "trainno"
         const val travelclasses = "travelclasses"
         const val trainNo = "trainNo"

@@ -17,8 +17,6 @@ class RouteDetailsAdapter(
     var date: String?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
-
     companion object {
 
         const val TYPE_DESTINATION = 0
@@ -27,6 +25,7 @@ class RouteDetailsAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         if (viewType == TYPE_DESTINATION) {
 
             return DestinationViewHolder(
@@ -37,6 +36,7 @@ class RouteDetailsAdapter(
                     false
                 )
             )
+
         } else {
 
 
@@ -62,12 +62,12 @@ class RouteDetailsAdapter(
                 holder1.binding.tvToStation.text = list[0].toStnCode
 
             }
+
             TYPE_LIST -> {
 
                 val holder2 = holder as ScheduleListViewHolder
                 holder2.binding.rvScheduled.layoutManager = LinearLayoutManager(context)
-                holder2.binding.rvScheduled.adapter =
-                    RouteDetailsListAdapter(context, list, date)
+                holder2.binding.rvScheduled.adapter = RouteDetailsListAdapter(context, list, date)
             }
         }
 
@@ -79,6 +79,7 @@ class RouteDetailsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
+
         return if (position == TYPE_DESTINATION) TYPE_DESTINATION else TYPE_LIST
     }
 

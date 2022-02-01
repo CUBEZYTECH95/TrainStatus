@@ -23,8 +23,6 @@ class DashbAdapter(val context: Context, val list: List<CategoryModel>, val item
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        /* Glide.with(context).load(list.get(position).image).into(holder.ivimage)*/
-
         list[position].image?.let { holder.ivimage.load(it) }
 
         holder.itemView.setOnClickListener {
