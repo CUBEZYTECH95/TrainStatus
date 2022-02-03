@@ -2,6 +2,7 @@ package com.example.trainlivestatus.livestatus
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,11 @@ class LiveTrainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_live_train)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
+
         val intent = intent
         trainNumber = intent.getStringExtra("trainNo")
         trainName = intent.getStringExtra("trainName")
@@ -77,7 +83,7 @@ class LiveTrainActivity : AppCompatActivity() {
 
         mainViewModel.getlivestatus(trainNumber, (dateFormat as SimpleDateFormat).format(today))
 
-        mainViewModel.liveStatusModel.observe(this, {
+        mainViewModel.liveStatusModel.observe(this) {
 
             binding.apply {
 
@@ -122,24 +128,22 @@ class LiveTrainActivity : AppCompatActivity() {
 
                                 if (delay !== 0) {
 
-                                    binding.tvTrainInfo.text =
-                                        "Departed $stationName at $departureTime Delay: " + getTime(
-                                            delay
-                                        )
+                                    binding.tvTrainInfo.text = "Departed $stationName at $departureTime Delay: " + getTime(delay)
 
                                 } else {
-                                    binding.tvTrainInfo.text =
-                                        "Departed $stationName at $departureTime"
+
+                                    binding.tvTrainInfo.text = "Departed $stationName at $departureTime"
                                 }
                             } else {
+
                                 binding.tvTrainInfo.visibility = View.GONE
                             }
 
                             binding.recyclerLiveStatus.post {
+
                                 try {
                                     binding.recyclerLiveStatus.scrollToPosition(pos)
                                 } catch (e: Exception) {
-
 
                                 }
                             }
@@ -149,28 +153,29 @@ class LiveTrainActivity : AppCompatActivity() {
                     })
             }
 
-        })
+        }
 
-        mainViewModel.errorMessage.observe(this, {
+        mainViewModel.errorMessage.observe(this) {
 
             Toast.makeText(this@LiveTrainActivity, it, Toast.LENGTH_SHORT).show()
-        })
+        }
 
-        mainViewModel.showLoadingProg.observe(this, {
+        mainViewModel.showLoadingProg.observe(this) {
 
             if (it) {
                 binding.progressCircular.visibility = View.VISIBLE
             } else {
                 binding.progressCircular.visibility = View.GONE
             }
-        })
+        }
 
-        mainViewModel.trainname.observe(this, {
+        mainViewModel.trainname.observe(this) {
 
-            binding.tvTitel.text = it
-        })
+            binding.rvToolbar.title = it
 
-        mainViewModel.trainliveornot.observe(this, {
+        }
+
+        mainViewModel.trainliveornot.observe(this) {
 
             if (it) {
 
@@ -178,7 +183,7 @@ class LiveTrainActivity : AppCompatActivity() {
                     binding.inNoTran.no.visibility = View.VISIBLE
                 binding.cvDate.visibility = View.GONE
             }
-        })
+        }
 
     }
 

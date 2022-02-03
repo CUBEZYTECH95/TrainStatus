@@ -9,55 +9,11 @@
         tools:context=".livestatus.LiveTrainActivity">
 
 
-        <RelativeLayout
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:background="#FFFFFF"
-            tools:ignore="UselessParent">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                tools:ignore="UselessParent">
-
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/todo"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_back_btn" />
-
-                <TextView
-                    android:id="@+id/tv_titel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:lineSpacingExtra="0sp"
-                    android:lines="1"
-                    android:text="@string/live_status"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    tools:ignore="RelativeOverlap" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/todo"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_share_btn" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
+            style="@style/MyThemeOverlay_Toolbar"
+            app:title="@string/live_status"
+            app:titleCentered="true" />
 
         <RelativeLayout
             android:id="@+id/rv"
@@ -67,14 +23,14 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_date"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:visibility="gone">
+                android:visibility="gone"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="@dimen/_10sdp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

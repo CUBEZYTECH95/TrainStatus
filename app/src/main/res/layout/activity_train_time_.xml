@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
@@ -10,18 +11,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
-            style="@style/MyThemeOverlay_Toolbar">
+            style="@style/MyThemeOverlay_Toolbar"
+            app:title="@string/seat_availability_calender"
+            app:titleCentered="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/poppins_medium"
-                android:lineSpacingExtra="0sp"
-                android:text="@string/seat_availability_calender"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

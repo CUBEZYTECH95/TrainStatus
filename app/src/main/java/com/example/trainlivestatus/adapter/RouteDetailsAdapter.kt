@@ -39,7 +39,6 @@ class RouteDetailsAdapter(
 
         } else {
 
-
             return ScheduleListViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -58,16 +57,24 @@ class RouteDetailsAdapter(
             TYPE_DESTINATION -> {
 
                 val holder1 = holder as DestinationViewHolder
-                holder1.binding.tvFromStation.text = list[0].fromStnCode
-                holder1.binding.tvToStation.text = list[0].toStnCode
+                holder1.binding.apply {
+
+                    tvFromStation.text = list[0].fromStnCode
+                    tvToStation.text = list[0].toStnCode
+                }
+
 
             }
 
             TYPE_LIST -> {
 
                 val holder2 = holder as ScheduleListViewHolder
-                holder2.binding.rvScheduled.layoutManager = LinearLayoutManager(context)
-                holder2.binding.rvScheduled.adapter = RouteDetailsListAdapter(context, list, date)
+                holder2.binding.apply {
+
+                    rvScheduled.layoutManager = LinearLayoutManager(context)
+                    rvScheduled.adapter = RouteDetailsListAdapter(context, list, date)
+                }
+
             }
         }
 

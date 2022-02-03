@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ class FairInquiryActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fair_inquiry)
 
+
         binding.etfrom.setText(SharedPref.getString(facebook_url))
         binding.etto.setText(SharedPref.getString(day_count))
         cityname = SharedPref.getString(city_from_st)
@@ -49,6 +51,11 @@ class FairInquiryActivity : AppCompatActivity() {
     }
 
     private fun clickevent() {
+
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
 
         binding.tvSelectDate.setTextIsSelectable(true)
         binding.tvSelectDate.isFocusable = false
@@ -141,7 +148,6 @@ class FairInquiryActivity : AppCompatActivity() {
             }
         }
 
-        binding.ivBack.setOnClickListener { finish() }
 
         binding.etfrom.setOnClickListener {
 

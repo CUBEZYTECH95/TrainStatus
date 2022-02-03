@@ -1,6 +1,5 @@
 package com.example.trainlivestatus.livestatus
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -41,6 +40,10 @@ class TrainscheduleActivity : AppCompatActivity() {
         binding.etTo.setText(SharedPrefs.getString(SharedPrefs.userSharedPrefData.scheduledTo))*/
 
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
 
         list.add(ClassSelectionModel(null, getString(R.string.first_ac)))
         list.add(ClassSelectionModel(null, getString(R.string.secound_ac)))
@@ -145,7 +148,10 @@ class TrainscheduleActivity : AppCompatActivity() {
                                 if (!validations.isSameDestinations(tvStations, etTo)) {
 
                                     val classs: String? = adapter!!.getSelected()
-                                    val intent = Intent(this@TrainscheduleActivity, ScheduleActivity::class.java)
+                                    val intent = Intent(
+                                        this@TrainscheduleActivity,
+                                        ScheduleActivity::class.java
+                                    )
                                     intent.putExtra("to", cityTo)
                                     intent.putExtra("from", cityFrom)
                                     intent.putExtra("date", date)
@@ -154,7 +160,11 @@ class TrainscheduleActivity : AppCompatActivity() {
 
                                 } else {
 
-                                    Toast.makeText(this@TrainscheduleActivity, "Same Destinations", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        this@TrainscheduleActivity,
+                                        "Same Destinations",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             } else {
 

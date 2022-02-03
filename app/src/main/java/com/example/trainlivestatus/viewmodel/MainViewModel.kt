@@ -17,9 +17,9 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class MainViewModel constructor(private val mainRespository: MainRespository) : ViewModel() {
-
 
     var topcalmodellist: MutableLiveData<List<TrainBtwnStnsListItem>> =
         MutableLiveData<List<TrainBtwnStnsListItem>>()
@@ -33,7 +33,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> =
         MutableLiveData<List<SeatAvailabilityModel>>()
 
-    var objects: MutableLiveData<Any> = MutableLiveData<Any>()
+    var objects: MutableLiveData<Any?> = MutableLiveData<Any?>()
 
     var mon = MutableLiveData<Int>()
     var tue = MutableLiveData<Int>()
@@ -211,6 +211,8 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                             trainliveornot.postValue(true)
 
+                            Log.e("=========", "onResponse: ${"no train live"}")
+
                             //no train live
                             /*LiveStatusModel.postValue(null);*/
                         }
@@ -250,8 +252,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
         email: String?,
         ptran: Boolean,
         local: String?,
-        showclass: Boolean
-    ) {
+        showclass: Boolean) {
         if (TrainPays.isNetConnectionAvailable()) {
             showLoadingProg.value = true
 
@@ -492,30 +493,18 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                                         for (i in 0 until jsonArray.length()) {
 
-                                            TrainName =
-                                                jsonArray.getJSONObject(i).getString("TrainName")
-                                            TrainNumber =
-                                                jsonArray.getJSONObject(i).getString("TrainNumber")
-                                            ScheduleArr =
-                                                jsonArray.getJSONObject(i).getString("ScheduleArr")
-                                            ExpectedArr =
-                                                jsonArray.getJSONObject(i).getString("ExpectedArr")
-                                            ExpectedArrColor = jsonArray.getJSONObject(i)
-                                                .getString("ExpectedArrColor")
-                                            DelayArr =
-                                                jsonArray.getJSONObject(i).getString("DelayArr")
-                                            DelayArrColor = jsonArray.getJSONObject(i)
-                                                .getString("DelayArrColor")
-                                            ScheduleDep =
-                                                jsonArray.getJSONObject(i).getString("ScheduleDep")
-                                            ExpectedDep =
-                                                jsonArray.getJSONObject(i).getString("ExpectedDep")
-                                            ExpectedDepColor = jsonArray.getJSONObject(i)
-                                                .getString("ExpectedDepColor")
-                                            DelayDep =
-                                                jsonArray.getJSONObject(i).getString("DelayDep")
-                                            DelayDepColor = jsonArray.getJSONObject(i)
-                                                .getString("DelayDepColor")
+                                            TrainName = jsonArray.getJSONObject(i).getString("TrainName")
+                                            TrainNumber = jsonArray.getJSONObject(i).getString("TrainNumber")
+                                            ScheduleArr = jsonArray.getJSONObject(i).getString("ScheduleArr")
+                                            ExpectedArr = jsonArray.getJSONObject(i).getString("ExpectedArr")
+                                            ExpectedArrColor = jsonArray.getJSONObject(i).getString("ExpectedArrColor")
+                                            DelayArr = jsonArray.getJSONObject(i).getString("DelayArr")
+                                            DelayArrColor = jsonArray.getJSONObject(i).getString("DelayArrColor")
+                                            ScheduleDep = jsonArray.getJSONObject(i).getString("ScheduleDep")
+                                            ExpectedDep = jsonArray.getJSONObject(i).getString("ExpectedDep")
+                                            ExpectedDepColor = jsonArray.getJSONObject(i).getString("ExpectedDepColor")
+                                            DelayDep = jsonArray.getJSONObject(i).getString("DelayDep")
+                                            DelayDepColor = jsonArray.getJSONObject(i).getString("DelayDepColor")
                                             ExpPF = jsonArray.getJSONObject(i).getString("ExpPF")
 
                                             val model = LiveModel(
@@ -533,7 +522,8 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                                                 DelayDepColor,
                                                 ExpPF)
 
-                                            objects.postValue(model)
+
+                                            objects.value= model
 
                                         }
 
@@ -577,7 +567,6 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                 override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
 
-                    Log.e("err", "onFailure: ${t.message}")
                 }
 
 

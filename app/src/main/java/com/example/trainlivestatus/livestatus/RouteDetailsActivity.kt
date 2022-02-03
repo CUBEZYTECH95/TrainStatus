@@ -30,6 +30,11 @@ class RouteDetailsActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_route_details)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
+
         val apiInterface: ApiInterface = getClient().create(ApiInterface::class.java)
 
         val intent = intent
@@ -48,32 +53,32 @@ class RouteDetailsActivity : AppCompatActivity() {
 
         mainViewModel?.safeBreakingNewsCall(from, to, date)
 
-        mainViewModel?.topcalmodellist?.observe(this, {
+        mainViewModel?.topcalmodellist?.observe(this) {
 
             binding.rvRoutDetails.layoutManager = LinearLayoutManager(this@RouteDetailsActivity)
             binding.rvRoutDetails.adapter = RouteDetailsAdapter(this@RouteDetailsActivity, it, date)
 
-        })
+        }
 
-        mainViewModel?.errorMessage?.observe(this,
-            { s ->
-                Toast.makeText(
-                    this@RouteDetailsActivity,
-                    s,
-                    Toast.LENGTH_SHORT
-                ).show()
-            })
+        mainViewModel?.errorMessage?.observe(this
+        ) { s ->
+            Toast.makeText(
+                this@RouteDetailsActivity,
+                s,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
-        mainViewModel?.showLoadingProg?.observe(this,
-            { aBoolean ->
-                if (aBoolean) {
+        mainViewModel?.showLoadingProg?.observe(this
+        ) { aBoolean ->
+            if (aBoolean) {
 
-                    binding.progressCircular.visibility = View.VISIBLE
-                } else {
+                binding.progressCircular.visibility = View.VISIBLE
+            } else {
 
-                    binding.progressCircular.visibility = View.GONE
-                }
-            })
+                binding.progressCircular.visibility = View.GONE
+            }
+        }
 
     }
 

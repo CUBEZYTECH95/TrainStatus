@@ -36,16 +36,7 @@ class MainRespository constructor(val api: ApiInterface) {
         return api.trainlivestatus(num, doj)
     }
 
-    fun topcalanderstatus(
-
-        source: String?,
-        den: String?,
-        doj: String?,
-        travelcalss: String?,
-        email: String?,
-        ptran: Boolean,
-        local: String?,
-        showclass: Boolean
+    fun topcalanderstatus(source: String?, den: String?, doj: String?, travelcalss: String?, email: String?, ptran: Boolean, local: String?, showclass: Boolean
 
     ): Call<TopCalModel?>? {
 
@@ -53,17 +44,7 @@ class MainRespository constructor(val api: ApiInterface) {
     }
 
 
-    fun avilabletrain(
-
-        trainNo: String?,
-        source: String?,
-        destination: String?,
-        doj: String?,
-        travelClasses: String?,
-        quota: String,
-        email: String?
-
-    ): Call<List<SeatAvailabilityModel?>?> {
+    fun avilabletrain(trainNo: String?, source: String?, destination: String?, doj: String?, travelClasses: String?, quota: String, email: String?): Call<List<SeatAvailabilityModel?>?> {
 
         return api.getTrainCalender(trainNo, source, destination, doj, travelClasses, quota, email)
     }

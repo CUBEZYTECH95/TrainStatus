@@ -24,6 +24,11 @@ class TrainListActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_train_list)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
+
         val trainList = CommonUtil.getTrainList(this@TrainListActivity)
         val type = object : TypeToken<List<String?>?>() {}.type
         val list = Gson().fromJson<List<String>>(trainList, type)

@@ -64,6 +64,8 @@ class FindStationAdapter(
             context.finish()
         }
 
+
+
     }
 
     override fun getItemCount(): Int {

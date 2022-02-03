@@ -28,10 +28,15 @@ class SeatAvailableActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_available)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
 
         binding.apply {
 
             tvGetStart.setOnClickListener {
+
                 startActivity(
                     Intent(
                         this@SeatAvailableActivity,
@@ -48,7 +53,6 @@ class SeatAvailableActivity : AppCompatActivity() {
             binding.tvSelectDate.setText(SharedPref.getString(SharedPref.is_date))
 
         }
-
 
         clickevent()
 
@@ -207,7 +211,7 @@ class SeatAvailableActivity : AppCompatActivity() {
                     SharedPref.putString(SharedPref.facebook_url, citycode)
                     SharedPref.putString(SharedPref.city_from_st, cityname)
 
-                    Log.e("1", "onActivityResult: $citycode-$cityname", )
+                    Log.e("1", "onActivityResult: $citycode-$cityname")
 
                     binding.tvStations.setText(citycode)
                 }
@@ -224,7 +228,7 @@ class SeatAvailableActivity : AppCompatActivity() {
                     SharedPref.putString(SharedPref.city_to_st, cityname1)
                     binding.to.setText(citycode1)
 
-                    Log.e("1", "onActivityResult: $citycode1-$cityname1", )
+                    Log.e("1", "onActivityResult: $citycode1-$cityname1")
                 }
             }
         }

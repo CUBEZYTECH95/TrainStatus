@@ -33,6 +33,12 @@ class LiveStationActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_live_station)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
+
+        binding.etfrom.setText(SharedPref.getString(facebook_url))
 
         livedetails()
     }
@@ -63,6 +69,7 @@ class LiveStationActivity : AppCompatActivity() {
             btngetdetails.setOnClickListener {
 
                 if (TrainPays.isNetConnectionAvailable()) {
+
                     val validations = Validation()
 
                     if (!validations.isStartingP(etfrom)) {

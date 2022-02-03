@@ -17,7 +17,6 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         return inflater.inflate(
             R.layout.bottom_sheet,
-            container, false
-        )
+            container, false)
     }
 }

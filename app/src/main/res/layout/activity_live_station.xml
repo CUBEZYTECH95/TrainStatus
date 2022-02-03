@@ -13,17 +13,9 @@
             style="@style/MyThemeOverlay_Toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/live_station"
-                android:textAlignment="center"
-                android:textColor="#22242B"
-                android:textSize="@dimen/_10sdp" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/live_station"
+            app:titleCentered="true">
 
 
         </com.google.android.material.appbar.MaterialToolbar>

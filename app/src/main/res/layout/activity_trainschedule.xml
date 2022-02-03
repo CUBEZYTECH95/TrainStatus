@@ -13,10 +13,9 @@
             style="@style/MyThemeOverlay_Toolbar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/search_train"
+            app:titleCentered="true"/>
 
 
         <ScrollView
@@ -34,7 +33,7 @@
                 <TextView
                     android:id="@+id/tv_get_start"
                     android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:background="@drawable/btn_boarding_point"
                     android:fontFamily="@font/poppins_medium"
@@ -63,7 +62,7 @@
                 <View
                     android:id="@+id/view2"
                     android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_190sdp"
+                    android:layout_height="@dimen/_170sdp"
                     android:background="@drawable/line_vertical"
                     android:backgroundTint="#22242B"
                     app:layout_constraintLeft_toLeftOf="@id/ellipse_37"
@@ -85,7 +84,7 @@
                 <View
                     android:id="@+id/view3"
                     android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_190sdp"
+                    android:layout_height="@dimen/_170sdp"
                     android:background="@drawable/line_vertical"
                     android:backgroundTint="#22242B"
                     app:layout_constraintLeft_toLeftOf="@id/ellipse_38"
@@ -139,12 +138,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_medium"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
-                            android:longClickable="false"
+                            android:fontFamily="@font/poppins_medium"
                             android:hint="Bandung Station"
+                            android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintLeft_toLeftOf="@id/tv_from"
@@ -181,12 +180,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_medium"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
-                            android:longClickable="false"
+                            android:fontFamily="@font/poppins_medium"
                             android:hint="Bandung Station"
+                            android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintLeft_toLeftOf="@id/tv_to"
@@ -216,7 +215,6 @@
                         android:layout_height="match_parent"
                         android:padding="@dimen/_10sdp">
 
-
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -243,10 +241,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:hint="4-8-2021"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
+                            android:hint="4-8-2021"
                             android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp"

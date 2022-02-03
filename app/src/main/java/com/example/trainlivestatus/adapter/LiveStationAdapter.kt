@@ -1,6 +1,7 @@
 package com.example.trainlivestatus.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
@@ -10,12 +11,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.databinding.LiveStation1Binding
+import com.example.trainlivestatus.livestatus.LiveTrainActivity
 import com.example.trainlivestatus.model.LiveModel
 
 
-class LiveStationAdapter(val context: Context, val list: List<Any>) :
+class LiveStationAdapter(val context: Context, val list: List<Any?> ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
     class LiveStationHolder(itemView: LiveStation1Binding) :
         RecyclerView.ViewHolder(itemView.root) {
@@ -38,7 +39,6 @@ class LiveStationAdapter(val context: Context, val list: List<Any>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
 
         val liveModel: LiveModel = list[position] as LiveModel
         val holder1 = holder as LiveStationHolder
@@ -64,7 +64,6 @@ class LiveStationAdapter(val context: Context, val list: List<Any>) :
 
                 tvExpArr.text = ""
             }
-
 
             if (!TextUtils.isEmpty(liveModel.delayArr)) {
 
@@ -106,11 +105,21 @@ class LiveStationAdapter(val context: Context, val list: List<Any>) :
                 tvTrainName.text = ""
             }
 
+
+            liveStatusDirect.setOnClickListener {
+
+                val intent = Intent(context, LiveTrainActivity::class.java)
+                intent.putExtra("trainNo", liveModel.trainNumber)
+                context.startActivity(intent)
+
+            }
+
         }
 
     }
 
     override fun getItemCount(): Int {
+        Log.e("TAG", "getItemCount: ${list.size}")
         return list.size
     }
 }

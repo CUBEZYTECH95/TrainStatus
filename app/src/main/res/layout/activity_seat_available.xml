@@ -6,53 +6,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FAF6F5F5"
+        android:background="#FFFFFF"
         tools:context=".livestatus.SeatAvailableActivity">
 
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
-
-
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:contentDescription="@string/todo"
-                android:padding="@dimen/_10sdp"
-                android:src="@drawable/ic_share_btn" />
-
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/seat_availability"
-                android:textAlignment="center" />
-
-
-            <ImageView
-                android:id="@+id/btnshare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:contentDescription="@string/todo"
-                android:padding="@dimen/_10sdp"
-                android:src="@drawable/ic_back_btn" />
-
-        </androidx.appcompat.widget.Toolbar>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/rv_toolbar"
+            style="@style/MyThemeOverlay_Toolbar"
+            app:title="@string/seat_availability"
+            app:titleCentered="true" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/appBarLayout"
+            android:layout_below="@id/rv_toolbar"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_20sdp"
@@ -66,7 +33,7 @@
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintTop_toBottomOf="@+id/rv_toolbar"
             app:startIconDrawable="@drawable/ic_search"
             app:startIconTint="#5B5B7E">
 
@@ -174,12 +141,12 @@
                             android:layout_below="@id/tv_from"
                             android:layout_alignStart="@id/tv_from"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_medium"
                             android:background="@android:color/transparent"
                             android:clickable="false"
-                            android:longClickable="false"
                             android:cursorVisible="false"
+                            android:fontFamily="@font/poppins_medium"
                             android:hint="Bandung Station"
+                            android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
 
@@ -225,12 +192,12 @@
                             android:layout_below="@id/tv_to"
                             android:layout_alignStart="@id/tv_to"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:hint="Bandung Station"
                             android:background="@android:color/transparent"
                             android:clickable="false"
-                            android:longClickable="false"
                             android:cursorVisible="false"
+                            android:fontFamily="@font/poppins_medium"
+                            android:hint="Bandung Station"
+                            android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
 
@@ -274,12 +241,12 @@
                             android:layout_below="@id/tv_date"
                             android:layout_alignStart="@id/tv_date"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_medium"
-                            android:hint="4-8-2021"
                             android:background="@android:color/transparent"
                             android:clickable="false"
-                            android:longClickable="false"
                             android:cursorVisible="false"
+                            android:fontFamily="@font/poppins_medium"
+                            android:hint="4-8-2021"
+                            android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
 

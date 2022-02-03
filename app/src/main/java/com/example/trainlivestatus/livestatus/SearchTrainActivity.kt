@@ -14,7 +14,6 @@ import com.example.trainlivestatus.databinding.ActivitySearchTrainBinding
 import com.example.trainlivestatus.utils.CommonUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.IOException
 
 class SearchTrainActivity : AppCompatActivity() {
 
@@ -26,10 +25,14 @@ class SearchTrainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_train)
 
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
+
         val trainList = CommonUtil.getTrainList(this@SearchTrainActivity)
         val type = object : TypeToken<List<String?>?>() {}.type
         val list = Gson().fromJson<List<String>>(trainList, type)
-
 
         binding.apply {
 
@@ -75,7 +78,6 @@ class SearchTrainActivity : AppCompatActivity() {
             })
 
         }
-
 
     }
 

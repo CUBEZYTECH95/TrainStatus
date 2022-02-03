@@ -41,32 +41,39 @@ class FareAdapter(
                 }
             }
             if (avalClass[i] == "3A") {
+
                 if (avaiblitycache!!.jsonMember3A != null) {
 
                     fareList.add(FareModel("3A", avaiblitycache.jsonMember3A?.fare))
                 }
             }
+
             if (avalClass[i] == "CC") {
+
                 if (avaiblitycache!!.cC != null) {
                     fareList.add(FareModel("CC", avaiblitycache.cC?.fare))
                 }
             }
             if (avalClass[i] == "EA") {
+
                 if (avaiblitycache!!.eA != null) {
                     fareList.add(FareModel("EA", avaiblitycache.eA?.fare))
                 }
             }
             if (avalClass[i] == "EC") {
+
                 if (avaiblitycache!!.eC != null) {
                     fareList.add(FareModel("EC", avaiblitycache.eC?.fare))
                 }
             }
             if (avalClass[i] == "2S") {
+
                 if (avaiblitycache!!.jsonMember2S != null) {
                     fareList.add(FareModel("2S", avaiblitycache.jsonMember2S?.fare))
                 }
             }
             if (avalClass[i] == "SL") {
+
                 if (avaiblitycache!!.sL != null) {
                     fareList.add(FareModel("SL", avaiblitycache.sL?.fare))
                 }
@@ -80,10 +87,7 @@ class FareAdapter(
         val binding: FareItemBinding = itemView
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): FareItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FareItemViewHolder {
 
         return FareItemViewHolder(
             DataBindingUtil.inflate(
@@ -98,9 +102,8 @@ class FareAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FareItemViewHolder, position: Int) {
 
-
         holder.binding.checkbox.text = fareList[position].text
-        holder.binding.tvFare.text = "₹ " + fareList[position].fare
+        holder.binding.tvFare.text = "₹" + fareList[position].fare
 
     }
 

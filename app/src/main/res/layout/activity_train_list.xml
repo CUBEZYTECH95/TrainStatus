@@ -10,46 +10,11 @@
         tools:context=".livestatus.TrainListActivity">
 
 
-        <RelativeLayout
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            tools:ignore="UselessParent">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                tools:ignore="UselessParent">
-
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_back_btn" />
-
-
-                <TextView
-                    android:id="@+id/fare_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/poppins_medium"
-                    android:lineSpacingExtra="0sp"
-                    android:text="@string/search_train"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp"
-
-                    />
-
-
-            </RelativeLayout>
-
-        </RelativeLayout>
+            app:title="@string/search_train"
+            app:titleCentered="true"
+            style="@style/Without_Menu"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"

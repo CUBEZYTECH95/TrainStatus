@@ -91,7 +91,12 @@
         <item name="android:layout_height">?actionBarSize</item>
         <item name="menu">@menu/toolbar_menu</item>
         <item name="navigationIcon">@drawable/ic_back_btn</item>
+    </style>
 
+    <style name="Without_Menu" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?actionBarSize</item>
+        <item name="navigationIcon">@drawable/ic_back_btn</item>
     </style>
 
 

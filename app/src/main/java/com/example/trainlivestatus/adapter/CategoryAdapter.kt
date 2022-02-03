@@ -65,6 +65,11 @@ class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) :
             }
         })
 
+        holder.setting.setOnClickListener {
+
+            context.startActivity(Intent(context, SettingsActivity::class.java))
+        }
+
     }
 
     override fun getItemCount(): Int {

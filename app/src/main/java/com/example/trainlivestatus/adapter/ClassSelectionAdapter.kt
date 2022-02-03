@@ -52,7 +52,6 @@ class ClassSelectionAdapter(
                 cb.isChecked = checkedPosition == holder.adapterPosition
             }
 
-
             cb.text = list[position].name
 
             holder.itemView.setOnClickListener {
@@ -62,6 +61,7 @@ class ClassSelectionAdapter(
                 if (checkedPosition != holder.adapterPosition) {
 
                     notifyItemChanged(checkedPosition)
+
                     checkedPosition = holder.adapterPosition
 
                 } else {

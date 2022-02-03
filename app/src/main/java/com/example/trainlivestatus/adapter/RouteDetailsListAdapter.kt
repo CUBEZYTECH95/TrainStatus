@@ -21,14 +21,10 @@ class RouteDetailsListAdapter(
 
 
     companion object {
-
         var avalClass = ArrayList<String>()
-
-
     }
 
-    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
+    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) : RecyclerView.ViewHolder(itemView.root) {
 
         val binding: RouteDetailsListItemBinding = itemView
 
@@ -36,8 +32,7 @@ class RouteDetailsListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): TrainDetailsViewHolder {
+        viewType: Int): TrainDetailsViewHolder {
 
         return TrainDetailsViewHolder(
             DataBindingUtil.inflate(
@@ -49,56 +44,54 @@ class RouteDetailsListAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(
-        holder: TrainDetailsViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: TrainDetailsViewHolder, position: Int) {
 
         val listItem: TrainBtwnStnsListItem = filteredList[position]
 
-
         if (filteredList[position].runningSun.equals("Y")) {
 
-            holder.binding.cbsun.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbsun.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsun.setTextColor(context.resources.getColor(R.color.white))
         }
+
         if (filteredList[position].runningMon.equals("Y")) {
-            holder.binding.cbmon.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbmon.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbmon.setTextColor(context.resources.getColor(R.color.white))
         }
+
         if (filteredList[position].runningTue.equals("Y")) {
-            holder.binding.cbtue.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbtue.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbtue.setTextColor(context.resources.getColor(R.color.white))
         }
+
         if (filteredList[position].runningWed.equals("Y")) {
-            holder.binding.cbwed.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbwed.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbwed.setTextColor(context.resources.getColor(R.color.white))
         }
+
         if (filteredList[position].runningThu.equals("Y")) {
-            holder.binding.cbthu.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbthu.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbthu.setTextColor(context.resources.getColor(R.color.white))
         }
+
         if (filteredList[position].runningFri.equals("Y")) {
-            holder.binding.cbfri.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbfri.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbfri.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningSat.equals("Y")) {
-            holder.binding.cbsat.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+            holder.binding.cbsat.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsat.setTextColor(context.resources.getColor(R.color.white))
         }
 
-
         avalClass.clear()
         avalClass = listItem.avlClasses?.array as ArrayList<String>
-
 
         for (i in avalClass.indices) {
 
@@ -144,11 +137,8 @@ class RouteDetailsListAdapter(
             }
         }
 
-
         holder.binding.farerv.layoutManager = GridLayoutManager(context, 2)
-        holder.binding.farerv.adapter =
-            FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
-
+        holder.binding.farerv.adapter = FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
 
         holder.binding.tvsource.text = listItem.fromStnCode
         holder.binding.tvdestinations.text = listItem.toStnCode

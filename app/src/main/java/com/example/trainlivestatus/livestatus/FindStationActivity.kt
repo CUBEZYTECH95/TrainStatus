@@ -63,7 +63,6 @@ class FindStationActivity : AppCompatActivity() {
             findstationcall()
         }
 
-
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -120,6 +119,8 @@ class FindStationActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<JsonArray?>, t: Throwable) {
+
+
 
                 }
             })

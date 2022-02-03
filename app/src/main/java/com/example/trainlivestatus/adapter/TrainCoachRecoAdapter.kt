@@ -38,19 +38,9 @@ class TrainCoachRecoAdapter(val context: Context, private val img: ArrayList<Str
     }
 
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): CoachViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoachViewHolder {
 
-        return CoachViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.train_coach_item,
-                parent,
-                false
-            )
-        )
+        return CoachViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.train_coach_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: CoachViewHolder, position: Int) {

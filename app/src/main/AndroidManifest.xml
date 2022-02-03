@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application.TrainPays"
@@ -18,14 +20,19 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".livestatus.CallLiveStationActivity"
+            android:name=".livestatus.SettingsActivity"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status"
             android:exported="false" />
 
         <activity
+            android:name=".livestatus.CallLiveStationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
+        <activity
             android:name=".livestatus.LiveStationActivity"
-            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
 
         <activity
             android:name=".livestatus.ScheduleActivity"
@@ -41,18 +48,22 @@
             android:name=".livestatus.TrainTimeActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
         <activity
             android:name=".livestatus.SeatAvailableActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
         <activity
             android:name=".livestatus.LiveTrainActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
         <activity
             android:name=".livestatus.TrainListActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
+
         <activity
             android:name=".livestatus.IntermediatestnActivity"
             android:exported="false"

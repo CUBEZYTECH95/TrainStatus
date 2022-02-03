@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -7,45 +7,16 @@
         android:layout_height="match_parent"
         tools:context=".livestatus.RouteDetailsActivity">
 
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
-
-            <ImageView
-                android:id="@+id/btnback"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="12dp"
-                android:padding="@dimen/_10sdp"
-                android:src="@drawable/ic_share_btn" />
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/findstation"
-                android:textAlignment="center" />
-
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:padding="@dimen/_10sdp"
-                android:src="@drawable/ic_back_btn" />
-
-        </androidx.appcompat.widget.Toolbar>
-
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/rv_toolbar"
+            style="@style/MyThemeOverlay_Toolbar"
+            app:title="@string/fare_detail"
+            app:titleCentered="true" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/appBarLayout">
+            android:layout_below="@id/rv_toolbar">
 
 
             <androidx.recyclerview.widget.RecyclerView

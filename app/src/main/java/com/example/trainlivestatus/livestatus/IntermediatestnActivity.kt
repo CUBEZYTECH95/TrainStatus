@@ -40,7 +40,7 @@ class IntermediatestnActivity : AppCompatActivity() {
 
         mainViewModel.schedulewithintermediatestn(trainNo)
 
-        mainViewModel.trainlist.observe(this, {
+        mainViewModel.trainlist.observe(this) {
 
 
             binding.apply {
@@ -50,25 +50,24 @@ class IntermediatestnActivity : AppCompatActivity() {
 
             }
 
-
-        })
+        }
 
         mainViewModel.errorMessage.observe(this, Observer {
 
             Toast.makeText(this@IntermediatestnActivity, it, Toast.LENGTH_SHORT).show()
         })
 
-        mainViewModel.showLoadingProg.observe(this,
-            {
+        mainViewModel.showLoadingProg.observe(this
+        ) {
 
-                if (it) {
+            if (it) {
 
-                    binding.progressCircular.visibility = View.VISIBLE
-                } else {
+                binding.progressCircular.visibility = View.VISIBLE
+            } else {
 
-                    binding.progressCircular.visibility = View.GONE
-                }
-            })
+                binding.progressCircular.visibility = View.GONE
+            }
+        }
 
 
     }

@@ -75,7 +75,6 @@ class TrainTimeActivity : AppCompatActivity() {
             Log.e("from", "onCreate: $from")
         }
 
-
         binding.rvToolbar.setNavigationOnClickListener {
 
             onBackPressed()
@@ -93,10 +92,7 @@ class TrainTimeActivity : AppCompatActivity() {
             true
         }
 
-        mainViewModel = ViewModelProvider(
-            this,
-            ModelFactory(MainRespository(apiInterface))
-        )[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
 
         mainViewModel.topseatcalander(
             from,
@@ -108,7 +104,7 @@ class TrainTimeActivity : AppCompatActivity() {
             "en",
             true)
 
-        mainViewModel.TopcalModelList.observe(this, {
+        mainViewModel.TopcalModelList.observe(this) {
 
             getTrainCalender(speakfromlangcode)
 
@@ -126,14 +122,14 @@ class TrainTimeActivity : AppCompatActivity() {
                 )
                 spinner(names)
             }
-        })
+        }
 
-        mainViewModel.errorMessage.observe(this, {
+        mainViewModel.errorMessage.observe(this) {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        })
+        }
 
-        mainViewModel.showLoadingProg.observe(this, {
+        mainViewModel.showLoadingProg.observe(this) {
 
             if (it) {
 
@@ -143,78 +139,77 @@ class TrainTimeActivity : AppCompatActivity() {
 
                 binding.progressCircular.visibility = View.GONE
             }
-        })
+        }
 
         /* mainViewModel.trainname.observe(this,
 
              { s -> binding.tvtrainnum.text = s })*/
 
-        mainViewModel.mon.observe(this,
-            { integer ->
-                binding.tvDay.monday.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.mon.observe(this
+        ) { integer ->
+            binding.tvDay.monday.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.tue.observe(this,
-            { integer ->
-                binding.tvDay.t.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.tue.observe(this
+        ) { integer ->
+            binding.tvDay.t.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.wed.observe(this,
-            { integer ->
-                binding.tvDay.w.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.wed.observe(this
+        ) { integer ->
+            binding.tvDay.w.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.th.observe(this,
-            { integer ->
-                binding.tvDay.th.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.th.observe(this
+        ) { integer ->
+            binding.tvDay.th.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.fri.observe(this,
-            { integer ->
-                binding.tvDay.f.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.fri.observe(this
+        ) { integer ->
+            binding.tvDay.f.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.sat.observe(this,
-            { integer ->
-                binding.tvDay.s.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.sat.observe(this
+        ) { integer ->
+            binding.tvDay.s.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
-        mainViewModel.sun.observe(this,
-            { integer ->
-                binding.tvDay.su.setTextColor(
-                    applicationContext.resources.getColor(
-                        integer!!
-                    )
+        mainViewModel.sun.observe(this
+        ) { integer ->
+            binding.tvDay.su.setTextColor(
+                applicationContext.resources.getColor(
+                    integer!!
                 )
-            })
+            )
+        }
 
         TrainquotaList()
     }
-
 
     private fun spinner(name: ArrayList<SpinnerModel>) {
 
@@ -351,17 +346,15 @@ class TrainTimeActivity : AppCompatActivity() {
            Log.e("trainnum", "getTrainCalender: $trainnum")*/
 
         mainViewModel.tarintimecalander(
-
             trainnum,
             from,
             to,
             date,
             "1A,2A,3A,SL",
             speakfromlangcode,
-            CommonUtil.api_key
-        )
+            CommonUtil.api_key)
 
-        mainViewModel.monthlyAvaModel.observe(this, {
+        mainViewModel.monthlyAvaModel.observe(this) {
 
             for (i in it.indices) {
 
@@ -374,8 +367,8 @@ class TrainTimeActivity : AppCompatActivity() {
             binding.rvtimetable.layoutManager = LinearLayoutManager(this@TrainTimeActivity)
             binding.rvtimetable.adapter = adapter
 
-        })
-        mainViewModel.showLoadingProg.observe(this, {
+        }
+        mainViewModel.showLoadingProg.observe(this) {
 
             if (it) {
 
@@ -385,16 +378,16 @@ class TrainTimeActivity : AppCompatActivity() {
 
                 binding.progressCircular.visibility = View.GONE
             }
-        })
-        mainViewModel.errorMessage.observe(this, {
+        }
+        mainViewModel.errorMessage.observe(this) {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        })
+        }
 
 
     }
 
-    fun TrainquotaList() {
+    private fun TrainquotaList() {
 
         val arrayList: ArrayList<String> = ArrayList<String>()
 

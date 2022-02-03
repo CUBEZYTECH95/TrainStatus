@@ -43,8 +43,11 @@ class ScheduleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule)
-        val apiInterface: ApiInterface = getClient().create(ApiInterface::class.java)
 
+        binding.rvToolbar.setNavigationOnClickListener {
+
+            onBackPressed()
+        }
 
         to = intent.getStringExtra("to")
         from = intent.getStringExtra("from")

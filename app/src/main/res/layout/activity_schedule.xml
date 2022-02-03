@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +10,8 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
+            app:title="@string/train_schedule"
+            app:titleCentered="true"
             style="@style/MyThemeOverlay_Toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
