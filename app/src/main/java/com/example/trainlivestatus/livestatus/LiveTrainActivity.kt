@@ -75,11 +75,7 @@ class LiveTrainActivity : AppCompatActivity() {
 
         val apiInterface: ApiInterface = TrainPays.getClient().create(ApiInterface::class.java)
 
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ModelFactory(MainRespository(apiInterface))
-            )[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
 
         mainViewModel.getlivestatus(trainNumber, (dateFormat as SimpleDateFormat).format(today))
 
@@ -108,9 +104,7 @@ class LiveTrainActivity : AppCompatActivity() {
                 }
 
                 recyclerLiveStatus.layoutManager = LinearLayoutManager(this@LiveTrainActivity)
-                recyclerLiveStatus.adapter = LiveTrainAdapter(
-                    this@LiveTrainActivity,
-                    it.stations as List<StationsItem>,
+                recyclerLiveStatus.adapter = LiveTrainAdapter(this@LiveTrainActivity, it.stations as List<StationsItem>,
                     p, object : LiveTrainClick {
                         @SuppressLint("SetTextI18n")
                         override fun click(

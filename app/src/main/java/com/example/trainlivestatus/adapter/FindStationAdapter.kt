@@ -56,6 +56,7 @@ class FindStationAdapter(
         var citylocal = arrayList[position].citylocale
         citylocal = citylocal!!.replace("\"", "")
         holder.itemLayoutBinding.citylocal.text = citylocal
+
         holder.itemView.setOnClickListener {
             val intent = Intent()
             intent.putExtra("citycode", arrayList[position].citycode)
@@ -63,8 +64,6 @@ class FindStationAdapter(
             context.setResult(Activity.RESULT_OK, intent)
             context.finish()
         }
-
-
 
     }
 

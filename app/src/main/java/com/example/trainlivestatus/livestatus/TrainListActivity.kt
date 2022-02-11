@@ -30,8 +30,8 @@ class TrainListActivity : AppCompatActivity() {
         }
 
         val trainList = CommonUtil.getTrainList(this@TrainListActivity)
-        val type = object : TypeToken<List<String?>?>() {}.type
-        val list = Gson().fromJson<List<String>>(trainList, type)
+        val type = object : TypeToken<ArrayList<String?>?>() {}.type
+        val list = Gson().fromJson<ArrayList<String>>(trainList, type)
 
         binding.apply {
 
@@ -39,7 +39,7 @@ class TrainListActivity : AppCompatActivity() {
             rvSearchTrain.setHasFixedSize(true)
             val adapter = SearchTrainAdapter(
                 this@TrainListActivity,
-                list as ArrayList<String>,
+                list,
                 object : TrainClickListener {
 
                     override fun onTrainClick(trainNo: String?, TrainName: String?) {

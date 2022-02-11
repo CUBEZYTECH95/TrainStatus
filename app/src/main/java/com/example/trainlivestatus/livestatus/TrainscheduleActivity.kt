@@ -62,7 +62,7 @@ class TrainscheduleActivity : AppCompatActivity() {
             etTo.setText(SharedPref.getString(scheduledTo))
             tvSelectDate.setText(SharedPref.getString(scheduledDate))
 
-            rvSeatSelected.layoutManager = GridLayoutManager(this@TrainscheduleActivity, 2)
+            rvSeatSelected.layoutManager = GridLayoutManager(this@TrainscheduleActivity, 3)
 
             adapter = ClassSelectionAdapter(this@TrainscheduleActivity, list)
             rvSeatSelected.adapter = adapter
@@ -93,33 +93,23 @@ class TrainscheduleActivity : AppCompatActivity() {
             tvSelectDate.isFocusable = false
             tvSelectDate.isFocusableInTouchMode = false
 
-
-
-            binding.tvSelectDate.setOnClickListener {
-                val calendar = Calendar.getInstance()
-                val day = calendar[Calendar.DAY_OF_MONTH]
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                datePickerDialog = DatePickerDialog(
-
-                    this@TrainscheduleActivity, R.style.DatePickerTheme,
-
-                    { view, year, month, dayOfMonth ->
-
-                        date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
-                        SharedPref.putString(scheduledDate, date)
-                        tvSelectDate.setText(date)
-
-                    }, year, month, day
-                )
-                datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
-                datePickerDialog!!.show()
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
-                    .setTextColor(resources.getColor(R.color.colorYellow))
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-                    .setTextColor(resources.getColor(R.color.colorYellow))
+            binding.swip.setOnClickListener {
+                val from = tvStations.text.toString().trim()
+                val to = etTo.text.toString().trim()
+                tvStations.setText(to)
+                etTo.setText(from)
             }
 
+            binding.tvSelectDate.setOnClickListener {
+
+                openpicker()
+
+            }
+
+            binding.ivOpenCal.setOnClickListener {
+
+                openpicker()
+            }
 
             binding.tvGetStart.setOnClickListener(View.OnClickListener {
 
@@ -230,5 +220,31 @@ class TrainscheduleActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun openpicker(){
+
+        val calendar = Calendar.getInstance()
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+        datePickerDialog = DatePickerDialog(
+
+            this@TrainscheduleActivity, R.style.DatePickerTheme,
+
+            { view, year, month, dayOfMonth ->
+
+                date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
+                SharedPref.putString(scheduledDate, date)
+                binding.tvSelectDate.setText(date)
+
+            }, year, month, day
+        )
+        datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog!!.show()
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
     }
 }

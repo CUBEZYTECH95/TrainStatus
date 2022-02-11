@@ -20,11 +20,11 @@
                 android:background="@drawable/train_no_bg"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center_horizontal"
-                android:padding="@dimen/dp_4"
-                android:text="------"
+                android:padding="@dimen/_2sdp"
+                android:text="-------"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/_10sdp" />
 
             <TextView
                 android:id="@+id/tvTrainName"
@@ -34,7 +34,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="------------------"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/_10sdp" />
 
         </LinearLayout>
 

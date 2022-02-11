@@ -11,9 +11,7 @@ import com.example.trainlivestatus.R
 import com.example.trainlivestatus.clicklistner.ItemClick
 import com.example.trainlivestatus.model.CategoryModel
 
-class DashbAdapter(val context: Context, val list: List<CategoryModel>, private val itemclick: ItemClick) :
-    RecyclerView.Adapter<DashbAdapter.Holder>() {
-
+class DashbAdapter(val context: Context, val list: List<CategoryModel>, private val itemclick: ItemClick) : RecyclerView.Adapter<DashbAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 

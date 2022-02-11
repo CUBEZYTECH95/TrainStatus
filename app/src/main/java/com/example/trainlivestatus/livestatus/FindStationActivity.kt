@@ -96,8 +96,7 @@ class FindStationActivity : AppCompatActivity() {
 
                             arraylist.add(stationModel)
 
-                            val mLayoutManager: RecyclerView.LayoutManager =
-                                LinearLayoutManager(applicationContext)
+                            val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(applicationContext)
                             adapter = FindStationAdapter(this@FindStationActivity, arraylist)
                             binding.rv.layoutManager = mLayoutManager
                             binding.rv.adapter = adapter
@@ -129,7 +128,7 @@ class FindStationActivity : AppCompatActivity() {
 
             handler.postDelayed({ //Do something after 5000ms
                 binding.progressCircular.visibility = View.GONE
-                Toast.makeText(this@FindStationActivity, R.string.internet_not, Toast.LENGTH_SHORT)
+                Toast.makeText(this@FindStationActivity, R.string.please_internet, Toast.LENGTH_SHORT)
                     .show()
             }, 2000)
         }
@@ -169,15 +168,12 @@ class FindStationActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         val id = item.itemId
         return if (id == R.id.action_search) {
             true
         } else super.onOptionsItemSelected(item)
     }
-
 
 }
 

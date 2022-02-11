@@ -23,7 +23,6 @@ class RouteDetailsAdapter(
         const val TYPE_LIST = 1
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         if (viewType == TYPE_DESTINATION) {
@@ -63,7 +62,6 @@ class RouteDetailsAdapter(
                     tvToStation.text = list[0].toStnCode
                 }
 
-
             }
 
             TYPE_LIST -> {
@@ -89,7 +87,6 @@ class RouteDetailsAdapter(
 
         return if (position == TYPE_DESTINATION) TYPE_DESTINATION else TYPE_LIST
     }
-
 
     class DestinationViewHolder(itemView: ItemSeatRoutDetailsHeaderBinding) :
         RecyclerView.ViewHolder(itemView.root) {

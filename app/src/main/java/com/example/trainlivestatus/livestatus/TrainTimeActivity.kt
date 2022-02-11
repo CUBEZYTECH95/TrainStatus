@@ -2,7 +2,6 @@ package com.example.trainlivestatus.livestatus
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -26,7 +25,6 @@ import com.example.trainlivestatus.utils.TrainQuota
 import com.example.trainlivestatus.viewmodel.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TrainTimeActivity : AppCompatActivity() {
 
@@ -59,7 +57,6 @@ class TrainTimeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_train_time_)
         qautaBinding = binding.tvDay
 
-
         val intent = intent
 
         if (intent != null) {
@@ -70,9 +67,9 @@ class TrainTimeActivity : AppCompatActivity() {
             binding.tvfrom.text = from
             binding.tvto.text = to
 
-            Log.e("date", "onCreate: $date")
+            /*Log.e("date", "onCreate: $date")
             Log.e("to", "onCreate: $to")
-            Log.e("from", "onCreate: $from")
+            Log.e("from", "onCreate: $from")*/
         }
 
         binding.rvToolbar.setNavigationOnClickListener {
@@ -85,14 +82,15 @@ class TrainTimeActivity : AppCompatActivity() {
             when (it.itemId) {
 
                 R.id.share -> {
-
-
                 }
             }
             true
         }
 
-        mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(
+            this,
+            ModelFactory(MainRespository(apiInterface))
+        )[MainViewModel::class.java]
 
         mainViewModel.topseatcalander(
             from,
@@ -102,7 +100,8 @@ class TrainTimeActivity : AppCompatActivity() {
             "4c266f54-988a-477d-bd6c-4981c124a80a",
             true,
             "en",
-            true)
+            true
+        )
 
         mainViewModel.TopcalModelList.observe(this) {
 
@@ -129,6 +128,18 @@ class TrainTimeActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
+        mainViewModel.recyclerview_flag.observe(this, androidx.lifecycle.Observer {
+
+            if (it) {
+
+                binding.rvLay.visibility=View.VISIBLE
+
+            } else {
+
+                binding.rvLay.visibility=View.GONE
+            }
+        })
+
         mainViewModel.showLoadingProg.observe(this) {
 
             if (it) {
@@ -145,7 +156,8 @@ class TrainTimeActivity : AppCompatActivity() {
 
              { s -> binding.tvtrainnum.text = s })*/
 
-        mainViewModel.mon.observe(this
+        mainViewModel.mon.observe(
+            this
         ) { integer ->
             binding.tvDay.monday.setTextColor(
                 applicationContext.resources.getColor(
@@ -154,7 +166,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.tue.observe(this
+        mainViewModel.tue.observe(
+            this
         ) { integer ->
             binding.tvDay.t.setTextColor(
                 applicationContext.resources.getColor(
@@ -163,7 +176,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.wed.observe(this
+        mainViewModel.wed.observe(
+            this
         ) { integer ->
             binding.tvDay.w.setTextColor(
                 applicationContext.resources.getColor(
@@ -172,7 +186,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.th.observe(this
+        mainViewModel.th.observe(
+            this
         ) { integer ->
             binding.tvDay.th.setTextColor(
                 applicationContext.resources.getColor(
@@ -181,7 +196,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.fri.observe(this
+        mainViewModel.fri.observe(
+            this
         ) { integer ->
             binding.tvDay.f.setTextColor(
                 applicationContext.resources.getColor(
@@ -190,7 +206,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.sat.observe(this
+        mainViewModel.sat.observe(
+            this
         ) { integer ->
             binding.tvDay.s.setTextColor(
                 applicationContext.resources.getColor(
@@ -199,7 +216,8 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.sun.observe(this
+        mainViewModel.sun.observe(
+            this
         ) { integer ->
             binding.tvDay.su.setTextColor(
                 applicationContext.resources.getColor(
@@ -207,6 +225,8 @@ class TrainTimeActivity : AppCompatActivity() {
                 )
             )
         }
+
+
 
         TrainquotaList()
     }
@@ -352,7 +372,8 @@ class TrainTimeActivity : AppCompatActivity() {
             date,
             "1A,2A,3A,SL",
             speakfromlangcode,
-            CommonUtil.api_key)
+            CommonUtil.api_key
+        )
 
         mainViewModel.monthlyAvaModel.observe(this) {
 
@@ -361,14 +382,15 @@ class TrainTimeActivity : AppCompatActivity() {
                 val calendar: Calendar = GregorianCalendar()
                 calendar.add(Calendar.DATE, i)
                 datelist.add(calendar.time)
+
             }
 
             val adapter = TrainTimeAdapter(this@TrainTimeActivity, it, datelist)
             binding.rvtimetable.layoutManager = LinearLayoutManager(this@TrainTimeActivity)
             binding.rvtimetable.adapter = adapter
-
         }
-        mainViewModel.showLoadingProg.observe(this) {
+
+        mainViewModel.calanderLoadingProg.observe(this) {
 
             if (it) {
 
@@ -379,7 +401,7 @@ class TrainTimeActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.GONE
             }
         }
-        mainViewModel.errorMessage.observe(this) {
+        mainViewModel.calandermessage.observe(this) {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }

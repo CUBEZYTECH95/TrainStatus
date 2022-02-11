@@ -2,7 +2,6 @@ package com.example.trainlivestatus.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -21,6 +20,7 @@ class RouteDetailsListAdapter(
 
 
     companion object {
+
         var avalClass = ArrayList<String>()
     }
 
@@ -32,7 +32,8 @@ class RouteDetailsListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int): TrainDetailsViewHolder {
+        viewType: Int
+    ): TrainDetailsViewHolder {
 
         return TrainDetailsViewHolder(
             DataBindingUtil.inflate(
@@ -50,43 +51,50 @@ class RouteDetailsListAdapter(
 
         if (filteredList[position].runningSun.equals("Y")) {
 
-            holder.binding.cbsun.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbsun.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsun.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningMon.equals("Y")) {
 
-            holder.binding.cbmon.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbmon.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbmon.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningTue.equals("Y")) {
 
-            holder.binding.cbtue.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbtue.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbtue.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningWed.equals("Y")) {
 
-            holder.binding.cbwed.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbwed.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbwed.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningThu.equals("Y")) {
 
-            holder.binding.cbthu.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbthu.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbthu.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningFri.equals("Y")) {
 
-            holder.binding.cbfri.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbfri.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbfri.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningSat.equals("Y")) {
 
-            holder.binding.cbsat.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbsat.background =
+                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsat.setTextColor(context.resources.getColor(R.color.white))
         }
 
@@ -96,43 +104,50 @@ class RouteDetailsListAdapter(
         for (i in avalClass.indices) {
 
             if (avalClass[i] == "1A") {
-                holder.binding.ch1a.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.ch1a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch1a.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "2A") {
-                holder.binding.ch2a.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.ch2a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch2a.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "3A") {
-                holder.binding.ch3a.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.ch3a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch3a.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "CC") {
-                holder.binding.chCc.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.chCc.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chCc.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "EA") {
-                holder.binding.chEa.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.chEa.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chEa.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "EC") {
-                holder.binding.chEc.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.chEc.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chEc.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "2S") {
-                holder.binding.ch2s.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.ch2s.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch2s.setTextColor(context.resources.getColor(R.color.white))
             }
+
             if (avalClass[i] == "SL") {
-                holder.binding.chSl.background =
-                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+
+                holder.binding.chSl.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chSl.setTextColor(context.resources.getColor(R.color.white))
             }
         }

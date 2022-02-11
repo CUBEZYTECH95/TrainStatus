@@ -33,6 +33,7 @@ class CommonUtil {
         const val locale = "en"
         const val API_URL1 = "https://gosmarttrip.com/"
         const val API_URL2 = "https://enquiry.indianrail.gov.in"
+        var errormessage="errormessage"
 
 
         fun getTrainList(context: Context): String? {

@@ -28,6 +28,12 @@ class IntermediatestnActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_intermediatestn)
 
+
+        binding.rvToolbar.setOnClickListener {
+
+            onBackPressed()
+        }
+
         trainNo = intent.getStringExtra("trainNo")
 
         val apiInterface: ApiInterface = TrainPays.getClient().create(ApiInterface::class.java)
@@ -42,13 +48,16 @@ class IntermediatestnActivity : AppCompatActivity() {
 
         mainViewModel.trainlist.observe(this) {
 
+            /* if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString*/
 
             binding.apply {
+
 
                 rv.layoutManager = LinearLayoutManager(this@IntermediatestnActivity)
                 rv.adapter = TrainScheduleAdapter(this@IntermediatestnActivity, it, trainNo)
 
             }
+
 
         }
 
@@ -57,7 +66,8 @@ class IntermediatestnActivity : AppCompatActivity() {
             Toast.makeText(this@IntermediatestnActivity, it, Toast.LENGTH_SHORT).show()
         })
 
-        mainViewModel.showLoadingProg.observe(this
+        mainViewModel.showLoadingProg.observe(
+            this
         ) {
 
             if (it) {

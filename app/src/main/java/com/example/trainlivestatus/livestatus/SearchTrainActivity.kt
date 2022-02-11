@@ -11,18 +11,22 @@ import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.SearchTrainAdapter
 import com.example.trainlivestatus.clicklistner.TrainClickListener
 import com.example.trainlivestatus.databinding.ActivitySearchTrainBinding
+import com.example.trainlivestatus.model.LiveModel
 import com.example.trainlivestatus.utils.CommonUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.ArrayList
 
 class SearchTrainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySearchTrainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_train)
+
 
 
         binding.rvToolbar.setNavigationOnClickListener {
@@ -31,19 +35,15 @@ class SearchTrainActivity : AppCompatActivity() {
         }
 
         val trainList = CommonUtil.getTrainList(this@SearchTrainActivity)
-        val type = object : TypeToken<List<String?>?>() {}.type
-        val list = Gson().fromJson<List<String>>(trainList, type)
+        val type = object : TypeToken<ArrayList<String?>?>() {}.type
+        val list = Gson().fromJson<ArrayList<String>>(trainList, type)
 
         binding.apply {
-
 
             rvSearchTrain.layoutManager = LinearLayoutManager(this@SearchTrainActivity)
             rvSearchTrain.setHasFixedSize(true)
 
-            val adapter =
-                SearchTrainAdapter(
-                    this@SearchTrainActivity,
-                    list as ArrayList<String>,
+            val adapter = SearchTrainAdapter(this@SearchTrainActivity, list,
                     object : TrainClickListener {
                         override fun onTrainClick(trainNo: String?, TrainName: String?) {
 

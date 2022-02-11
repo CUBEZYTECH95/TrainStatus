@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.trainlivestatus.R
+import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.databinding.ActivitySeatAvailableBinding
 import com.example.trainlivestatus.utils.SharedPref
 import com.example.trainlivestatus.utils.Validation
@@ -35,22 +36,12 @@ class SeatAvailableActivity : AppCompatActivity() {
 
         binding.apply {
 
-            tvGetStart.setOnClickListener {
-
-                startActivity(
-                    Intent(
-                        this@SeatAvailableActivity,
-                        TrainTimeActivity::class.java
-                    )
-                )
-            }
-
             tvStations.setText(SharedPref.getString(SharedPref.facebook_url))
             to.setText(SharedPref.getString(SharedPref.day_count))
             cityname = SharedPref.getString(SharedPref.city_from_st)
             cityname1 = SharedPref.getString(SharedPref.city_to_st)
-            binding.tvSelectDate.setText(SharedPref.getString(SharedPref.is_date))
-            binding.tvSelectDate.setText(SharedPref.getString(SharedPref.is_date))
+            tvSelectDate.setText(SharedPref.getString(SharedPref.is_date))
+            tvSelectDate.setText(SharedPref.getString(SharedPref.is_date))
 
         }
 
@@ -67,93 +58,90 @@ class SeatAvailableActivity : AppCompatActivity() {
             tvSelectDate.isFocusableInTouchMode = false
 
             binding.tvSelectDate.setOnClickListener {
-                val calendar = Calendar.getInstance()
-                val day = calendar[Calendar.DAY_OF_MONTH]
-                val year = calendar[Calendar.YEAR]
-                val month = calendar[Calendar.MONTH]
-                datePickerDialog = DatePickerDialog(
 
-                    this@SeatAvailableActivity, R.style.DatePickerTheme,
+                openpicker()
 
-                    { view, year, month, dayOfMonth ->
+            }
 
-                        date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
-                        binding.tvSelectDate.setText(date)
-                    }, year, month, day
-                )
-                datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
-                datePickerDialog!!.show()
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
-                    .setTextColor(resources.getColor(R.color.colorYellow))
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-                    .setTextColor(resources.getColor(R.color.colorYellow))
+            binding.ivOpenCal.setOnClickListener {
+
+                openpicker()
             }
 
             binding.tvGetStart.setOnClickListener {
 
-                val validations = Validation()
+                if (TrainPays.isNetConnectionAvailable()) {
 
-                if (!validations.isStartingP(tvStations)) {
+                    val validations = Validation()
 
-                    citycode = tvStations.text.toString().trim()
-                    SharedPref.putString(SharedPref.facebook_url, citycode)
+                    if (!validations.isStartingP(tvStations)) {
 
-                    if (!validations.isEndingP(to)) {
+                        citycode = tvStations.text.toString().trim()
+                        SharedPref.putString(SharedPref.facebook_url, citycode)
 
-                        citycode1 = to.text.toString().trim()
-                        SharedPref.putString(SharedPref.day_count, citycode1)
+                        if (!validations.isEndingP(to)) {
 
-                        if (!validations.isEmpty(tvSelectDate)) {
+                            citycode1 = to.text.toString().trim()
+                            SharedPref.putString(SharedPref.day_count, citycode1)
 
-                            date = tvSelectDate.text.toString()
-                            SharedPref.putString(SharedPref.is_date, date)
+                            if (!validations.isEmpty(tvSelectDate)) {
 
-                            if (!validations.isSameDestinations(tvStations, to)) {
+                                date = tvSelectDate.text.toString()
+                                SharedPref.putString(SharedPref.is_date, date)
 
-                                val intent = Intent(
-                                    this@SeatAvailableActivity,
-                                    TrainTimeActivity::class.java
-                                )
+                                if (!validations.isSameDestinations(tvStations, to)) {
 
-                                intent.putExtra("citycode", citycode)
-                                intent.putExtra("citycode1", citycode1)
-                                intent.putExtra("cityname", cityname)
-                                intent.putExtra("cityname1", cityname1)
-                                intent.putExtra("date", date)
-                                startActivity(intent)
+                                    val intent = Intent(
+                                        this@SeatAvailableActivity,
+                                        TrainTimeActivity::class.java
+                                    )
 
+                                    intent.putExtra("citycode", citycode)
+                                    intent.putExtra("citycode1", citycode1)
+                                    intent.putExtra("cityname", cityname)
+                                    intent.putExtra("cityname1", cityname1)
+                                    intent.putExtra("date", date)
+                                    startActivity(intent)
+
+                                } else {
+
+                                    Toast.makeText(
+                                        this@SeatAvailableActivity,
+                                        getString(R.string.same_destinations),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             } else {
 
                                 Toast.makeText(
                                     this@SeatAvailableActivity,
-                                    getString(R.string.same_destinations),
+                                    getString(R.string.please_enter_date),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                         } else {
-
                             Toast.makeText(
                                 this@SeatAvailableActivity,
-                                getString(R.string.please_enter_date),
+                                getString(R.string.enter_destinations_station),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     } else {
+
                         Toast.makeText(
                             this@SeatAvailableActivity,
-                            getString(R.string.enter_destinations_station),
+                            getString(R.string.please_enter_start_station),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                } else {
-                    Toast.makeText(
-                        this@SeatAvailableActivity,
-                        getString(R.string.please_enter_start_station),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
 
+                }else{
+
+                    Toast.makeText(this@SeatAvailableActivity, R.string.please_internet, Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
 
             tvStations.setOnClickListener {
 
@@ -166,7 +154,6 @@ class SeatAvailableActivity : AppCompatActivity() {
                 startActivityForResult(intent, 2)
             }
 
-
             binding.swip.setOnClickListener {
 
                 val from = tvStations.text.toString().trim()
@@ -178,7 +165,6 @@ class SeatAvailableActivity : AppCompatActivity() {
 
 
     }
-
 
     override fun onRestart() {
         super.onRestart()
@@ -228,10 +214,33 @@ class SeatAvailableActivity : AppCompatActivity() {
                     SharedPref.putString(SharedPref.city_to_st, cityname1)
                     binding.to.setText(citycode1)
 
-                    Log.e("1", "onActivityResult: $citycode1-$cityname1")
                 }
             }
         }
+    }
+
+    fun openpicker() {
+
+        val calendar = Calendar.getInstance()
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+        datePickerDialog = DatePickerDialog(
+
+            this@SeatAvailableActivity, R.style.DatePickerTheme,
+
+            { view, year, month, dayOfMonth ->
+
+                date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
+                binding.tvSelectDate.setText(date)
+            }, year, month, day
+        )
+        datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog!!.show()
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
     }
 
 

@@ -24,8 +24,7 @@ class MainRespository constructor(val api: ApiInterface) {
             CommonUtil.locale,
             "4c266f54-988a-477d-bd6c-4981c124a80a",
             CommonUtil.appVersion,
-            CommonUtil.EMAIL
-        )
+            CommonUtil.EMAIL)
     }
 
     fun getallIntermediatestn(trainId: String?): Call<InterstnModel?> {
@@ -42,7 +41,6 @@ class MainRespository constructor(val api: ApiInterface) {
 
         return api.topcalanderdata(source, den, doj, travelcalss, email, ptran, local, showclass)
     }
-
 
     fun avilabletrain(trainNo: String?, source: String?, destination: String?, doj: String?, travelClasses: String?, quota: String, email: String?): Call<List<SeatAvailabilityModel?>?> {
 

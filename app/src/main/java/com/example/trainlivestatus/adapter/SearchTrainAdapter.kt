@@ -15,8 +15,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchTrainAdapter(
-    val context: Context,
-    val list: ArrayList<String>,
+    val context: Context, val list: ArrayList<String>,
     val trainClickListener: TrainClickListener
 ) : RecyclerView.Adapter<SearchTrainAdapter.TrainNoViewHolder>(), Filterable {
 
@@ -144,8 +143,9 @@ class SearchTrainAdapter(
 
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
+
             list.clear()
-            list.addAll(results.values as Collection<String>)
+            list.addAll(results.values as java.util.ArrayList<String>)
             notifyDataSetChanged()
         }
     }

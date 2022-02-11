@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/arc.xml" value="0.1625" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/btn_start.xml" value="0.3651041666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/button_bg.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/ic_fare_in.xml" value="0.3651041666666667" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/ic_vector_arrow.xml" value="0.3651041666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/ic_vertical_line.xml" value="0.3651041666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/live_status_bg.xml" value="0.3651041666666667" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/round.xml" value="0.1" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/drawable/white_round_bg.xml" value="0.3494791666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_call_live_station.xml" value="0.31145833333333334" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_category.xml" value="0.2957427536231884" />
@@ -33,7 +35,8 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_train_list.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_train_time.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_train_time_.xml" value="0.32916666666666666" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_trainschedule.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/activity_trainschedule.xml" value="0.2" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/arc.xml" value="0.2767210144927536" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/bottom_sheet.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/class_selection_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/coach_position_view_item.xml" value="0.32916666666666666" />
@@ -53,6 +56,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/no_train_avai.xml" value="0.2359375" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/route_details_item.xml" value="0.34479166666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/route_details_list_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/rv_item.xml" value="0.30885416666666665" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/schedule_details_item.xml" value="0.2046875" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/table_item.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/train_coach_item.xml" value="0.32916666666666666" />
@@ -62,6 +66,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/train_name_view_item.xml" value="0.32916666666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/train_scheduled_rv_item.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/train_spinner_item.xml" value="0.34479166666666666" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/layout/tt.xml" value="0.2767210144927536" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/menu/menu_main.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/KotlinRepo/TrainLiveStatus/app/src/main/res/menu/toolbar_menu.xml" value="0.3333333333333333" />
       </map>

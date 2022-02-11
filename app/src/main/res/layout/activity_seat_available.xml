@@ -136,14 +136,17 @@
 
                         <EditText
                             android:id="@+id/tv_stations"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_from"
                             android:layout_alignStart="@id/tv_from"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_toStartOf="@id/swip"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
+                            android:focusable="true"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
                             android:hint="Bandung Station"
                             android:longClickable="false"
@@ -187,7 +190,7 @@
 
                         <EditText
                             android:id="@+id/to"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_to"
                             android:layout_alignStart="@id/tv_to"
@@ -195,6 +198,9 @@
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
+                            android:focusable="true"
+                            android:layout_toStartOf="@id/swip"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
                             android:hint="Bandung Station"
                             android:longClickable="false"
@@ -236,7 +242,7 @@
 
                         <EditText
                             android:id="@+id/tv_select_date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_date"
                             android:layout_alignStart="@id/tv_date"
@@ -244,6 +250,9 @@
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
+                            android:focusable="true"
+                            android:layout_toStartOf="@id/iv_open_cal"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
                             android:hint="4-8-2021"
                             android:longClickable="false"
@@ -252,6 +261,7 @@
 
 
                         <ImageView
+                            android:id="@+id/iv_open_cal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/tv_select_date"

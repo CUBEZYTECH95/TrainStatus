@@ -2,18 +2,19 @@ package com.example.trainlivestatus.livestatus
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.RouteDetailsAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
+import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.databinding.ActivityScheduleBinding
 import com.example.trainlivestatus.model.RouteStationModel
 import com.example.trainlivestatus.model.TrainBtwnStnsListItem
 import com.example.trainlivestatus.utils.CommonUtil
-import com.example.trainlivestatus.viewmodel.MainViewModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,12 +26,10 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class ScheduleActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityScheduleBinding
-    var mainViewModel: MainViewModel? = null
     private var from: String? = null
     private var to: String? = null
     private var date: String? = null
@@ -44,6 +43,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule)
 
+
         binding.rvToolbar.setNavigationOnClickListener {
 
             onBackPressed()
@@ -55,6 +55,8 @@ class ScheduleActivity : AppCompatActivity() {
         firstAc = intent.getStringExtra("1a")
         secoundAc = intent.getBooleanExtra("2a", false)
         thirdAc = intent.getBooleanExtra("3a", false)
+
+
         val format1 = SimpleDateFormat("dd-MM-yyyy")
         var dt1: Date? = null
 
@@ -70,7 +72,6 @@ class ScheduleActivity : AppCompatActivity() {
             finalDay = format2.format(dt1)
         }
 
-
         getTrainDetails(finalDay)
 
 
@@ -78,409 +79,539 @@ class ScheduleActivity : AppCompatActivity() {
 
     private fun getTrainDetails(finalDay: String?) {
 
-        val apiInterface: ApiInterface = getClient().create(ApiInterface::class.java)
+        if (TrainPays.isNetConnectionAvailable()) {
 
-        val call: Call<RouteStationModel?>? = apiInterface.RouteStationCall(
-            from,
-            to,
-            date,
-            CommonUtil.tokan,
-            CommonUtil.quota,
-            CommonUtil.locale,
-            "4c266f54-988a-477d-bd6c-4981c124a80a",
-            CommonUtil.appVersion,
-            CommonUtil.EMAIL
-        )
+            binding.progressCircular.visibility = View.VISIBLE
 
-        call?.enqueue(object : Callback<RouteStationModel?> {
+            val apiInterface: ApiInterface = getClient().create(ApiInterface::class.java)
 
-            override fun onResponse(
-                call: Call<RouteStationModel?>,
-                response: Response<RouteStationModel?>
-            ) {
+            val call: Call<RouteStationModel?>? = apiInterface.RouteStationCall(
+                from,
+                to,
+                date,
+                CommonUtil.tokan,
+                CommonUtil.quota,
+                CommonUtil.locale,
+                "4c266f54-988a-477d-bd6c-4981c124a80a",
+                CommonUtil.appVersion,
+                CommonUtil.EMAIL
+            )
 
-                if (response.isSuccessful) {
+            call?.enqueue(object : Callback<RouteStationModel?> {
 
-                    val searchStationModel: RouteStationModel? = response.body()
+                override fun onResponse(
+                    call: Call<RouteStationModel?>,
+                    response: Response<RouteStationModel?>
+                ) {
 
-                    if (searchStationModel != null) {
+                    binding.progressCircular.visibility = View.GONE
 
-                        val listItemList: List<TrainBtwnStnsListItem>? = searchStationModel.trainBtwnStnsList as List<TrainBtwnStnsListItem>?
+                    if (response.isSuccessful) {
 
-                        if (listItemList != null && listItemList.isNotEmpty()) {
+                        val searchStationModel: RouteStationModel? = response.body()
 
-                            val filteredList: List<TrainBtwnStnsListItem> = listItemList
+                        CommonUtil.errormessage = searchStationModel?.errorMessage.toString()
 
-                            for (i in filteredList.indices) {
+                        if (searchStationModel != null) {
 
-                                if (finalDay == "Fri") {
+                            val listItemList: List<TrainBtwnStnsListItem>? =
+                                searchStationModel.trainBtwnStnsList as List<TrainBtwnStnsListItem>?
 
-                                    if (listItemList[i].runningFri.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                            if (listItemList != null && listItemList.isNotEmpty()) {
+
+                                val filteredList: List<TrainBtwnStnsListItem> = listItemList
+
+                                for (i in filteredList.indices) {
+
+                                    if (finalDay == "Fri") {
+
+                                        if (listItemList[i].runningFri.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Mon") {
+                                        if (listItemList[i].runningMon.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Sat") {
+                                        if (listItemList[i].runningSat.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Sun") {
+                                        if (listItemList[i].runningSun.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Thu") {
+                                        if (listItemList[i].runningThu.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Tue") {
+                                        if (listItemList[i].runningTue.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                        }
+                                    } else if (finalDay == "Wed") {
+                                        if (listItemList[i].runningWed.equals("Y")) {
+                                            if (firstAc == null) {
+                                                filteredList.toMutableList().add(listItemList[i])
+                                            } else {
+                                                if (firstAc == "First A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
+                                                if (firstAc == "Second A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Third A/C") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Chair Car") {
+                                                    if (listItemList[i].avaiblitycache!!.cC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Chair") {
+                                                    if (listItemList[i].avaiblitycache!!.eC != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Executive Anubhuti") {
+                                                    if (listItemList[i].avaiblitycache!!.eA != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Second Seating") {
+                                                    if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
+                                                }
+                                                if (firstAc == "Sleeper") {
+                                                    if (listItemList[i].avaiblitycache!!.sL != null) {
+                                                        filteredList.toMutableList()
+                                                            .add(listItemList[i])
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                } else if (finalDay == "Mon") {
-                                    if (listItemList[i].runningMon.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (finalDay == "Sat") {
-                                    if (listItemList[i].runningSat.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (finalDay == "Sun") {
-                                    if (listItemList[i].runningSun.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (finalDay == "Thu") {
-                                    if (listItemList[i].runningThu.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (finalDay == "Tue") {
-                                    if (listItemList[i].runningTue.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
-                                } else if (finalDay == "Wed") {
-                                    if (listItemList[i].runningWed.equals("Y")) {
-                                        if (firstAc == null) {
-                                            filteredList.toMutableList().add(listItemList[i])
-                                        } else {
-                                            if (firstAc == "First A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Third A/C") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember3A != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Chair Car") {
-                                                if (listItemList[i].avaiblitycache!!.cC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Chair") {
-                                                if (listItemList[i].avaiblitycache!!.eC != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Executive Anubhuti") {
-                                                if (listItemList[i].avaiblitycache!!.eA != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Second Seating") {
-                                                if (listItemList[i].avaiblitycache!!.jsonMember2S != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                            if (firstAc == "Sleeper") {
-                                                if (listItemList[i].avaiblitycache!!.sL != null) {
-                                                    filteredList.toMutableList().add(listItemList[i])
-                                                }
-                                            }
-                                        }
-                                    }
+
                                 }
 
-                            }
 
+                                if (filteredList.isNotEmpty()) {
 
-                            Log.e("TAG", "onResponse: ${filteredList.size}")
+                                    binding.rv.layoutManager =
+                                        LinearLayoutManager(this@ScheduleActivity)
+                                    val adapter = RouteDetailsAdapter(
+                                        this@ScheduleActivity,
+                                        filteredList,
+                                        date
+                                    )
+                                    binding.rv.adapter = adapter
+                                } else {
 
-                            if (filteredList.isNotEmpty()) {
+                                    binding.progressCircular.visibility = View.GONE
+                                    Toast.makeText(
+                                        this@ScheduleActivity,
+                                        "" + CommonUtil.errormessage,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
 
-                                binding.rv.layoutManager = LinearLayoutManager(this@ScheduleActivity)
-                                val adapter = RouteDetailsAdapter(this@ScheduleActivity, filteredList, date)
-                                binding.rv.adapter = adapter
+                            } else {
+
+                                binding.progressCircular.visibility = View.GONE
+                                Toast.makeText(
+                                    this@ScheduleActivity,
+                                    "" + CommonUtil.errormessage,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
                             }
 
                         } else {
 
-
+                            binding.progressCircular.visibility = View.GONE
+                            Toast.makeText(
+                                this@ScheduleActivity,
+                                "" + CommonUtil.errormessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                     } else {
 
 
+                        when (response.code()) {
+
+                            404 -> {
+
+                                Toast.makeText(
+                                    this@ScheduleActivity,
+                                    "404 not found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            500 -> {
+
+                                Toast.makeText(
+                                    this@ScheduleActivity,
+                                    "500 server broken",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            else -> {
+
+                                Toast.makeText(
+                                    this@ScheduleActivity,
+                                    "unknown error",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        }
                     }
-
-                } else {
-
 
                 }
 
-            }
+                override fun onFailure(call: Call<RouteStationModel?>, t: Throwable) {
 
-            override fun onFailure(call: Call<RouteStationModel?>, t: Throwable) {
+                    binding.progressCircular.visibility = View.GONE
+
+                    Toast.makeText(
+                        this@ScheduleActivity,
+                        "Network failure, Please Try Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
 
 
-            }
+            })
 
 
-        })
+        } else {
+
+            binding.progressCircular.visibility = View.GONE
+            Toast.makeText(this@ScheduleActivity, R.string.please_internet, Toast.LENGTH_SHORT)
+                .show()
+        }
 
     }
 
@@ -495,4 +626,6 @@ class ScheduleActivity : AppCompatActivity() {
             .client(client)
             .build()
     }
+
+
 }

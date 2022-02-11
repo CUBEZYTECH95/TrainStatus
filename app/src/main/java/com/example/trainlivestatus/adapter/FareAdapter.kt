@@ -32,6 +32,7 @@ class FareAdapter(
                 }
             }
             if (avalClass[i] == "2A") {
+
                 if (avaiblitycache!!.jsonMember2A != null) {
 
                     if (avaiblitycache.jsonMember2A?.fare != null) {

@@ -17,7 +17,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
 class MainViewModel constructor(private val mainRespository: MainRespository) : ViewModel() {
 
@@ -26,12 +25,16 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var liveStatusModel = MutableLiveData<LiveStatusModel?>()
     var trainlist = MutableLiveData<InterstnModel>()
     var errorMessage = MutableLiveData<String>()
+    var calandermessage = MutableLiveData<String>()
+    var no_available_errormessage = MutableLiveData<String>()
+    var calanderLoadingProg = MutableLiveData<Boolean>()
     var showLoadingProg = MutableLiveData<Boolean>()
     var trainliveornot = MutableLiveData<Boolean>()
     var trainname = MutableLiveData<String>()
     var TopcalModelList: MutableLiveData<List<TrainsItem>> = MutableLiveData<List<TrainsItem>>()
     var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> =
         MutableLiveData<List<SeatAvailabilityModel>>()
+
 
     var objects: MutableLiveData<Any?> = MutableLiveData<Any?>()
 
@@ -44,6 +47,8 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var sun = MutableLiveData<Int>()
     var secpnd: String? = null
     var first: String? = null
+
+    var recyclerview_flag = MutableLiveData<Boolean>()
 
     companion object {
 
@@ -92,7 +97,9 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                         } else {
 
+
                             showLoadingProg.value = false
+                            no_available_errormessage.value = routedetails?.errorMessage.toString()
 
                         }
 
@@ -119,9 +126,8 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
         } else {
 
-
             showLoadingProg.value = false
-            errorMessage.setValue("Data not Available")
+            errorMessage.setValue("Check your Internet Connection")
         }
 
     }
@@ -143,18 +149,18 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                     if (response.isSuccessful) {
 
-                        if (response.body() != null) {
+                        if (response.body() != null && response.body()?.schedule != null) {
 
                             trainlist.postValue(response.body())
 
                         } else {
 
-                            errorMessage.value = "Something went Wrong"
+                            showLoadingProg.value = false
+                            errorMessage.value = "No trains route Available"
                         }
 
 
                     } else {
-
 
                         when (response.code()) {
 
@@ -169,14 +175,14 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 override fun onFailure(call: Call<InterstnModel?>, t: Throwable) {
 
                     showLoadingProg.value = false
-                    errorMessage.value = "Something went Wrong"
+                    errorMessage.value = "Network failure, Please Try Again"
                 }
             })
 
         } else {
 
             showLoadingProg.value = false
-            errorMessage.value = "Data not Available"
+            errorMessage.value = "Check your Internet Connection"
         }
     }
 
@@ -239,7 +245,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
         } else {
 
             showLoadingProg.value = false
-            errorMessage.value = "Data not Available"
+            errorMessage.value = "Check your Internet Connection"
 
         }
     }
@@ -252,8 +258,11 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
         email: String?,
         ptran: Boolean,
         local: String?,
-        showclass: Boolean) {
+        showclass: Boolean
+    ) {
         if (TrainPays.isNetConnectionAvailable()) {
+
+            recyclerview_flag.value=false
             showLoadingProg.value = true
 
             val call: Call<TopCalModel?>? = mainRespository.topcalanderstatus(
@@ -264,21 +273,21 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 email,
                 ptran,
                 local,
-                showclass
-            )
+                showclass)
 
             call?.enqueue(object : Callback<TopCalModel?> {
                 override fun onResponse(
                     call: Call<TopCalModel?>,
-                    response: Response<TopCalModel?>
-                ) {
+                    response: Response<TopCalModel?>) {
+
+                    recyclerview_flag.value=true
                     showLoadingProg.value = false
 
                     if (response.isSuccessful) {
 
                         val liveStatusResponse: TopCalModel? = response.body()
 
-                        if (liveStatusResponse?.trains != null) {
+                        if (liveStatusResponse?.trains != null && liveStatusResponse.trains.isNotEmpty()) {
 
                             for (i in liveStatusResponse.trains.indices) {
 
@@ -287,7 +296,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                                     trainname.postValue(liveStatusResponse.trains[i]?.trainNo.toString() + "-" + liveStatusResponse.trains[i]?.trainName)
                                 }*/
 
-                                if (i == 0) {
+                                    if (i == 0) {
 
                                     if (!liveStatusResponse.trains[i]?.daysOfRun?.mon!!) {
 
@@ -336,10 +345,20 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                         } else {
 
+                            /**
+                             * No trains available between the inputted stations
+                             */
+
+                            recyclerview_flag.value=false
+                            showLoadingProg.value = false
+                            errorMessage.value = "No trains available between the inputted stations"
 
                         }
 
                     } else {
+
+                        recyclerview_flag.value=false
+
                         when (response.code()) {
 
                             404 -> errorMessage.setValue("404 not found")
@@ -350,42 +369,29 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 }
 
                 override fun onFailure(call: Call<TopCalModel?>, t: Throwable) {
+
+                    recyclerview_flag.value=false
                     showLoadingProg.value = false
                     errorMessage.value = "Network failure, Please Try Again"
                 }
             })
+
         } else {
 
+            recyclerview_flag.value=false
             showLoadingProg.value = false
-            errorMessage.value = "Data not Available"
+            errorMessage.value = "Check your Internet Connection"
         }
     }
 
 
-    fun tarintimecalander(
-        trainNo: String?,
-        source: String?,
-        destination: String?,
-        doj: String?,
-        travelClasses: String?,
-        quota: String,
-        email: String?
-    ) {
-
+    fun tarintimecalander(trainNo: String?, source: String?, destination: String?, doj: String?, travelClasses: String?, quota: String, email: String?) {
 
         if (TrainPays.isNetConnectionAvailable()) {
 
-            showLoadingProg.value = true
+            calanderLoadingProg.value = true
 
-            val call: Call<List<SeatAvailabilityModel?>?> = mainRespository.avilabletrain(
-                trainNo,
-                source,
-                destination,
-                doj,
-                travelClasses,
-                quota,
-                email
-            )
+            val call: Call<List<SeatAvailabilityModel?>?> = mainRespository.avilabletrain(trainNo, source, destination, doj, travelClasses, quota, email)
 
             call.enqueue(object : Callback<List<SeatAvailabilityModel?>?> {
 
@@ -394,16 +400,13 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                     response: Response<List<SeatAvailabilityModel?>?>
                 ) {
 
-                    showLoadingProg.value = false
-
+                    calanderLoadingProg.value = false
 
                     if (response.isSuccessful) {
 
                         val liveStatusResponse: List<SeatAvailabilityModel?>? = response.body()
 
-
                         if (liveStatusResponse != null && liveStatusResponse.isNotEmpty()) {
-
 
                             monthlyAvaModel.postValue(liveStatusResponse as List<SeatAvailabilityModel>)
 
@@ -417,9 +420,9 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                         when (response.code()) {
 
-                            404 -> errorMessage.value = "404 not found"
-                            500 -> errorMessage.value = "500 server broken"
-                            else -> errorMessage.value = "unknown error"
+                            404 -> calandermessage.value = "404 not found"
+                            500 -> calandermessage.value = "500 server broken"
+                            else -> calandermessage.value = "unknown error"
                         }
                     }
 
@@ -427,23 +430,20 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                 override fun onFailure(call: Call<List<SeatAvailabilityModel?>?>, t: Throwable) {
 
-                    showLoadingProg.value = false
-                    Log.e("TAG", "onFailure: ${t.message}")
-                    /*errorMessage.value = "Network failure, Please Try Again"*/
-                }
+                    calanderLoadingProg.value = false
 
+                }
 
             })
 
         } else {
 
-            showLoadingProg.value = false
-            errorMessage.value = "Data not Available"
+            calanderLoadingProg.value = false
+            calandermessage.value = "Check your Internet Connection"
 
         }
 
     }
-
 
     fun laststioncall(NextHours: String?, code: String?, cityname: String?, jsonIn1: String?) {
 
@@ -477,9 +477,11 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                             if (jsonObject1 != null) {
 
-                                first = if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString
+                                first =
+                                    if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString
 
-                                secpnd = if (jsonObject1["second"].isJsonNull) null else jsonObject1["second"].asString
+                                secpnd =
+                                    if (jsonObject1["second"].isJsonNull) null else jsonObject1["second"].asString
 
                                 try {
 
@@ -489,22 +491,35 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                                         jsonObject2 = JSONObject(secpnd)
 
-                                        val jsonArray = jsonObject2.getJSONArray("liveStationModels")
+                                        val jsonArray =
+                                            jsonObject2.getJSONArray("liveStationModels")
 
                                         for (i in 0 until jsonArray.length()) {
 
-                                            TrainName = jsonArray.getJSONObject(i).getString("TrainName")
-                                            TrainNumber = jsonArray.getJSONObject(i).getString("TrainNumber")
-                                            ScheduleArr = jsonArray.getJSONObject(i).getString("ScheduleArr")
-                                            ExpectedArr = jsonArray.getJSONObject(i).getString("ExpectedArr")
-                                            ExpectedArrColor = jsonArray.getJSONObject(i).getString("ExpectedArrColor")
-                                            DelayArr = jsonArray.getJSONObject(i).getString("DelayArr")
-                                            DelayArrColor = jsonArray.getJSONObject(i).getString("DelayArrColor")
-                                            ScheduleDep = jsonArray.getJSONObject(i).getString("ScheduleDep")
-                                            ExpectedDep = jsonArray.getJSONObject(i).getString("ExpectedDep")
-                                            ExpectedDepColor = jsonArray.getJSONObject(i).getString("ExpectedDepColor")
-                                            DelayDep = jsonArray.getJSONObject(i).getString("DelayDep")
-                                            DelayDepColor = jsonArray.getJSONObject(i).getString("DelayDepColor")
+                                            TrainName =
+                                                jsonArray.getJSONObject(i).getString("TrainName")
+                                            TrainNumber =
+                                                jsonArray.getJSONObject(i).getString("TrainNumber")
+                                            ScheduleArr =
+                                                jsonArray.getJSONObject(i).getString("ScheduleArr")
+                                            ExpectedArr =
+                                                jsonArray.getJSONObject(i).getString("ExpectedArr")
+                                            ExpectedArrColor = jsonArray.getJSONObject(i)
+                                                .getString("ExpectedArrColor")
+                                            DelayArr =
+                                                jsonArray.getJSONObject(i).getString("DelayArr")
+                                            DelayArrColor = jsonArray.getJSONObject(i)
+                                                .getString("DelayArrColor")
+                                            ScheduleDep =
+                                                jsonArray.getJSONObject(i).getString("ScheduleDep")
+                                            ExpectedDep =
+                                                jsonArray.getJSONObject(i).getString("ExpectedDep")
+                                            ExpectedDepColor = jsonArray.getJSONObject(i)
+                                                .getString("ExpectedDepColor")
+                                            DelayDep =
+                                                jsonArray.getJSONObject(i).getString("DelayDep")
+                                            DelayDepColor = jsonArray.getJSONObject(i)
+                                                .getString("DelayDepColor")
                                             ExpPF = jsonArray.getJSONObject(i).getString("ExpPF")
 
                                             val model = LiveModel(
@@ -520,10 +535,11 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                                                 ExpectedDepColor,
                                                 DelayDep,
                                                 DelayDepColor,
-                                                ExpPF)
+                                                ExpPF
+                                            )
 
 
-                                            objects.value= model
+                                            objects.value = model
 
                                         }
 

@@ -4,12 +4,12 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.trainlivestatus.R
+import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.databinding.ActivityFairInquiryBinding
 import com.example.trainlivestatus.utils.SharedPref
 import com.example.trainlivestatus.utils.SharedPref.Companion.city_from_st
@@ -47,7 +47,6 @@ class FairInquiryActivity : AppCompatActivity() {
 
         clickevent()
 
-
     }
 
     private fun clickevent() {
@@ -62,90 +61,93 @@ class FairInquiryActivity : AppCompatActivity() {
         binding.tvSelectDate.isFocusableInTouchMode = false
 
         binding.tvSelectDate.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val day = calendar[Calendar.DAY_OF_MONTH]
-            val year = calendar[Calendar.YEAR]
-            val month = calendar[Calendar.MONTH]
-            datePickerDialog = DatePickerDialog(
 
-                this@FairInquiryActivity, R.style.DatePickerTheme,
 
-                { view, year, month, dayOfMonth ->
+            openpicker()
 
-                    date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
-                    binding.tvSelectDate.setText(date)
-                }, year, month, day
-            )
-            datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog!!.show()
-            datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
-                .setTextColor(resources.getColor(R.color.colorYellow))
-            datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-                .setTextColor(resources.getColor(R.color.colorYellow))
+        }
+
+        binding.ivOpenCal.setOnClickListener {
+
+            openpicker()
         }
 
         binding.tvGetStart.setOnClickListener {
 
-            val validations = Validation()
+            if (TrainPays.isNetConnectionAvailable()) {
 
-            if (!validations.isStartingP(binding.etfrom)) {
+                val validations = Validation()
 
-                citycode = binding.etfrom.text.toString().trim()
-                SharedPref.putString(facebook_url, citycode)
+                if (!validations.isStartingP(binding.etfrom)) {
 
-                if (!validations.isEndingP(binding.etto)) {
+                    citycode = binding.etfrom.text.toString().trim()
+                    SharedPref.putString(facebook_url, citycode)
 
-                    citycode1 = binding.etto.text.toString().trim()
-                    SharedPref.putString(day_count, citycode1)
+                    if (!validations.isEndingP(binding.etto)) {
 
-                    if (!validations.isEmpty(binding.tvSelectDate)) {
+                        citycode1 = binding.etto.text.toString().trim()
+                        SharedPref.putString(day_count, citycode1)
 
-                        date = binding.tvSelectDate.text.toString()
-                        SharedPref.putString(is_date, date)
+                        if (!validations.isEmpty(binding.tvSelectDate)) {
 
-                        if (!validations.isSameDestinations(binding.etfrom, binding.etto)) {
+                            date = binding.tvSelectDate.text.toString()
+                            SharedPref.putString(is_date, date)
 
-                            val intent = Intent(
-                                this@FairInquiryActivity,
-                                RouteDetailsActivity::class.java)
+                            if (!validations.isSameDestinations(binding.etfrom, binding.etto)) {
 
-                            intent.putExtra("citycode", citycode)
-                            intent.putExtra("citycode1", citycode1)
-                            intent.putExtra("cityname", cityname)
-                            intent.putExtra("cityname1", cityname1)
-                            intent.putExtra("date", date)
-                            startActivity(intent)
+                                val intent = Intent(
+                                    this@FairInquiryActivity,
+                                    RouteDetailsActivity::class.java
+                                )
 
+                                intent.putExtra("citycode", citycode)
+                                intent.putExtra("citycode1", citycode1)
+                                intent.putExtra("cityname", cityname)
+                                intent.putExtra("cityname1", cityname1)
+                                intent.putExtra("date", date)
+                                startActivity(intent)
+
+                            } else {
+
+                                Toast.makeText(
+                                    this@FairInquiryActivity,
+                                    getString(R.string.same_destinations),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         } else {
 
                             Toast.makeText(
                                 this@FairInquiryActivity,
-                                getString(R.string.same_destinations),
+                                getString(R.string.please_enter_date),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                     } else {
-
                         Toast.makeText(
                             this@FairInquiryActivity,
-                            getString(R.string.please_enter_date),
+                            getString(R.string.enter_destinations_station),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 } else {
                     Toast.makeText(
                         this@FairInquiryActivity,
-                        getString(R.string.enter_destinations_station),
+                        getString(R.string.please_enter_start_station),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
             } else {
+
                 Toast.makeText(
                     this@FairInquiryActivity,
-                    getString(R.string.please_enter_start_station),
+                    R.string.please_internet,
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
+
         }
 
 
@@ -159,7 +161,6 @@ class FairInquiryActivity : AppCompatActivity() {
             val intent = Intent(this@FairInquiryActivity, FindStationActivity::class.java)
             startActivityForResult(intent, 2)
         }
-
 
         binding.swip.setOnClickListener {
             val from = binding.etfrom.text.toString().trim()
@@ -215,5 +216,30 @@ class FairInquiryActivity : AppCompatActivity() {
         }
     }
 
+
+    fun openpicker() {
+
+        val calendar = Calendar.getInstance()
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+
+        datePickerDialog = DatePickerDialog(
+
+            this@FairInquiryActivity, R.style.DatePickerTheme,
+
+            { view, year, month, dayOfMonth ->
+
+                date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
+                binding.tvSelectDate.setText(date)
+            }, year, month, day
+        )
+        datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
+        datePickerDialog!!.show()
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.colorYellow))
+    }
 
 }

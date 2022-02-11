@@ -16,15 +16,11 @@ class TrainCoachRecoAdapter(val context: Context, private val img: ArrayList<Str
     var pxWidth = 0
     var layoutParams: LinearLayout.LayoutParams? = null
 
-
-
-
     init {
 
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
+            LinearLayout.LayoutParams.WRAP_CONTENT)
 
         val display = context.resources.displayMetrics
         pxWidth = display.widthPixels
@@ -60,9 +56,11 @@ class TrainCoachRecoAdapter(val context: Context, private val img: ArrayList<Str
                 img[position] == "L" -> {
                     ivTrain.setImageResource(R.drawable.ic_train_engine)
                 }
+
                 img[position] == "EOG" -> {
                     ivTrain.setImageResource(R.drawable.ic_train_genrater)
                 }
+
                 else -> {
                     ivTrain.setImageResource(R.drawable.ic_train_genrater)
                 }

@@ -5,14 +5,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.RouteDetailsAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
 import com.example.trainlivestatus.databinding.ActivityRouteDetailsBinding
 import com.example.trainlivestatus.repository.MainRespository
+import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.utils.ModelFactory
 import com.example.trainlivestatus.viewmodel.MainViewModel
 import okhttp3.OkHttpClient
@@ -60,7 +61,8 @@ class RouteDetailsActivity : AppCompatActivity() {
 
         }
 
-        mainViewModel?.errorMessage?.observe(this
+        mainViewModel?.errorMessage?.observe(
+            this
         ) { s ->
             Toast.makeText(
                 this@RouteDetailsActivity,
@@ -69,7 +71,8 @@ class RouteDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
-        mainViewModel?.showLoadingProg?.observe(this
+        mainViewModel?.showLoadingProg?.observe(
+            this
         ) { aBoolean ->
             if (aBoolean) {
 
@@ -79,6 +82,15 @@ class RouteDetailsActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.GONE
             }
         }
+
+        mainViewModel?.no_available_errormessage?.observe(this, Observer {
+
+            Toast.makeText(
+                this@RouteDetailsActivity,
+                it,
+                Toast.LENGTH_SHORT
+            ).show()
+        })
 
     }
 

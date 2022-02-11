@@ -16,15 +16,7 @@ import java.util.concurrent.TimeUnit
 
 open class BaseClass : AppCompatActivity() {
 
-    var Image_array = intArrayOf(
-        R.drawable.ic_fare_in,
-        R.drawable.ic_search_train,
-        R.drawable.ic_train_schedule,
-        R.drawable.ic_live_train,
-        R.drawable.ic_seat_availa,
-        R.drawable.ic_live_station
-    )
-    var list = ArrayList<CategoryModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

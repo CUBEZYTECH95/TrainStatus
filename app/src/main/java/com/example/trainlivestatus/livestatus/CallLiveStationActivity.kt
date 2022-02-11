@@ -24,7 +24,6 @@ import retrofit2.Response
 
 class CallLiveStationActivity : BaseClass() {
 
-
     lateinit var binding: ActivityCallLiveStationBinding
     val handler = Handler(Looper.getMainLooper())
     var mes: String? = null
@@ -47,7 +46,6 @@ class CallLiveStationActivity : BaseClass() {
     var DelayDep: String? = null
     var DelayDepColor: String? = null
     var ExpPF: String? = null
-    var PDF_REQ_CODE = 1
     var uri: String? = null
 
 
@@ -55,6 +53,8 @@ class CallLiveStationActivity : BaseClass() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_call_live_station)
+
+        binding.progressCircular.visibility = View.VISIBLE
 
         binding.rvToolbar.setOnClickListener {
 
@@ -84,11 +84,9 @@ class CallLiveStationActivity : BaseClass() {
 
         if (TrainPays.isNetConnectionAvailable()) {
 
-            binding.progressCircular.visibility = View.VISIBLE
+           /* binding.progressCircular.visibility = View.VISIBLE*/
 
-            val apiInterface: ApiInterface =
-                getclient(CommonUtil.API_URL1).create(ApiInterface::class.java)
-
+            val apiInterface: ApiInterface = getclient(CommonUtil.API_URL1).create(ApiInterface::class.java)
             val jsonob = JsonObject()
             jsonob.addProperty("NextHours", NextHours)
             jsonob.addProperty("StationFromCode", code)
@@ -101,11 +99,7 @@ class CallLiveStationActivity : BaseClass() {
 
                 override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
 
-                    handler.postDelayed({ //Do something after 5000ms
-
-                        binding.progressCircular.visibility = View.GONE
-
-                    }, 2000)
+                    /*binding.progressCircular.visibility = View.GONE*/
 
                     if (response.isSuccessful) {
 
@@ -121,7 +115,7 @@ class CallLiveStationActivity : BaseClass() {
 
                             handler.postDelayed({ //Do something after 5000ms
 
-                                binding.progressCircular.visibility = View.GONE
+                                /*binding.progressCircular.visibility = View.GONE*/
 
                             }, 2000)
 
@@ -133,7 +127,8 @@ class CallLiveStationActivity : BaseClass() {
 
                             404 ->  handler.postDelayed({ //Do something after 5000ms
 
-                                binding.progressCircular.visibility = View.GONE
+                                /*binding.progressCircular.visibility = View.GONE*/
+
                                 Toast.makeText(
                                     this@CallLiveStationActivity,
                                     "404 not found",
@@ -146,7 +141,7 @@ class CallLiveStationActivity : BaseClass() {
 
                             500 ->  handler.postDelayed({ //Do something after 5000ms
 
-                                binding.progressCircular.visibility = View.GONE
+                                /*binding.progressCircular.visibility = View.GONE*/
 
                                 Toast.makeText(
                                     this@CallLiveStationActivity,
@@ -159,7 +154,7 @@ class CallLiveStationActivity : BaseClass() {
 
                             else -> handler.postDelayed({ //Do something after 5000ms
 
-                                binding.progressCircular.visibility = View.GONE
+                                /*binding.progressCircular.visibility = View.GONE*/
 
                                 Toast.makeText(
                                     this@CallLiveStationActivity,
@@ -178,7 +173,8 @@ class CallLiveStationActivity : BaseClass() {
 
                     handler.postDelayed({ //Do something after 5000ms
 
-                        binding.progressCircular.visibility = View.GONE
+                        /*binding.progressCircular.visibility = View.GONE*/
+
                         Toast.makeText(
                             this@CallLiveStationActivity,
                             "Network failure, Please Try Again",
@@ -196,10 +192,11 @@ class CallLiveStationActivity : BaseClass() {
 
             handler.postDelayed({ //Do something after 5000ms
 
-                binding.progressCircular.visibility = View.GONE
+               /* binding.progressCircular.visibility = View.GONE*/
+
                 Toast.makeText(
                     this@CallLiveStationActivity,
-                    R.string.No_Train_Available,
+                    R.string.please_internet,
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -214,10 +211,9 @@ class CallLiveStationActivity : BaseClass() {
 
         if (TrainPays.isNetConnectionAvailable()) {
 
-            binding.progressCircular.visibility = View.VISIBLE
+            /*binding.progressCircular.visibility = View.VISIBLE*/
 
-            val apiInterface: ApiInterface =
-                getclient(CommonUtil.API_URL2).create(ApiInterface::class.java)
+            val apiInterface: ApiInterface = getclient(CommonUtil.API_URL2).create(ApiInterface::class.java)
 
             val jsonob = JsonObject()
             jsonob.addProperty("jsonIn", jsonin)
@@ -227,11 +223,7 @@ class CallLiveStationActivity : BaseClass() {
 
                 override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
 
-                    handler.postDelayed({ //Do something after 5000ms
-
-                        binding.progressCircular.visibility = View.GONE
-
-                    }, 2000)
+                    /*binding.progressCircular.visibility = View.GONE*/
 
                     if (response.isSuccessful) {
 
@@ -241,13 +233,14 @@ class CallLiveStationActivity : BaseClass() {
 
                             val jsonIn1 = jsonObject["jsonIn"].asString
                             getlivestation2(jsonIn1)
+
                         } else {
 
-                            handler.postDelayed({ //Do something after 5000ms
+                           /* handler.postDelayed({ //Do something after 5000ms
 
                                 binding.progressCircular.visibility = View.GONE
 
-                            }, 2000)
+                            }, 2000)*/
                         }
                     } else {
 
@@ -303,7 +296,7 @@ class CallLiveStationActivity : BaseClass() {
 
                     handler.postDelayed({ //Do something after 5000ms
 
-                        binding.progressCircular.visibility = View.GONE
+                        /*binding.progressCircular.visibility = View.GONE*/
                         Toast.makeText(
                             this@CallLiveStationActivity,
                             "Network failure, Please Try Again",
@@ -318,11 +311,11 @@ class CallLiveStationActivity : BaseClass() {
 
             handler.postDelayed({ //Do something after 5000ms
 
-                binding.progressCircular.visibility = View.GONE
+                /*binding.progressCircular.visibility = View.GONE*/
 
                 Toast.makeText(
                     this@CallLiveStationActivity,
-                    R.string.No_Train_Available,
+                    R.string.please_internet,
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -369,11 +362,9 @@ class CallLiveStationActivity : BaseClass() {
 
                             if (jsonObject1 != null) {
 
-                                first =
-                                    if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString
+                                first = if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString
 
-                                secpnd =
-                                    if (jsonObject1["second"].isJsonNull) null else jsonObject1["second"].asString
+                                secpnd = if (jsonObject1["second"].isJsonNull) null else jsonObject1["second"].asString
 
                                 try {
 
@@ -563,7 +554,7 @@ class CallLiveStationActivity : BaseClass() {
 
             Toast.makeText(
                 this@CallLiveStationActivity,
-                R.string.No_Train_Available,
+                R.string.please_internet,
                 Toast.LENGTH_SHORT
             ).show()
 

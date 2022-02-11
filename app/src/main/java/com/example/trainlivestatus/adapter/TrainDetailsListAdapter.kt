@@ -11,7 +11,7 @@ import com.example.trainlivestatus.databinding.ScheduleDetailsItemBinding
 import com.example.trainlivestatus.model.ScheduleItem
 
 
-class TrainDetailsListAdapter(val context: Context, private val schedule: List<ScheduleItem>) :
+class TrainDetailsListAdapter(val context: Context, private val schedule: List<ScheduleItem?>) :
     RecyclerView.Adapter<TrainDetailsListAdapter.TrainDetailsListViewHolder>() {
 
     class TrainDetailsListViewHolder(itemview: ScheduleDetailsItemBinding) :
@@ -25,7 +25,6 @@ class TrainDetailsListAdapter(val context: Context, private val schedule: List<S
         parent: ViewGroup,
         viewType: Int
     ): TrainDetailsListViewHolder {
-
 
         return TrainDetailsListViewHolder(
             DataBindingUtil.inflate(
@@ -45,31 +44,31 @@ class TrainDetailsListAdapter(val context: Context, private val schedule: List<S
         holder.binding.apply {
 
 
-            tvStationName.text = schedule[position].stationName
+            tvStationName.text = schedule[position]?.stationName
 
-            if (schedule[position].arrivalTime.equals("")) tvArrivalTime.text =
-                "Source" else tvArrivalTime.text = schedule[position].arrivalTime
+            if (schedule[position]?.arrivalTime.equals("")) tvArrivalTime.text =
+                "Source" else tvArrivalTime.text = schedule[position]?.arrivalTime
 
-            if (schedule[position].departureTime.equals("")) tvDepTime.text =
-                "Source" else tvDepTime.text = schedule[position].departureTime
+            if (schedule[position]?.departureTime.equals("")) tvDepTime.text =
+                "Source" else tvDepTime.text = schedule[position]?.departureTime
 
-            tvDistance.text = schedule[position].distance
+            tvDistance.text = schedule[position]?.distance
 
-            if (schedule[position].expectedPlatformNo != null) {
+            if (schedule[position]?.expectedPlatformNo != null) {
 
-                tvPlatformNo.text = schedule[position].expectedPlatformNo.toString()
+                tvPlatformNo.text = schedule[position]?.expectedPlatformNo.toString()
 
             }
 
-            if (schedule[position].arrivalDelay != null) {
+            if (schedule[position]?.arrivalDelay != null) {
 
-                tvDelay.text = schedule[position].arrivalDelay
+                tvDelay.text = schedule[position]?.arrivalDelay
             } else {
                 tvDelay.text = "-"
             }
 
 
-            tvDay.text = schedule[position].day.toString()
+            tvDay.text = schedule[position]?.day.toString()
 
         }
 

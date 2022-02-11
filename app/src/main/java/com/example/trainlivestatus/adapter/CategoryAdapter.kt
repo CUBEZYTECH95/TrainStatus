@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.clicklistner.ItemClick
 import com.example.trainlivestatus.livestatus.*
 import com.example.trainlivestatus.model.CategoryModel
 
-class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) :
-    RecyclerView.Adapter<CategoryAdapter.Holder>() {
+class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
@@ -23,7 +25,21 @@ class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) :
         return Holder(view)
     }
 
-    override fun onBindViewHolder(holder: Holder, @SuppressLint("RecyclerView") position: Int) {
+    override fun getItemCount(): Int {
+
+        return 1
+    }
+
+    class Holder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+
+        val iv_rc: RecyclerView = itemView.findViewById(R.id.iv_rc)
+        val setting: ImageButton = itemView.findViewById(R.id.setting)
+
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+        val holder = holder as Holder
 
         holder.iv_rc.layoutManager = GridLayoutManager(context, 2)
 
@@ -61,7 +77,6 @@ class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) :
                     context.startActivity(Intent(context, LiveStationActivity::class.java))
                 }
 
-
             }
         })
 
@@ -69,18 +84,6 @@ class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) :
 
             context.startActivity(Intent(context, SettingsActivity::class.java))
         }
-
     }
 
-    override fun getItemCount(): Int {
-
-        return 1
-    }
-
-    class Holder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-
-        val iv_rc: RecyclerView = itemView.findViewById(R.id.iv_rc)
-        val setting: ImageButton = itemView.findViewById(R.id.setting)
-
-    }
 }

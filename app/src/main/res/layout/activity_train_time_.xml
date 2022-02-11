@@ -18,12 +18,17 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <RelativeLayout
+            android:id="@+id/rv_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_below="@id/rv_toolbar">
 
         <TextView
             android:id="@+id/tvtrainnum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rv_toolbar"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="9dp"
@@ -32,7 +37,7 @@
             android:fontFamily="@font/poppins_medium"
             android:text="09029 - LOK SHAKTI EXP"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/_10sdp" />
 
         <RelativeLayout
             android:id="@+id/rv"
@@ -51,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Runs on :"
+                android:textSize="@dimen/_10sdp"
                 android:textColor="#22242B" />
 
 
@@ -128,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Trains"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -161,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Quota"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -286,6 +292,9 @@
             </HorizontalScrollView>
 
         </LinearLayout>
+
+
+        </RelativeLayout>
 
         <ProgressBar
             android:id="@+id/progress_circular"
