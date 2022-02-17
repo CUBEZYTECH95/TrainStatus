@@ -43,7 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/white_round_bg"
+                android:clickable="false"
                 android:completionThreshold="1"
+                android:cursorVisible="false"
                 android:drawablePadding="@dimen/_12sdp"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/search_by_train_no_or_name"
@@ -53,6 +55,9 @@
                 android:singleLine="true"
                 android:textColorHint="#868383"
                 android:textSize="@dimen/_12sdp" />
+
+
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +153,7 @@
                             android:focusable="true"
                             android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
-                            android:hint="Bandung Station"
+                            android:hint="Where from?"
                             android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
@@ -195,14 +200,14 @@
                             android:layout_below="@id/tv_to"
                             android:layout_alignStart="@id/tv_to"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_toStartOf="@id/swip"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
                             android:focusable="true"
-                            android:layout_toStartOf="@id/swip"
                             android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
-                            android:hint="Bandung Station"
+                            android:hint="Where to?"
                             android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
@@ -247,11 +252,11 @@
                             android:layout_below="@id/tv_date"
                             android:layout_alignStart="@id/tv_date"
                             android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_toStartOf="@id/iv_open_cal"
                             android:background="@android:color/transparent"
                             android:clickable="false"
                             android:cursorVisible="false"
                             android:focusable="true"
-                            android:layout_toStartOf="@id/iv_open_cal"
                             android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
                             android:hint="4-8-2021"
@@ -297,6 +302,17 @@
 
 
         </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:background="@color/white"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            tools:listitem="@layout/train_autocomp_item"
+            android:layout_below="@id/textInputLayout" />
 
     </RelativeLayout>
 

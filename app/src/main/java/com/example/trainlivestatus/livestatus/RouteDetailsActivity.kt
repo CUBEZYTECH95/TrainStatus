@@ -44,13 +44,7 @@ class RouteDetailsActivity : AppCompatActivity() {
         val to = intent.getStringExtra("citycode1")
         val date = intent.getStringExtra("date")
 
-
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ModelFactory(MainRespository(apiInterface))
-            )[MainViewModel::class.java]
-
+        mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
 
         mainViewModel?.safeBreakingNewsCall(from, to, date)
 
@@ -61,9 +55,7 @@ class RouteDetailsActivity : AppCompatActivity() {
 
         }
 
-        mainViewModel?.errorMessage?.observe(
-            this
-        ) { s ->
+        mainViewModel?.errorMessage?.observe(this) { s ->
             Toast.makeText(
                 this@RouteDetailsActivity,
                 s,
@@ -71,9 +63,7 @@ class RouteDetailsActivity : AppCompatActivity() {
             ).show()
         }
 
-        mainViewModel?.showLoadingProg?.observe(
-            this
-        ) { aBoolean ->
+        mainViewModel?.showLoadingProg?.observe(this) { aBoolean ->
             if (aBoolean) {
 
                 binding.progressCircular.visibility = View.VISIBLE
@@ -93,7 +83,6 @@ class RouteDetailsActivity : AppCompatActivity() {
         })
 
     }
-
 
     private fun getClient(): Retrofit {
 

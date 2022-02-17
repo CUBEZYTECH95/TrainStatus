@@ -37,7 +37,6 @@ class FairInquiryActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fair_inquiry)
 
-
         binding.etfrom.setText(SharedPref.getString(facebook_url))
         binding.etto.setText(SharedPref.getString(day_count))
         cityname = SharedPref.getString(city_from_st)
@@ -150,7 +149,6 @@ class FairInquiryActivity : AppCompatActivity() {
 
         }
 
-
         binding.etfrom.setOnClickListener {
 
             val intent = Intent(this@FairInquiryActivity, FindStationActivity::class.java)
@@ -216,7 +214,6 @@ class FairInquiryActivity : AppCompatActivity() {
         }
     }
 
-
     fun openpicker() {
 
         val calendar = Calendar.getInstance()
@@ -236,10 +233,8 @@ class FairInquiryActivity : AppCompatActivity() {
         )
         datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
         datePickerDialog!!.show()
-        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE)
-            .setTextColor(resources.getColor(R.color.colorYellow))
-        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-            .setTextColor(resources.getColor(R.color.colorYellow))
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.colorYellow))
+        datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorYellow))
     }
 
 }

@@ -29,6 +29,7 @@
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_centerInParent="true"
+            android:indeterminateTint="@color/colorYellow"
             android:visibility="gone" />
 
 

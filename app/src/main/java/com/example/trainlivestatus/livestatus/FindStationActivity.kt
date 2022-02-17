@@ -16,7 +16,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.FindStationAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
@@ -24,6 +23,7 @@ import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.databinding.ActivityFindStationBinding
 import com.example.trainlivestatus.livestatus.FindStationActivity.Companion.BASE
 import com.example.trainlivestatus.model.FindStationModel
+import com.example.trainlivestatus.utils.CommonUtil
 import com.google.gson.JsonArray
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -96,7 +96,8 @@ class FindStationActivity : AppCompatActivity() {
 
                             arraylist.add(stationModel)
 
-                            val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(applicationContext)
+                            val mLayoutManager: RecyclerView.LayoutManager =
+                                LinearLayoutManager(applicationContext)
                             adapter = FindStationAdapter(this@FindStationActivity, arraylist)
                             binding.rv.layoutManager = mLayoutManager
                             binding.rv.adapter = adapter
@@ -120,7 +121,6 @@ class FindStationActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<JsonArray?>, t: Throwable) {
 
 
-
                 }
             })
 
@@ -128,7 +128,11 @@ class FindStationActivity : AppCompatActivity() {
 
             handler.postDelayed({ //Do something after 5000ms
                 binding.progressCircular.visibility = View.GONE
-                Toast.makeText(this@FindStationActivity, R.string.please_internet, Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this@FindStationActivity,
+                    R.string.please_internet,
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }, 2000)
         }
@@ -156,9 +160,13 @@ class FindStationActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(query: String): Boolean {
                 // filter recycler view when text is changed
-                if (query.length > 1) {
+
+                if (query.isNotEmpty()) {
+
                     adapter!!.filter.filter(query)
                 }
+
+
                 return false
             }
         })

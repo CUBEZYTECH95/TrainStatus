@@ -22,10 +22,8 @@ class TrainPays : Application() {
 
     companion object {
 
-        val TAG = TrainPays::class.java.simpleName
         private var mInstance: TrainPays? = null
         private const val BASE_URL = "https://api.confirmtkt.com/"
-
 
         fun getContext(): Context? {
             return mInstance

@@ -27,8 +27,6 @@ class SearchTrainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_train)
 
-
-
         binding.rvToolbar.setNavigationOnClickListener {
 
             onBackPressed()

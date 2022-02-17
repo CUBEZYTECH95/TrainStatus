@@ -109,6 +109,7 @@ class CallLiveStationActivity : BaseClass() {
 
                             val jsonObject1 = jsonObject.getAsJsonObject("parameters")
                             val jsonin = jsonObject1["jsonIn"].asString
+
                             getlivestation1(jsonin)
 
                         } else {
@@ -474,6 +475,7 @@ class CallLiveStationActivity : BaseClass() {
                             handler.postDelayed({ //Do something after 5000ms
 
                                 binding.progressCircular.visibility = View.GONE
+
                                 Toast.makeText(
                                     this@CallLiveStationActivity,
                                     "Data not Available",
@@ -539,6 +541,7 @@ class CallLiveStationActivity : BaseClass() {
                     handler.postDelayed({ //Do something after 5000ms
 
                         binding.progressCircular.visibility = View.GONE
+
                         Toast.makeText(
                             this@CallLiveStationActivity,
                             "Network failure, Please Try Again",

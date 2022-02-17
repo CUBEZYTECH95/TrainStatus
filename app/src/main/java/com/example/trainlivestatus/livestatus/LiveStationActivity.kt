@@ -93,7 +93,6 @@ class LiveStationActivity : AppCompatActivity() {
                             }
 
                             val intent = Intent(this@LiveStationActivity, CallLiveStationActivity::class.java)
-
                             intent.putExtra("citycode", citycode)
                             intent.putExtra("citycode1", citycode1)
                             intent.putExtra("cityname", cityname)

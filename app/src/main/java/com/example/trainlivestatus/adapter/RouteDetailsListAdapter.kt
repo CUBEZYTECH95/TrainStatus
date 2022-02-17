@@ -2,6 +2,7 @@ package com.example.trainlivestatus.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,6 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.databinding.RouteDetailsListItemBinding
+import com.example.trainlivestatus.livestatus.IntermediatestnActivity
+import com.example.trainlivestatus.livestatus.LiveTrainActivity
+import com.example.trainlivestatus.livestatus.TrainTimeActivity
 import com.example.trainlivestatus.model.TrainBtwnStnsListItem
 
 class RouteDetailsListAdapter(
@@ -24,7 +28,8 @@ class RouteDetailsListAdapter(
         var avalClass = ArrayList<String>()
     }
 
-    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) : RecyclerView.ViewHolder(itemView.root) {
+    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) :
+        RecyclerView.ViewHolder(itemView.root) {
 
         val binding: RouteDetailsListItemBinding = itemView
 
@@ -105,55 +110,64 @@ class RouteDetailsListAdapter(
 
             if (avalClass[i] == "1A") {
 
-                holder.binding.ch1a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.ch1a.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch1a.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "2A") {
 
-                holder.binding.ch2a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.ch2a.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch2a.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "3A") {
 
-                holder.binding.ch3a.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.ch3a.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch3a.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "CC") {
 
-                holder.binding.chCc.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.chCc.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chCc.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "EA") {
 
-                holder.binding.chEa.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.chEa.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chEa.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "EC") {
 
-                holder.binding.chEc.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.chEc.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chEc.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "2S") {
 
-                holder.binding.ch2s.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.ch2s.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.ch2s.setTextColor(context.resources.getColor(R.color.white))
             }
 
             if (avalClass[i] == "SL") {
 
-                holder.binding.chSl.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                holder.binding.chSl.background =
+                    ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                 holder.binding.chSl.setTextColor(context.resources.getColor(R.color.white))
             }
         }
 
         holder.binding.farerv.layoutManager = GridLayoutManager(context, 2)
-        holder.binding.farerv.adapter = FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
+        holder.binding.farerv.adapter =
+            FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
 
         holder.binding.tvsource.text = listItem.fromStnCode
         holder.binding.tvdestinations.text = listItem.toStnCode
@@ -170,6 +184,43 @@ class RouteDetailsListAdapter(
         val totalMinute = hrs * 60 + minute
         val i = listItem.distance!! * 60 / totalMinute.toFloat()
         holder.binding.tvSpeed.text = String.format("%.2f", i) + " Km/hr"
+
+        holder.binding.btnlive.setOnClickListener {
+
+            val intent = Intent(context, LiveTrainActivity::class.java)
+            intent.putExtra("trainNo", listItem.trainNumber)
+            intent.putExtra("trainName", listItem.trainName)
+            context.startActivity(intent)
+
+        }
+
+
+        holder.binding.btnSeatAvab.setOnClickListener {
+
+            val intent = Intent(context, TrainTimeActivity::class.java)
+            intent.putExtra("type", 1)
+            intent.putExtra("trainNo", listItem.trainNumber)
+            intent.putExtra("from", listItem.fromStnCode)
+            intent.putExtra("to", listItem.toStnCode)
+            intent.putExtra("date", date)
+            intent.putExtra("trainName", listItem.trainName)
+            intent.putExtra("mon", listItem.runningMon)
+            intent.putExtra("tue", listItem.runningTue)
+            intent.putExtra("wed", listItem.runningWed)
+            intent.putExtra("thu", listItem.runningThu)
+            intent.putExtra("fri", listItem.runningFri)
+            intent.putExtra("sat", listItem.runningSat)
+            intent.putExtra("sun", listItem.runningSun)
+            context.startActivity(intent)
+        }
+
+        holder.binding.btnRouteSchedule.setOnClickListener {
+            val intent = Intent(context, IntermediatestnActivity::class.java)
+            intent.putExtra("trainNo", listItem.trainNumber)
+            context.startActivity(intent)
+        }
+
+
     }
 
     override fun getItemCount(): Int {

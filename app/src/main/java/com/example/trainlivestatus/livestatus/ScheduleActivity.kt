@@ -68,6 +68,7 @@ class ScheduleActivity : AppCompatActivity() {
 
         val format2: DateFormat = SimpleDateFormat("EE")
         var finalDay: String? = null
+
         if (dt1 != null) {
             finalDay = format2.format(dt1)
         }
@@ -85,18 +86,7 @@ class ScheduleActivity : AppCompatActivity() {
 
             val apiInterface: ApiInterface = getClient().create(ApiInterface::class.java)
 
-            val call: Call<RouteStationModel?>? = apiInterface.RouteStationCall(
-                from,
-                to,
-                date,
-                CommonUtil.tokan,
-                CommonUtil.quota,
-                CommonUtil.locale,
-                "4c266f54-988a-477d-bd6c-4981c124a80a",
-                CommonUtil.appVersion,
-                CommonUtil.EMAIL
-            )
-
+            val call: Call<RouteStationModel?>? = apiInterface.RouteStationCall(from, to, date, CommonUtil.tokan, CommonUtil.quota, CommonUtil.locale, "4c266f54-988a-477d-bd6c-4981c124a80a", CommonUtil.appVersion, CommonUtil.EMAIL)
             call?.enqueue(object : Callback<RouteStationModel?> {
 
                 override fun onResponse(
@@ -609,8 +599,7 @@ class ScheduleActivity : AppCompatActivity() {
         } else {
 
             binding.progressCircular.visibility = View.GONE
-            Toast.makeText(this@ScheduleActivity, R.string.please_internet, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this@ScheduleActivity, R.string.please_internet, Toast.LENGTH_SHORT).show()
         }
 
     }

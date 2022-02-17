@@ -17,6 +17,7 @@ class CommonUtil {
         const val TYPE = "type"
         const val CLICK = "Click"
         const val BASE_URL = "http://www.hgapis.com/railapi/v1/"
+        const val FIND_TRAIN_NUMBER="https://www.ixigo.com/"
         const val BASE_URL_FARE = "https://securedapi.confirmtkt.com"
         const val EMAIL = "4c266f54-988a-477d-bd6c-4981c124a80a"
         const val api_key = "191c93ed6e28945e7267e84db1031314"
@@ -37,7 +38,9 @@ class CommonUtil {
 
 
         fun getTrainList(context: Context): String? {
+
             val json: String?
+
             try {
                 val `is` = context.assets.open("trains.json")
                 var size = 0
@@ -50,7 +53,9 @@ class CommonUtil {
                 e.printStackTrace()
                 return null
             }
+
             return json
+
         }
     }
 

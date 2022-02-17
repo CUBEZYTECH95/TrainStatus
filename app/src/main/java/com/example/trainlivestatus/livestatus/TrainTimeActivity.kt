@@ -31,7 +31,6 @@ class TrainTimeActivity : AppCompatActivity() {
     lateinit var binding: ActivityTrainTimeBinding
     var qautaBinding: ItemQautaBinding? = null
     lateinit var mainViewModel: MainViewModel
-
     var names: ArrayList<SpinnerModel> = ArrayList()
     var datelist: ArrayList<Date> = ArrayList()
 
@@ -45,6 +44,7 @@ class TrainTimeActivity : AppCompatActivity() {
         var date: String? = null
         var to: String? = null
         var from: String? = null
+
         val apiInterface: ApiInterface = TrainPays.getClient().create(ApiInterface::class.java)
     }
 
@@ -55,22 +55,8 @@ class TrainTimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_train_time_)
+
         qautaBinding = binding.tvDay
-
-        val intent = intent
-
-        if (intent != null) {
-
-            date = intent.getStringExtra("date")
-            to = intent.getStringExtra("citycode1")
-            from = intent.getStringExtra("citycode")
-            binding.tvfrom.text = from
-            binding.tvto.text = to
-
-            /*Log.e("date", "onCreate: $date")
-            Log.e("to", "onCreate: $to")
-            Log.e("from", "onCreate: $from")*/
-        }
 
         binding.rvToolbar.setNavigationOnClickListener {
 
@@ -87,6 +73,26 @@ class TrainTimeActivity : AppCompatActivity() {
             true
         }
 
+        val intent = intent
+
+        if (intent != null) {
+
+            date = intent.getStringExtra("date")
+            to = intent.getStringExtra("citycode1")
+            from = intent.getStringExtra("citycode")
+            binding.tvfrom.text = from
+            binding.tvto.text = to
+
+            topitemcall()
+            TrainquotaList()
+
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun topitemcall() {
+
         mainViewModel = ViewModelProvider(
             this,
             ModelFactory(MainRespository(apiInterface))
@@ -100,8 +106,7 @@ class TrainTimeActivity : AppCompatActivity() {
             "4c266f54-988a-477d-bd6c-4981c124a80a",
             true,
             "en",
-            true
-        )
+            true)
 
         mainViewModel.TopcalModelList.observe(this) {
 
@@ -128,17 +133,17 @@ class TrainTimeActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
-        mainViewModel.recyclerview_flag.observe(this, androidx.lifecycle.Observer {
+        mainViewModel.recyclerview_flag.observe(this) {
 
             if (it) {
 
-                binding.rvLay.visibility=View.VISIBLE
+                binding.rvLay.visibility = View.VISIBLE
 
             } else {
 
-                binding.rvLay.visibility=View.GONE
+                binding.rvLay.visibility = View.GONE
             }
-        })
+        }
 
         mainViewModel.showLoadingProg.observe(this) {
 
@@ -151,10 +156,6 @@ class TrainTimeActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.GONE
             }
         }
-
-        /* mainViewModel.trainname.observe(this,
-
-             { s -> binding.tvtrainnum.text = s })*/
 
         mainViewModel.mon.observe(
             this
@@ -179,30 +180,24 @@ class TrainTimeActivity : AppCompatActivity() {
         mainViewModel.wed.observe(
             this
         ) { integer ->
-            binding.tvDay.w.setTextColor(
-                applicationContext.resources.getColor(
-                    integer!!
-                )
-            )
+
+            binding.tvDay.w.setTextColor(applicationContext.resources.getColor(integer!!))
         }
 
         mainViewModel.th.observe(
             this
         ) { integer ->
-            binding.tvDay.th.setTextColor(
-                applicationContext.resources.getColor(
-                    integer!!
-                )
-            )
+
+            binding.tvDay.th.setTextColor(applicationContext.resources.getColor(integer!!))
         }
 
         mainViewModel.fri.observe(
             this
         ) { integer ->
+
             binding.tvDay.f.setTextColor(
                 applicationContext.resources.getColor(
-                    integer!!
-                )
+                    integer!!)
             )
         }
 
@@ -216,19 +211,13 @@ class TrainTimeActivity : AppCompatActivity() {
             )
         }
 
-        mainViewModel.sun.observe(
-            this
-        ) { integer ->
+        mainViewModel.sun.observe(this) { integer ->
             binding.tvDay.su.setTextColor(
                 applicationContext.resources.getColor(
                     integer!!
                 )
             )
         }
-
-
-
-        TrainquotaList()
     }
 
     private fun spinner(name: ArrayList<SpinnerModel>) {
@@ -295,76 +284,6 @@ class TrainTimeActivity : AppCompatActivity() {
 
     private fun getTrainCalender(speakfromlangcode: String) {
 
-        /* if (TrainPays.isNetConnectionAvailable()) {
-
-
-             val call: Call<List<SeatAvailabilityModel?>?> = apiInterface.getTrainCalender(
-                 trainnum,
-                 "ST",
-                 "ADI",
-                 "29-1-2022",
-                 "1A,2A,3A,SL",
-                 speakfromlangcode,
-                 CommonUtil.api_key
-             )
-
-             call.enqueue(object : Callback<List<SeatAvailabilityModel?>?> {
-
-                 override fun onResponse(
-                     call: Call<List<SeatAvailabilityModel?>?>,
-                     response: Response<List<SeatAvailabilityModel?>?>
-                 ) {
-
-                     if (response.isSuccessful) {
-
-                         val liveStatusResponse: List<SeatAvailabilityModel?>? = response.body()
-
-                         if (liveStatusResponse != null && liveStatusResponse.isNotEmpty()) {
-
-                             for (i in liveStatusResponse.indices) {
-
-                                 val calendar: Calendar = GregorianCalendar()
-                                 calendar.add(Calendar.DATE, i)
-                                 datelist.add(calendar.time)
-                             }
-
-                             val adapter = TrainTimeAdapter(
-                                 this@TrainTimeActivity,
-                                 liveStatusResponse as List<SeatAvailabilityModel>, datelist
-                             )
-                             binding.rvtimetable.layoutManager =
-                                 LinearLayoutManager(this@TrainTimeActivity)
-                             binding.rvtimetable.adapter = adapter
-
-
-                         } else {
-
-
-                         }
-
-
-                     } else {
-
-
-                     }
-
-                 }
-
-                 override fun onFailure(call: Call<List<SeatAvailabilityModel?>?>, t: Throwable) {
-
-
-                 }
-
-
-             })
-
-         } else {
-
-
-         }
-
-           Log.e("trainnum", "getTrainCalender: $trainnum")*/
-
         mainViewModel.tarintimecalander(
             trainnum,
             from,
@@ -412,9 +331,7 @@ class TrainTimeActivity : AppCompatActivity() {
     private fun TrainquotaList() {
 
         val arrayList: ArrayList<String> = ArrayList<String>()
-
         Collections.addAll(arrayList, *TrainQuota.getQutosName())
-
         val quotaSpinnerAdapter = QuotaSpinnerAdapter(this, arrayList)
         quotaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spQuata.adapter = quotaSpinnerAdapter

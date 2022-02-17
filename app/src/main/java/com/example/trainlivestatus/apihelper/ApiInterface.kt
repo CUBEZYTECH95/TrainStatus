@@ -1,8 +1,6 @@
 package com.example.trainlivestatus.apihelper
 
-import com.example.trainlivestatus.model.InterstnModel
-import com.example.trainlivestatus.model.LiveStatusModel
-import com.example.trainlivestatus.model.RouteStationModel
+import com.example.trainlivestatus.model.*
 import com.example.trainlivestatus.trainavaimodel.SeatAvailabilityModel
 import com.example.trainlivestatus.trainavaimodel.TopCalModel
 import com.example.trainlivestatus.utils.WsClients
@@ -71,6 +69,7 @@ interface ApiInterface {
     @Headers(
         "Authorization: Token dab50e0656db2e9383bc9269d35615a6e93aef15"
     )
+
     @POST("railapi/getlivestation")
     fun livestation1(
         @Body action: JsonObject?
@@ -80,15 +79,17 @@ interface ApiInterface {
         "Authorization: Token dab50e0656db2e9383bc9269d35615a6e93aef15",
         "Content-Type: application/x-www-form-urlencoded",
         "Accept-Path: true",
-        "User-Agent: Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"
-    )
+        "User-Agent: Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36")
+
     @POST("/crisns/AppServAnd")
     fun livestation2(@Body action: JsonObject?): Call<JsonObject?>?
-
 
     @Headers("Authorization: Token dab50e0656db2e9383bc9269d35615a6e93aef15")
     @POST("railapi/getlivestation")
     fun finalstation(@Body action: JsonObject?): Call<JsonObject?>?
+
+    @GET("action/content/")
+    suspend fun nameorcode(@Query("nameOrCode") nameOrCode: CharSequence?, @Query("searchFor") searchFor: String):List<NameOrCodeModelItem>
 
 
     /*@Multipart

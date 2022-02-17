@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.model.*
@@ -12,6 +13,9 @@ import com.example.trainlivestatus.trainavaimodel.SeatAvailabilityModel
 import com.example.trainlivestatus.trainavaimodel.TopCalModel
 import com.example.trainlivestatus.trainavaimodel.TrainsItem
 import com.google.gson.JsonObject
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -32,11 +36,11 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var trainliveornot = MutableLiveData<Boolean>()
     var trainname = MutableLiveData<String>()
     var TopcalModelList: MutableLiveData<List<TrainsItem>> = MutableLiveData<List<TrainsItem>>()
-    var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> =
-        MutableLiveData<List<SeatAvailabilityModel>>()
-
+    var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> = MutableLiveData<List<SeatAvailabilityModel>>()
 
     var objects: MutableLiveData<Any?> = MutableLiveData<Any?>()
+
+    val postData: MutableLiveData<List<NameOrCodeModelItem>> = MutableLiveData()
 
     var mon = MutableLiveData<Int>()
     var tue = MutableLiveData<Int>()
@@ -262,7 +266,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     ) {
         if (TrainPays.isNetConnectionAvailable()) {
 
-            recyclerview_flag.value=false
+            recyclerview_flag.value = false
             showLoadingProg.value = true
 
             val call: Call<TopCalModel?>? = mainRespository.topcalanderstatus(
@@ -273,14 +277,16 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 email,
                 ptran,
                 local,
-                showclass)
+                showclass
+            )
 
             call?.enqueue(object : Callback<TopCalModel?> {
                 override fun onResponse(
                     call: Call<TopCalModel?>,
-                    response: Response<TopCalModel?>) {
+                    response: Response<TopCalModel?>
+                ) {
 
-                    recyclerview_flag.value=true
+                    recyclerview_flag.value = true
                     showLoadingProg.value = false
 
                     if (response.isSuccessful) {
@@ -296,7 +302,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                                     trainname.postValue(liveStatusResponse.trains[i]?.trainNo.toString() + "-" + liveStatusResponse.trains[i]?.trainName)
                                 }*/
 
-                                    if (i == 0) {
+                                if (i == 0) {
 
                                     if (!liveStatusResponse.trains[i]?.daysOfRun?.mon!!) {
 
@@ -349,7 +355,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                              * No trains available between the inputted stations
                              */
 
-                            recyclerview_flag.value=false
+                            recyclerview_flag.value = false
                             showLoadingProg.value = false
                             errorMessage.value = "No trains available between the inputted stations"
 
@@ -357,7 +363,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                     } else {
 
-                        recyclerview_flag.value=false
+                        recyclerview_flag.value = false
 
                         when (response.code()) {
 
@@ -370,7 +376,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                 override fun onFailure(call: Call<TopCalModel?>, t: Throwable) {
 
-                    recyclerview_flag.value=false
+                    recyclerview_flag.value = false
                     showLoadingProg.value = false
                     errorMessage.value = "Network failure, Please Try Again"
                 }
@@ -378,20 +384,36 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
         } else {
 
-            recyclerview_flag.value=false
+            recyclerview_flag.value = false
             showLoadingProg.value = false
             errorMessage.value = "Check your Internet Connection"
         }
     }
 
 
-    fun tarintimecalander(trainNo: String?, source: String?, destination: String?, doj: String?, travelClasses: String?, quota: String, email: String?) {
+    fun tarintimecalander(
+        trainNo: String?,
+        source: String?,
+        destination: String?,
+        doj: String?,
+        travelClasses: String?,
+        quota: String,
+        email: String?
+    ) {
 
         if (TrainPays.isNetConnectionAvailable()) {
 
             calanderLoadingProg.value = true
 
-            val call: Call<List<SeatAvailabilityModel?>?> = mainRespository.avilabletrain(trainNo, source, destination, doj, travelClasses, quota, email)
+            val call: Call<List<SeatAvailabilityModel?>?> = mainRespository.avilabletrain(
+                trainNo,
+                source,
+                destination,
+                doj,
+                travelClasses,
+                quota,
+                email
+            )
 
             call.enqueue(object : Callback<List<SeatAvailabilityModel?>?> {
 
@@ -594,6 +616,25 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
             errorMessage.setValue("Data not Available")
         }
 
+    }
+
+
+    fun getPost(name: String) {
+
+        viewModelScope.launch {
+
+            mainRespository.fetchnamecode(name)
+
+                .catch { e ->
+
+                    Log.d("main", "getPost: ${e.message}")
+                }
+                .collect {
+
+                    postData.value=it
+                }
+
+        }
     }
 
 

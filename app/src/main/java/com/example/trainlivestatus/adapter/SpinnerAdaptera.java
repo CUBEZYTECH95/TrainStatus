@@ -22,7 +22,6 @@ public class SpinnerAdaptera extends ArrayAdapter<SpinnerModel> {
     Context context;
     List<SpinnerModel> spinnerModels;
 
-
     public SpinnerAdaptera(@NonNull Context context, @NonNull List<SpinnerModel> objects) {
         super(context, 0, objects);
         this.context = context;

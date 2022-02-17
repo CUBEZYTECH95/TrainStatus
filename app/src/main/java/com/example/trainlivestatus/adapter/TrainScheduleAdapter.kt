@@ -2,6 +2,8 @@ package com.example.trainlivestatus.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.example.trainlivestatus.databinding.CoachPositionViewItemBinding
 import com.example.trainlivestatus.databinding.TrainDayViewItemBinding
 import com.example.trainlivestatus.databinding.TrainDetailsViewItemBinding
 import com.example.trainlivestatus.databinding.TrainNameViewItemBinding
+import com.example.trainlivestatus.livestatus.LiveTrainActivity
 import com.example.trainlivestatus.model.InterstnModel
 import com.example.trainlivestatus.model.ScheduleItem
 
@@ -72,8 +75,14 @@ class TrainScheduleAdapter(
 
             TRAIN_NAME_TYPE -> TrainNameViewHolder(
 
-                DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.train_name_view_item, parent, false)
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.train_name_view_item,
+                    parent,
+                    false
+                )
             )
+
             COACH_POSITION_TYPE -> CoachPositionViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -82,6 +91,7 @@ class TrainScheduleAdapter(
                     false
                 )
             )
+
             TRAIN_DAY_TYPE -> TrainDayViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -117,10 +127,10 @@ class TrainScheduleAdapter(
 
                     btnLiveStatus.setOnClickListener {
 
-                        /* val intent = Intent(context, LivestatusallActivity::class.java)
-                         intent.putExtra("trainNo", trainNo)
-                         intent.putExtra("trainName", searchTrainModel.trainName)
-                         context.startActivity(intent)*/
+                        val intent = Intent(context, LiveTrainActivity::class.java)
+                        intent.putExtra("trainNo", trainNo)
+                        intent.putExtra("trainName", interstnModel.trainName)
+                        context.startActivity(intent)
                     }
 
                 }
@@ -133,6 +143,8 @@ class TrainScheduleAdapter(
                 if (interstnModel.coachPosition != null) {
 
                     val coach: List<String> = interstnModel.coachPosition.split(" ")
+
+                    Log.e("sss", "onBindViewHolder: ${coach.size}")
 
                     if (coach.size > 5) {
 
@@ -148,8 +160,10 @@ class TrainScheduleAdapter(
                             img.add(coach[i])
                         }
 
-                        coachPositionViewHolder.binding.rv.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                        coachPositionViewHolder.binding.rv.adapter = TrainCoachRecoAdapter(context, img)
+                        coachPositionViewHolder.binding.rv.layoutManager =
+                            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                        coachPositionViewHolder.binding.rv.adapter =
+                            TrainCoachRecoAdapter(context, img)
                     }
                 }
 
@@ -163,37 +177,44 @@ class TrainScheduleAdapter(
 
                     if (interstnModel.daysOfRun?.sun == true) {
 
-                        sun.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        sun.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         sun.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.mon == true) {
 
-                        mon.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        mon.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         mon.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.tue == true) {
 
-                        tue.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        tue.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         tue.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.wed == true) {
 
-                        wed.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        wed.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         wed.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.thu == true) {
 
-                        thu.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        thu.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         thu.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.fri == true) {
 
-                        fri.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        fri.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         fri.setTextColor(context.resources.getColor(R.color.white))
                     }
                     if (interstnModel.daysOfRun?.sat == true) {
 
-                        sat.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+                        sat.background =
+                            ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
                         sat.setTextColor(context.resources.getColor(R.color.white))
                     }
 
@@ -210,7 +231,10 @@ class TrainScheduleAdapter(
 
                     rvTrainDetails.layoutManager = LinearLayoutManager(context)
 
-                    rvTrainDetails.adapter = TrainDetailsListAdapter(context, interstnModel.schedule as List<ScheduleItem>)
+                    rvTrainDetails.adapter = TrainDetailsListAdapter(
+                        context,
+                        interstnModel.schedule as List<ScheduleItem>
+                    )
                 }
 
 

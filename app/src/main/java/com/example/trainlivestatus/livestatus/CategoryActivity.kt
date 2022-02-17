@@ -18,8 +18,8 @@ class CategoryActivity : AppCompatActivity() {
         R.drawable.ic_train_schedule,
         R.drawable.ic_live_train,
         R.drawable.ic_seat_availa,
-        R.drawable.ic_live_station
-    )
+        R.drawable.ic_live_station)
+
     var list = ArrayList<CategoryModel>()
 
     lateinit var binding: ActivityCategoryBinding

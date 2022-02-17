@@ -12,7 +12,7 @@ class SharedPref {
         private val sharedPrefenceName =
             TrainPays.getContext()?.resources?.getString(R.string.app_name)
 
-        fun getSharedPref(): SharedPreferences? {
+        private fun getSharedPref(): SharedPreferences? {
             return TrainPays.getContext()
                 ?.getSharedPreferences(sharedPrefenceName, Context.MODE_PRIVATE)
         }

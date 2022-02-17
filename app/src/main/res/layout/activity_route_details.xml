@@ -30,6 +30,7 @@
             android:id="@+id/progress_circular"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
+            android:indeterminateTint="@color/colorYellow"
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
