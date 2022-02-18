@@ -13,8 +13,8 @@ import com.example.trainlivestatus.trainavaimodel.SeatAvailabilityModel
 import com.example.trainlivestatus.trainavaimodel.TopCalModel
 import com.example.trainlivestatus.trainavaimodel.TrainsItem
 import com.google.gson.JsonObject
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,12 +36,14 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var trainliveornot = MutableLiveData<Boolean>()
     var trainname = MutableLiveData<String>()
     var TopcalModelList: MutableLiveData<List<TrainsItem>> = MutableLiveData<List<TrainsItem>>()
-    var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> = MutableLiveData<List<SeatAvailabilityModel>>()
+    var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> =
+        MutableLiveData<List<SeatAvailabilityModel>>()
 
     var objects: MutableLiveData<Any?> = MutableLiveData<Any?>()
 
     val postData: MutableLiveData<List<NameOrCodeModelItem>> = MutableLiveData()
-
+    val articles: MutableList<FindStationModel> = mutableListOf()
+    val ar= MutableLiveData<List<FindStationModel>>()
     var mon = MutableLiveData<Int>()
     var tue = MutableLiveData<Int>()
     var wed = MutableLiveData<Int>()
@@ -618,7 +620,6 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
     }
 
-
     fun getPost(name: String) {
 
         viewModelScope.launch {
@@ -631,11 +632,61 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 }
                 .collect {
 
-                    postData.value=it
+                    postData.value = it
                 }
 
         }
     }
 
+    @OptIn(FlowPreview::class)
+    fun getfindstationcall() {
+
+        viewModelScope.launch {
+
+            mainRespository.findstationcall().debounce(600).catch {e -> Log.d("main", "getPost: ${e.message}") }.distinctUntilChanged().collect {
+
+                it?.forEach { it ->
+
+                    val name = it?.asJsonArray
+                    val citycode = name?.get(0)?.toString()
+                    val cityname = name?.get(1)?.toString()
+                    val citylocale = name?.get(2)?.toString()
+
+                    val stationModel = FindStationModel(citycode, cityname, citylocale)
+
+                    articles.add(stationModel)
+
+                    ar.value=articles
+
+                }
+            }
+
+           /* mainRespository.findstationcall()
+
+                .catch { e ->
+
+                    Log.d("main", "getPost: ${e.message}")
+                }
+                .collect {
+
+                    it?.forEach { it ->
+
+                        val name = it?.asJsonArray
+                        val citycode = name?.get(0)?.toString()
+                        val cityname = name?.get(1)?.toString()
+                        val citylocale = name?.get(2)?.toString()
+
+                        val stationModel = FindStationModel(citycode, cityname, citylocale)
+
+                       articles.add(stationModel)
+
+                        ar.value=articles
+
+                    }
+
+                }*/
+
+        }
+    }
 
 }

@@ -2,12 +2,15 @@ package com.example.trainlivestatus.livestatus
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,16 +19,21 @@ import com.example.trainlivestatus.adapter.RepoAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
 import com.example.trainlivestatus.application.TrainPays
 import com.example.trainlivestatus.databinding.ActivitySeatAvailableBinding
+import com.example.trainlivestatus.model.NameOrCodeModelItem
 import com.example.trainlivestatus.repository.MainRespository
 import com.example.trainlivestatus.utils.CommonUtil
 import com.example.trainlivestatus.utils.ModelFactory
 import com.example.trainlivestatus.utils.SharedPref
 import com.example.trainlivestatus.utils.Validation
 import com.example.trainlivestatus.viewmodel.MainViewModel
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 
-class SeatAvailableActivity : BaseClass() {
+class SeatAvailableActivity : BaseClass(), CoroutineScope {
 
     lateinit var binding: ActivitySeatAvailableBinding
     private var datePickerDialog: DatePickerDialog? = null
@@ -35,13 +43,23 @@ class SeatAvailableActivity : BaseClass() {
     var cityname1: String? = null
     private var date: String? = null
     lateinit var mainViewModel: MainViewModel
+    val apiInterface: ApiInterface by lazy{
 
+        getclient(CommonUtil.FIND_TRAIN_NUMBER).create(ApiInterface::class.java)
+    }
+
+    private val job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + job
+
+
+    @OptIn(DelicateCoroutinesApi::class, FlowPreview::class,
+        ExperimentalCoroutinesApi::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val apiInterface: ApiInterface =
-            getclient(CommonUtil.FIND_TRAIN_NUMBER).create(ApiInterface::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_available)
 
@@ -63,25 +81,48 @@ class SeatAvailableActivity : BaseClass() {
 
         clickevent()
 
-
         binding.rvSearch.layoutManager = LinearLayoutManager(this@SeatAvailableActivity)
         val adapter = RepoAdapter(this@SeatAvailableActivity)
         binding.rvSearch.adapter = adapter
 
-        mainViewModel =
-            ViewModelProvider(
-                this,
-                ModelFactory(MainRespository(apiInterface))
-            )[MainViewModel::class.java]
+       /* mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
 
-
-        mainViewModel.postData.observe(this, androidx.lifecycle.Observer {
+        mainViewModel.postData.observe(this) {
 
             adapter.submitList(it)
-        })
+        }
+*/
 
+        launch  {
 
-        binding.etSearchTrain.addTextChangedListener(object : TextWatcher {
+            binding.etSearchTrain.getQueryTextChangeStateFlow().debounce(300).filter {
+
+                    query ->
+                if (query.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        adapter.submitList(listOf())
+                    }
+                    return@filter false
+                } else {
+                    return@filter true
+                }
+            }.distinctUntilChanged()
+                .flatMapLatest { query ->
+                    binding.progressCircular.setVisible()
+                    fetchnamecode(query)
+                        .catch { emitAll(flowOf(listOf())) }
+                }.collect {
+
+                    binding.progressCircular.setInvisible {
+
+                        adapter.submitList(it)
+                    }
+
+                }
+        }
+
+       /* binding.etSearchTrain.addTextChangedListener(object : TextWatcher {
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -105,8 +146,7 @@ class SeatAvailableActivity : BaseClass() {
 
             }
 
-        })
-
+        })*/
 
 
     }
@@ -308,6 +348,19 @@ class SeatAvailableActivity : BaseClass() {
             .setTextColor(resources.getColor(R.color.colorYellow))
         datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
             .setTextColor(resources.getColor(R.color.colorYellow))
+    }
+
+    suspend fun fetchnamecode(id: String): Flow<List<NameOrCodeModelItem>> {
+        return flow {
+            val comment = apiInterface.nameorcode(id, "getTrainByNameOrCode")
+            delay(300)
+            emit(comment)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        job.cancel()
     }
 
 }

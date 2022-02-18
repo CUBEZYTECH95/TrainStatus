@@ -89,8 +89,7 @@ class FindStationAdapter(
 
                 for (i in contactListFiltered?.indices!!) {
 
-                    if (contactListFiltered!![i].ecityname!!.lowercase(Locale.getDefault())
-                            .contains(p0.toString().lowercase(Locale.getDefault()))
+                    if (contactListFiltered!![i].ecityname!!.lowercase(Locale.getDefault()).contains(p0.toString().lowercase(Locale.getDefault()))
                     ) {
                         filterList.add(contactListFiltered!![i])
                     }

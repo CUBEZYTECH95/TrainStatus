@@ -13,10 +13,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("station_list?")
-    fun FindStations(
+    suspend fun FindStations(
         @Field(WsClients.app_version) app_version: String?,
         @Field(WsClients.api_key) api_key: String?
-    ): Call<JsonArray?>?
+    ): List<JsonArray?>?
 
 
     @GET("/api/platform/trainbooking/tatwnstns")

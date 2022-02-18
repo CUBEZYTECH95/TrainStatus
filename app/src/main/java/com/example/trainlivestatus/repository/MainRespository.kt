@@ -9,8 +9,10 @@ import com.example.trainlivestatus.model.RouteStationModel
 import com.example.trainlivestatus.trainavaimodel.SeatAvailabilityModel
 import com.example.trainlivestatus.trainavaimodel.TopCalModel
 import com.example.trainlivestatus.utils.CommonUtil
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -77,6 +79,14 @@ class MainRespository constructor(val api: ApiInterface) {
     suspend fun fetchnamecode(id: String): Flow<List<NameOrCodeModelItem>> {
         return flow {
             val comment = api.nameorcode(id, "getTrainByNameOrCode")
+            delay(2000)
+            emit(comment)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun findstationcall(): Flow<List<JsonArray?>?> {
+        return flow{
+            val comment = api.FindStations(CommonUtil.app_version, CommonUtil.api_key)
             emit(comment)
         }.flowOn(Dispatchers.IO)
     }

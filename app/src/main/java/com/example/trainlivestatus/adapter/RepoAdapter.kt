@@ -1,5 +1,6 @@
 package com.example.trainlivestatus.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
-import com.example.trainlivestatus.clicklistner.ItemClick
 import com.example.trainlivestatus.model.NameOrCodeModelItem
 
 class RepoAdapter constructor(val context: Context) :
@@ -43,13 +43,20 @@ class RepoAdapter constructor(val context: Context) :
         return MyViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
 
         val photo = getItem(position)
 
         val holder: MyViewHolder = holder as MyViewHolder
+
         holder.tvTrainNo.text = photo.C
+
+        holder.tv_train_name.text = photo.N
+
+        holder.tv_source.text = "("+photo.origin+")"+" "+photo.originName
+
+        holder.tv_destination.text = "("+photo.destination+")"+" "+photo.destinationName
 
         holder.itemView.setOnClickListener {
 
@@ -63,6 +70,10 @@ class RepoAdapter constructor(val context: Context) :
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tvTrainNo: TextView = view.findViewById(R.id.tv_train_no)
+
+        val tv_train_name: TextView = view.findViewById(R.id.tv_train_name)
+        val tv_source: TextView = view.findViewById(R.id.tv_source)
+        val tv_destination: TextView = view.findViewById(R.id.tv_destination)
     }
 
 }

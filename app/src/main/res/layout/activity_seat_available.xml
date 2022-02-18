@@ -15,56 +15,67 @@
             app:title="@string/seat_availability"
             app:titleCentered="true" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+        <RelativeLayout
+            android:id="@+id/rvl_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rv_toolbar"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            app:barrierMargin="@dimen/material_emphasis_disabled"
-            app:boxBackgroundMode="outline"
-            app:endIconDrawable="@drawable/ic_cancel"
-            app:endIconMode="clear_text"
-            app:endIconTint="#F86E6E"
-            app:expandedHintEnabled="false"
-            app:hintAnimationEnabled="false"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_toolbar"
-            app:startIconDrawable="@drawable/ic_search"
-            app:startIconTint="#5B5B7E">
+            android:layout_marginRight="@dimen/_20sdp">
 
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/etSearchTrain"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/white_round_bg"
-                android:clickable="false"
-                android:completionThreshold="1"
-                android:cursorVisible="false"
-                android:drawablePadding="@dimen/_12sdp"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/search_by_train_no_or_name"
-                android:imeOptions="actionSearch"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:singleLine="true"
-                android:textColorHint="#868383"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_height="wrap_content"
+                app:barrierMargin="@dimen/material_emphasis_disabled"
+                app:boxBackgroundMode="outline"
+                app:expandedHintEnabled="false"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:startIconDrawable="@drawable/ic_search"
+                app:startIconTint="#5B5B7E">
 
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearchTrain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/white_round_bg"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawablePadding="@dimen/_12sdp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="@string/search_by_train_no_or_name"
+                    android:imeOptions="actionSearch"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:textColorHint="#868383"
+                    android:textSize="@dimen/_12sdp" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:indeterminateTint="@color/colorYellow"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textInputLayout">
+            android:layout_below="@+id/rvl_search">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -307,12 +318,13 @@
             android:id="@+id/rv_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:background="@color/white"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_below="@id/rvl_search"
             android:layout_marginLeft="@dimen/_12sdp"
-            tools:listitem="@layout/train_autocomp_item"
-            android:layout_below="@id/textInputLayout" />
+            android:layout_marginRight="@dimen/_12sdp"
+            android:background="@color/white"
+            android:visibility="visible"
+            tools:listitem="@layout/train_autocomp_item" />
+
 
     </RelativeLayout>
 
