@@ -7,7 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".livestatus.CallLiveStationActivity">
 
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
             style="@style/MyThemeOverlay_Toolbar"
@@ -15,7 +14,6 @@
             app:titleCentered="true">
 
         </com.google.android.material.appbar.MaterialToolbar>
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

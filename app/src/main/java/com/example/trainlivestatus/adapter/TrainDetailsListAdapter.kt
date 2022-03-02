@@ -21,10 +21,7 @@ class TrainDetailsListAdapter(val context: Context, private val schedule: List<S
 
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TrainDetailsListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainDetailsListViewHolder {
 
         return TrainDetailsListViewHolder(
             DataBindingUtil.inflate(
@@ -35,19 +32,15 @@ class TrainDetailsListAdapter(val context: Context, private val schedule: List<S
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(
-        holder: TrainDetailsListViewHolder,
-        position: Int
-    ) {
-
+    override fun onBindViewHolder(holder: TrainDetailsListViewHolder, position: Int) {
 
         holder.binding.apply {
 
-
             tvStationName.text = schedule[position]?.stationName
 
-            if (schedule[position]?.arrivalTime.equals("")) tvArrivalTime.text =
-                "Source" else tvArrivalTime.text = schedule[position]?.arrivalTime
+            if (schedule[position]?.arrivalTime.equals(""))
+                tvArrivalTime.text = "Source" else tvArrivalTime.text =
+                schedule[position]?.arrivalTime
 
             if (schedule[position]?.departureTime.equals("")) tvDepTime.text =
                 "Source" else tvDepTime.text = schedule[position]?.departureTime
@@ -57,16 +50,16 @@ class TrainDetailsListAdapter(val context: Context, private val schedule: List<S
             if (schedule[position]?.expectedPlatformNo != null) {
 
                 tvPlatformNo.text = schedule[position]?.expectedPlatformNo.toString()
-
             }
 
             if (schedule[position]?.arrivalDelay != null) {
 
                 tvDelay.text = schedule[position]?.arrivalDelay
+
             } else {
+
                 tvDelay.text = "-"
             }
-
 
             tvDay.text = schedule[position]?.day.toString()
 

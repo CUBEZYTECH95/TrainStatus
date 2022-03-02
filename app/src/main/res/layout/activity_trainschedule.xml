@@ -252,7 +252,7 @@
                             android:focusable="true"
                             android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
-                            android:hint="4-8-2021"
+                            android:hint="Departure date"
                             android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_10sdp"

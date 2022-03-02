@@ -8,7 +8,6 @@
         android:background="#FFFFFF"
         tools:context=".livestatus.LiveTrainActivity">
 
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
             style="@style/MyThemeOverlay_Toolbar"
@@ -81,8 +80,7 @@
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerLiveStatus"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/tv_train_info"
@@ -90,20 +88,23 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:fillViewport="true">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerLiveStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </androidx.core.widget.NestedScrollView>
+
 
         </RelativeLayout>
 
         <include
             android:id="@+id/in_no_tran"
             layout="@layout/no_train_avai"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/rv_toolbar"
-            android:visibility="gone" />
-
-        <include
-            layout="@layout/error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/rv_toolbar"

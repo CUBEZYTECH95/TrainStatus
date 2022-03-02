@@ -2,31 +2,23 @@ package com.example.trainlivestatus.livestatus
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.RepoAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
 import com.example.trainlivestatus.application.TrainPays
+import com.example.trainlivestatus.clicklistner.TrainSeatClick
 import com.example.trainlivestatus.databinding.ActivitySeatAvailableBinding
 import com.example.trainlivestatus.model.NameOrCodeModelItem
-import com.example.trainlivestatus.repository.MainRespository
 import com.example.trainlivestatus.utils.CommonUtil
-import com.example.trainlivestatus.utils.ModelFactory
 import com.example.trainlivestatus.utils.SharedPref
 import com.example.trainlivestatus.utils.Validation
 import com.example.trainlivestatus.viewmodel.MainViewModel
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
@@ -43,7 +35,8 @@ class SeatAvailableActivity : BaseClass(), CoroutineScope {
     var cityname1: String? = null
     private var date: String? = null
     lateinit var mainViewModel: MainViewModel
-    val apiInterface: ApiInterface by lazy{
+
+    val apiInterface: ApiInterface by lazy {
 
         getclient(CommonUtil.FIND_TRAIN_NUMBER).create(ApiInterface::class.java)
     }
@@ -54,12 +47,10 @@ class SeatAvailableActivity : BaseClass(), CoroutineScope {
         get() = Dispatchers.IO + job
 
 
-    @OptIn(DelicateCoroutinesApi::class, FlowPreview::class,
-        ExperimentalCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class, FlowPreview::class, ExperimentalCoroutinesApi::class)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_seat_available)
 
@@ -82,71 +73,29 @@ class SeatAvailableActivity : BaseClass(), CoroutineScope {
         clickevent()
 
         binding.rvSearch.layoutManager = LinearLayoutManager(this@SeatAvailableActivity)
-        val adapter = RepoAdapter(this@SeatAvailableActivity)
-        binding.rvSearch.adapter = adapter
 
-       /* mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
+        val adapter = RepoAdapter(this@SeatAvailableActivity, trainSeatClick = object : TrainSeatClick {
+                override fun click(photo: NameOrCodeModelItem) {
 
-        mainViewModel.postData.observe(this) {
-
-            adapter.submitList(it)
-        }
-*/
-
-        launch  {
-
-            binding.etSearchTrain.getQueryTextChangeStateFlow().debounce(300).filter {
-
-                    query ->
-                if (query.isEmpty()) {
-                    withContext(Dispatchers.Main) {
-                        adapter.submitList(listOf())
-                    }
-                    return@filter false
-                } else {
-                    return@filter true
-                }
-            }.distinctUntilChanged()
-                .flatMapLatest { query ->
-                    binding.progressCircular.setVisible()
-                    fetchnamecode(query)
-                        .catch { emitAll(flowOf(listOf())) }
-                }.collect {
-
-                    binding.progressCircular.setInvisible {
-
-                        adapter.submitList(it)
-                    }
-
-                }
-        }
-
-       /* binding.etSearchTrain.addTextChangedListener(object : TextWatcher {
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                if (s.toString().trim().isNotEmpty()) {
-
-                    binding.rvSearch.visibility = View.VISIBLE
-                    mainViewModel.getPost(s.toString())
-
-                } else {
-
+                    val intent = Intent(this@SeatAvailableActivity, TopSeatCalenderActivity::class.java)
+                    intent.putExtra("type", 2)
+                    intent.putExtra("trainNo", photo.C)
+                    intent.putExtra("sourceCode", photo.origin)
+                    intent.putExtra("destinationCode", photo.destination)
+                    intent.putExtra("trainName", photo.N)
+                    startActivity(intent)
                     binding.rvSearch.visibility = View.GONE
                 }
+            })
+        binding.rvSearch.adapter = adapter
 
 
-            }
 
-            override fun afterTextChanged(s: Editable?) {
+        binding.etSearchTrain.setOnClickListener {
 
-            }
+            startActivity(Intent(this@SeatAvailableActivity,TrainBySearchActivity::class.java))
+        }
 
-        })*/
 
 
     }
@@ -270,7 +219,6 @@ class SeatAvailableActivity : BaseClass(), CoroutineScope {
             }
         }
 
-
     }
 
     override fun onRestart() {
@@ -351,6 +299,7 @@ class SeatAvailableActivity : BaseClass(), CoroutineScope {
     }
 
     suspend fun fetchnamecode(id: String): Flow<List<NameOrCodeModelItem>> {
+
         return flow {
             val comment = apiInterface.nameorcode(id, "getTrainByNameOrCode")
             delay(300)

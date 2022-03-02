@@ -11,11 +11,9 @@ import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.SearchTrainAdapter
 import com.example.trainlivestatus.clicklistner.TrainClickListener
 import com.example.trainlivestatus.databinding.ActivitySearchTrainBinding
-import com.example.trainlivestatus.model.LiveModel
 import com.example.trainlivestatus.utils.CommonUtil
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.ArrayList
 
 class SearchTrainActivity : AppCompatActivity() {
 
@@ -42,20 +40,17 @@ class SearchTrainActivity : AppCompatActivity() {
             rvSearchTrain.setHasFixedSize(true)
 
             val adapter = SearchTrainAdapter(this@SearchTrainActivity, list,
-                    object : TrainClickListener {
-                        override fun onTrainClick(trainNo: String?, TrainName: String?) {
+                object : TrainClickListener {
+                    override fun onTrainClick(trainNo: String?, TrainName: String?) {
 
-                            val intent = Intent(
-                                this@SearchTrainActivity,
-                                IntermediatestnActivity::class.java
-                            )
-
-                            intent.putExtra("trainNo", trainNo)
-                            startActivity(intent)
-                        }
+                        val intent =
+                            Intent(this@SearchTrainActivity, IntermediatestnActivity::class.java)
+                        intent.putExtra("trainNo", trainNo)
+                        startActivity(intent)
+                    }
 
 
-                    })
+                })
 
             rvSearchTrain.adapter = adapter
 

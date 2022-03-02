@@ -2,13 +2,14 @@ package com.example.trainlivestatus.livestatus
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.adapter.LiveTrainAdapter
 import com.example.trainlivestatus.apihelper.ApiInterface
@@ -29,7 +30,6 @@ class LiveTrainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLiveTrainBinding
     lateinit var mainViewModel: MainViewModel
-
     var date: String? = null
     var calendar: Calendar? = null
     var today: Date? = null
@@ -65,7 +65,6 @@ class LiveTrainActivity : AppCompatActivity() {
         fixCalender?.add(Calendar.DAY_OF_YEAR, -4)
         fixDate = dateFormat?.format(fixCalender?.time)
 
-
         binding.apply {
 
             inNoTran.no.visibility = View.GONE
@@ -84,6 +83,7 @@ class LiveTrainActivity : AppCompatActivity() {
             binding.apply {
 
                 cvDate.visibility = View.VISIBLE
+
                 val list: List<StationsItem?>? = it?.stations
 
                 for (i in list!!.indices) {
@@ -104,47 +104,44 @@ class LiveTrainActivity : AppCompatActivity() {
                 }
 
                 recyclerLiveStatus.layoutManager = LinearLayoutManager(this@LiveTrainActivity)
-                recyclerLiveStatus.adapter = LiveTrainAdapter(this@LiveTrainActivity, it.stations as List<StationsItem>,
-                    p, object : LiveTrainClick {
-                        @SuppressLint("SetTextI18n")
-                        override fun click(
+                recyclerLiveStatus.adapter = LiveTrainAdapter(this@LiveTrainActivity, it.stations as List<StationsItem>, p, object : LiveTrainClick {
+                            @SuppressLint("SetTextI18n")
+                            override fun click(pos: Int,
+                                stationName: String?,
+                                departureTime: String?,
+                                delay: Int) {
 
-                            pos: Int,
-                            stationName: String?,
-                            departureTime: String?,
-                            delay: Int
+                                if (stationName != null && departureTime != null) {
 
-                        ) {
+                                    binding.tvTrainInfo.visibility = View.VISIBLE
 
-                            if (stationName != null && departureTime != null) {
+                                    if (delay !== 0) {
 
-                                binding.tvTrainInfo.visibility = View.VISIBLE
+                                        binding.tvTrainInfo.text = "Departed $stationName at $departureTime Delay: " + getTime(delay)
 
-                                if (delay !== 0) {
+                                    } else {
 
-                                    binding.tvTrainInfo.text = "Departed $stationName at $departureTime Delay: " + getTime(delay)
-
+                                        binding.tvTrainInfo.text = "Departed $stationName at $departureTime"
+                                    }
                                 } else {
 
-                                    binding.tvTrainInfo.text = "Departed $stationName at $departureTime"
+                                    binding.tvTrainInfo.visibility = View.GONE
                                 }
-                            } else {
 
-                                binding.tvTrainInfo.visibility = View.GONE
+                                binding.recyclerLiveStatus.post {
+
+                                    try {
+
+                                        binding.recyclerLiveStatus.scrollToPosition(pos)
+
+                                    } catch (e: Exception) {
+
+                                    }
+                                }
+
                             }
 
-                            binding.recyclerLiveStatus.post {
-
-                                try {
-                                    binding.recyclerLiveStatus.scrollToPosition(pos)
-                                } catch (e: Exception) {
-
-                                }
-                            }
-
-                        }
-
-                    })
+                        })
             }
 
         }
@@ -190,6 +187,15 @@ class LiveTrainActivity : AppCompatActivity() {
         } else {
             "-"
         }
+    }
+
+    fun RecyclerView.smoothSnapToPosition(position: Int, snapMode: Int = LinearSmoothScroller.SNAP_TO_START) {
+        val smoothScroller = object : LinearSmoothScroller(this.context) {
+            override fun getVerticalSnapPreference(): Int = snapMode
+            override fun getHorizontalSnapPreference(): Int = snapMode
+        }
+        smoothScroller.targetPosition = position
+        layoutManager?.startSmoothScroll(smoothScroller)
     }
 
 

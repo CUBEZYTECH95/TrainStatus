@@ -1,24 +1,18 @@
 package com.example.trainlivestatus.livestatus
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trainlivestatus.R
-import com.example.trainlivestatus.adapter.CategoryAdapter
 import com.example.trainlivestatus.databinding.ActivityCategoryBinding
 import com.example.trainlivestatus.model.CategoryModel
-import java.util.ArrayList
 
 class CategoryActivity : AppCompatActivity() {
 
-    private var Image_array = intArrayOf(
-        R.drawable.ic_fare_in,
-        R.drawable.ic_search_train,
-        R.drawable.ic_train_schedule,
-        R.drawable.ic_live_train,
-        R.drawable.ic_seat_availa,
-        R.drawable.ic_live_station)
 
     var list = ArrayList<CategoryModel>()
 
@@ -29,16 +23,61 @@ class CategoryActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
 
-        for (item in Image_array.indices) {
 
-            val categoryModel = CategoryModel();
-            categoryModel.image = Image_array[item]
-            list.add(categoryModel)
+        binding.setting.setOnClickListener {
+
+            startActivity(Intent(this@CategoryActivity,SettingsActivity::class.java))
+        }
+        binding.icFareIn.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    FairInquiryActivity::class.java
+                )
+            )
+        }
+        binding.icSearchTrain.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    SearchTrainActivity::class.java
+                )
+            )
+        }
+        binding.icTrainSchedule.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    TrainscheduleActivity::class.java
+                )
+            )
+        }
+        binding.icLiveTrain.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    TrainListActivity::class.java
+                )
+            )
+        }
+        binding.icSeatAvaila.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    SeatAvailableActivity::class.java
+                )
+            )
+        }
+        binding.icLiveStation.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@CategoryActivity,
+                    LiveStationActivity::class.java
+                )
+            )
         }
 
-        binding.ivRc.layoutManager = LinearLayoutManager(this)
-        binding.ivRc.adapter = CategoryAdapter(this, list)
-
-
     }
+
+
 }

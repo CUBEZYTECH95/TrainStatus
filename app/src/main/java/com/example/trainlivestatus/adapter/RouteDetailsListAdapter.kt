@@ -13,6 +13,7 @@ import com.example.trainlivestatus.R
 import com.example.trainlivestatus.databinding.RouteDetailsListItemBinding
 import com.example.trainlivestatus.livestatus.IntermediatestnActivity
 import com.example.trainlivestatus.livestatus.LiveTrainActivity
+import com.example.trainlivestatus.livestatus.TopSeatCalenderActivity
 import com.example.trainlivestatus.livestatus.TrainTimeActivity
 import com.example.trainlivestatus.model.TrainBtwnStnsListItem
 
@@ -28,8 +29,7 @@ class RouteDetailsListAdapter(
         var avalClass = ArrayList<String>()
     }
 
-    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
+    class TrainDetailsViewHolder(itemView: RouteDetailsListItemBinding) : RecyclerView.ViewHolder(itemView.root) {
 
         val binding: RouteDetailsListItemBinding = itemView
 
@@ -37,8 +37,7 @@ class RouteDetailsListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): TrainDetailsViewHolder {
+        viewType: Int): TrainDetailsViewHolder {
 
         return TrainDetailsViewHolder(
             DataBindingUtil.inflate(
@@ -56,50 +55,43 @@ class RouteDetailsListAdapter(
 
         if (filteredList[position].runningSun.equals("Y")) {
 
-            holder.binding.cbsun.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbsun.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsun.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningMon.equals("Y")) {
 
-            holder.binding.cbmon.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbmon.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbmon.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningTue.equals("Y")) {
 
-            holder.binding.cbtue.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbtue.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbtue.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningWed.equals("Y")) {
 
-            holder.binding.cbwed.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbwed.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbwed.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningThu.equals("Y")) {
 
-            holder.binding.cbthu.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbthu.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbthu.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningFri.equals("Y")) {
 
-            holder.binding.cbfri.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbfri.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbfri.setTextColor(context.resources.getColor(R.color.white))
         }
 
         if (filteredList[position].runningSat.equals("Y")) {
 
-            holder.binding.cbsat.background =
-                ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
+            holder.binding.cbsat.background = ContextCompat.getDrawable(context, R.drawable.custom_checkbox_full)
             holder.binding.cbsat.setTextColor(context.resources.getColor(R.color.white))
         }
 
@@ -166,8 +158,7 @@ class RouteDetailsListAdapter(
         }
 
         holder.binding.farerv.layoutManager = GridLayoutManager(context, 2)
-        holder.binding.farerv.adapter =
-            FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
+        holder.binding.farerv.adapter = FareAdapter(context, filteredList[position].avaiblitycache, avalClass)
 
         holder.binding.tvsource.text = listItem.fromStnCode
         holder.binding.tvdestinations.text = listItem.toStnCode
@@ -194,10 +185,9 @@ class RouteDetailsListAdapter(
 
         }
 
-
         holder.binding.btnSeatAvab.setOnClickListener {
 
-            val intent = Intent(context, TrainTimeActivity::class.java)
+            val intent = Intent(context, TopSeatCalenderActivity::class.java)
             intent.putExtra("type", 1)
             intent.putExtra("trainNo", listItem.trainNumber)
             intent.putExtra("from", listItem.fromStnCode)
@@ -215,11 +205,11 @@ class RouteDetailsListAdapter(
         }
 
         holder.binding.btnRouteSchedule.setOnClickListener {
+
             val intent = Intent(context, IntermediatestnActivity::class.java)
             intent.putExtra("trainNo", listItem.trainNumber)
             context.startActivity(intent)
         }
-
 
     }
 

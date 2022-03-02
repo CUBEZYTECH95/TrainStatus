@@ -1,9 +1,11 @@
 package com.example.trainlivestatus.livestatus
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,8 +64,12 @@ class TrainListActivity : AppCompatActivity() {
                 ) {
                 }
 
+                @SuppressLint("NotifyDataSetChanged")
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
                     adapter.filter.filter(s)
+
+
                 }
 
                 override fun afterTextChanged(s: Editable) {}

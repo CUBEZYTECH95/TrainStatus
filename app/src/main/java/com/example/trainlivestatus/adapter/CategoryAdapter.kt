@@ -34,7 +34,6 @@ class CategoryAdapter(val context: Activity, val list: List<CategoryModel>) : Re
 
         val iv_rc: RecyclerView = itemView.findViewById(R.id.iv_rc)
         val setting: ImageButton = itemView.findViewById(R.id.setting)
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

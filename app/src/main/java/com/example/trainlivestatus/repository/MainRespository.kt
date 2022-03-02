@@ -1,6 +1,7 @@
 package com.example.trainlivestatus.repository
 
 
+import androidx.lifecycle.LiveData
 import com.example.trainlivestatus.apihelper.ApiInterface
 import com.example.trainlivestatus.model.InterstnModel
 import com.example.trainlivestatus.model.LiveStatusModel
@@ -52,8 +53,7 @@ class MainRespository constructor(val api: ApiInterface) {
         email: String?,
         ptran: Boolean,
         local: String?,
-        showclass: Boolean
-    ): Call<TopCalModel?>? {
+        showclass: Boolean): Call<TopCalModel?>? {
 
         return api.topcalanderdata(source, den, doj, travelcalss, email, ptran, local, showclass)
     }
@@ -65,18 +65,18 @@ class MainRespository constructor(val api: ApiInterface) {
         doj: String?,
         travelClasses: String?,
         quota: String,
-        email: String?
-    ): Call<List<SeatAvailabilityModel?>?> {
+        email: String?): Call<List<SeatAvailabilityModel?>?> {
 
         return api.getTrainCalender(trainNo, source, destination, doj, travelClasses, quota, email)
     }
 
-    fun finalcallstation(jsonObject: JsonObject): Call<JsonObject?>? {
+    fun searchtrainby(name:String): Call<List<NameOrCodeModelItem>> {
 
-        return api.finalstation(jsonObject)
+        return api.trainby(name,"getTrainByNameOrCode")
     }
 
     suspend fun fetchnamecode(id: String): Flow<List<NameOrCodeModelItem>> {
+
         return flow {
             val comment = api.nameorcode(id, "getTrainByNameOrCode")
             delay(2000)
@@ -84,12 +84,11 @@ class MainRespository constructor(val api: ApiInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun findstationcall(): Flow<List<JsonArray?>?> {
+   /* suspend fun findstationcall(): Flow<List<JsonArray?>?> {
         return flow{
             val comment = api.FindStations(CommonUtil.app_version, CommonUtil.api_key)
             emit(comment)
         }.flowOn(Dispatchers.IO)
-    }
-
+    }*/
 
 }

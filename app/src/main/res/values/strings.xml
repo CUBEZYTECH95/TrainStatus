@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">TrainLiveStatus</string>
     <string name="fare_detail">Fare Details</string>
     <string name="get_details">Get Details</string>
@@ -35,7 +36,7 @@
     <string name="seat_availability_calender">Seat Availability Calender</string>
     <string name="live_status">Live Status</string>
     <string name="route_schedule">Route/Schedule</string>
-    <string name="seat_availablity">Seat Availablity</string>
+    <string name="seat_availablity">Seat Availability</string>
     <string name="source">Source</string>
     <string name="st">ST</string>
     <string name="destination">Destination</string>
@@ -55,7 +56,9 @@
     <string name="search_by_train_no_or_name">Search by train no. or name</string>
     <string name="coach_position">Coach Position</string>
     <string name="departed_udvada_uvd_at_19_02_delay_05_minutes">Departed Udvada - UVD at 19:02 Delay: 05 minutes</string>
+
     <string-array name="daysofrun">
+
         <item>M</item>
         <item>T</item>
         <item>W</item>
@@ -65,6 +68,7 @@
         <item>S</item>
 
     </string-array>
+
     <string name="title_activity_live_train_status">LiveTrainStatusActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -75,4 +79,15 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_train_time">TrainTimeActivity</string>
+
+    <string name="imgDescription">Background Picture</string>
+    <string name="setting">setting</string>
+
+
+    <string name="share_app">Share App</string>
+    <string name="rate_app">Rate App</string>
+    <string name="feedback">FeedBack</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string name="mail_id">accurateweather806@gmail.com</string>
 </resources>

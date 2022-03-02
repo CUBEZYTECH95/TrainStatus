@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,8 @@ import com.example.trainlivestatus.utils.SharedPref.Companion.day_count
 import com.example.trainlivestatus.utils.SharedPref.Companion.facebook_url
 import com.example.trainlivestatus.utils.SharedPref.Companion.is_date
 import com.example.trainlivestatus.utils.Validation
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class FairInquiryActivity : AppCompatActivity() {
@@ -30,7 +34,6 @@ class FairInquiryActivity : AppCompatActivity() {
     var cityname1: String? = null
     private var date: String? = null
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,6 @@ class FairInquiryActivity : AppCompatActivity() {
         binding.etto.setText(SharedPref.getString(day_count))
         cityname = SharedPref.getString(city_from_st)
         cityname1 = SharedPref.getString(city_to_st)
-        binding.tvSelectDate.setText(SharedPref.getString(is_date))
         binding.tvSelectDate.setText(SharedPref.getString(is_date))
 
         clickevent()
@@ -54,23 +56,19 @@ class FairInquiryActivity : AppCompatActivity() {
 
             onBackPressed()
         }
-
         binding.tvSelectDate.setTextIsSelectable(true)
         binding.tvSelectDate.isFocusable = false
         binding.tvSelectDate.isFocusableInTouchMode = false
-
         binding.tvSelectDate.setOnClickListener {
 
 
             openpicker()
 
         }
-
         binding.ivOpenCal.setOnClickListener {
 
             openpicker()
         }
-
         binding.tvGetStart.setOnClickListener {
 
             if (TrainPays.isNetConnectionAvailable()) {
@@ -105,6 +103,7 @@ class FairInquiryActivity : AppCompatActivity() {
                                 intent.putExtra("cityname1", cityname1)
                                 intent.putExtra("date", date)
                                 startActivity(intent)
+
 
                             } else {
 
@@ -148,18 +147,15 @@ class FairInquiryActivity : AppCompatActivity() {
 
 
         }
-
         binding.etfrom.setOnClickListener {
 
             val intent = Intent(this@FairInquiryActivity, FindStationActivity::class.java)
             startActivityForResult(intent, 1)
         }
-
         binding.etto.setOnClickListener {
             val intent = Intent(this@FairInquiryActivity, FindStationActivity::class.java)
             startActivityForResult(intent, 2)
         }
-
         binding.swip.setOnClickListener {
             val from = binding.etfrom.text.toString().trim()
             val to = binding.etto.text.toString().trim()
@@ -205,7 +201,7 @@ class FairInquiryActivity : AppCompatActivity() {
 
                     citycode1 = data.getStringExtra("citycode")
                     cityname1 = data.getStringExtra("cityname")
-                    citycode1 = citycode1!!.replace("\"", "")
+                    citycode1 = citycode1?.replace("\"", "")
                     SharedPref.putString(day_count, citycode1)
                     SharedPref.putString(city_to_st, cityname1)
                     binding.etto.setText(citycode1)
@@ -214,27 +210,33 @@ class FairInquiryActivity : AppCompatActivity() {
         }
     }
 
-    fun openpicker() {
+    private fun openpicker() {
 
         val calendar = Calendar.getInstance()
         val day = calendar[Calendar.DAY_OF_MONTH]
         val year = calendar[Calendar.YEAR]
         val month = calendar[Calendar.MONTH]
 
-        datePickerDialog = DatePickerDialog(
-
-            this@FairInquiryActivity, R.style.DatePickerTheme,
-
-            { view, year, month, dayOfMonth ->
+        datePickerDialog = DatePickerDialog(this@FairInquiryActivity, R.style.DatePickerTheme,
+            { _, year, month, dayOfMonth ->
 
                 date = dayOfMonth.toString() + "-" + (month + 1) + "-" + year
                 binding.tvSelectDate.setText(date)
+                SharedPref.putString(is_date,date)
             }, year, month, day
         )
+
         datePickerDialog!!.datePicker.minDate = System.currentTimeMillis() - 1000
+
+        //tommorow
+        /*datePickerDialog!!.datePicker.minDate = System.currentTimeMillis()+(1000*24*60*60)*/
+
         datePickerDialog!!.show()
         datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(R.color.colorYellow))
         datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(R.color.colorYellow))
     }
+
+
+
 
 }

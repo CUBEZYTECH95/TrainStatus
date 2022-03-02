@@ -84,9 +84,10 @@ class CallLiveStationActivity : BaseClass() {
 
         if (TrainPays.isNetConnectionAvailable()) {
 
-           /* binding.progressCircular.visibility = View.VISIBLE*/
+            /* binding.progressCircular.visibility = View.VISIBLE*/
 
             val apiInterface: ApiInterface = getclient(CommonUtil.API_URL1).create(ApiInterface::class.java)
+
             val jsonob = JsonObject()
             jsonob.addProperty("NextHours", NextHours)
             jsonob.addProperty("StationFromCode", code)
@@ -126,7 +127,7 @@ class CallLiveStationActivity : BaseClass() {
 
                         when (response.code()) {
 
-                            404 ->  handler.postDelayed({ //Do something after 5000ms
+                            404 -> handler.postDelayed({ //Do something after 5000ms
 
                                 /*binding.progressCircular.visibility = View.GONE*/
 
@@ -139,8 +140,7 @@ class CallLiveStationActivity : BaseClass() {
 
                             }, 2000)
 
-
-                            500 ->  handler.postDelayed({ //Do something after 5000ms
+                            500 -> handler.postDelayed({ //Do something after 5000ms
 
                                 /*binding.progressCircular.visibility = View.GONE*/
 
@@ -151,7 +151,6 @@ class CallLiveStationActivity : BaseClass() {
                                 ).show()
 
                             }, 2000)
-
 
                             else -> handler.postDelayed({ //Do something after 5000ms
 
@@ -193,7 +192,7 @@ class CallLiveStationActivity : BaseClass() {
 
             handler.postDelayed({ //Do something after 5000ms
 
-               /* binding.progressCircular.visibility = View.GONE*/
+                /* binding.progressCircular.visibility = View.GONE*/
 
                 Toast.makeText(
                     this@CallLiveStationActivity,
@@ -214,7 +213,8 @@ class CallLiveStationActivity : BaseClass() {
 
             /*binding.progressCircular.visibility = View.VISIBLE*/
 
-            val apiInterface: ApiInterface = getclient(CommonUtil.API_URL2).create(ApiInterface::class.java)
+            val apiInterface: ApiInterface =
+                getclient(CommonUtil.API_URL2).create(ApiInterface::class.java)
 
             val jsonob = JsonObject()
             jsonob.addProperty("jsonIn", jsonin)
@@ -237,11 +237,11 @@ class CallLiveStationActivity : BaseClass() {
 
                         } else {
 
-                           /* handler.postDelayed({ //Do something after 5000ms
+                            /* handler.postDelayed({ //Do something after 5000ms
 
-                                binding.progressCircular.visibility = View.GONE
+                                 binding.progressCircular.visibility = View.GONE
 
-                            }, 2000)*/
+                             }, 2000)*/
                         }
                     } else {
 
@@ -375,39 +375,22 @@ class CallLiveStationActivity : BaseClass() {
 
                                         jsonObject2 = JSONObject(secpnd)
 
-                                        val jsonArray =
-                                            jsonObject2.getJSONArray("liveStationModels")
+                                        val jsonArray = jsonObject2.getJSONArray("liveStationModels")
 
                                         for (i in 0 until jsonArray.length()) {
 
-                                            TrainName =
-                                                jsonArray.getJSONObject(i).getString("TrainName")
-                                            TrainNumber =
-                                                jsonArray.getJSONObject(i).getString("TrainNumber")
-                                            ScheduleArr =
-                                                jsonArray.getJSONObject(i).getString("ScheduleArr")
-                                            ExpectedArr =
-                                                jsonArray.getJSONObject(i).getString("ExpectedArr")
-                                            ExpectedArrColor =
-                                                jsonArray.getJSONObject(i)
-                                                    .getString("ExpectedArrColor")
-                                            DelayArr =
-                                                jsonArray.getJSONObject(i).getString("DelayArr")
-                                            DelayArrColor =
-                                                jsonArray.getJSONObject(i)
-                                                    .getString("DelayArrColor")
-                                            ScheduleDep =
-                                                jsonArray.getJSONObject(i).getString("ScheduleDep")
-                                            ExpectedDep =
-                                                jsonArray.getJSONObject(i).getString("ExpectedDep")
-                                            ExpectedDepColor =
-                                                jsonArray.getJSONObject(i)
-                                                    .getString("ExpectedDepColor")
-                                            DelayDep =
-                                                jsonArray.getJSONObject(i).getString("DelayDep")
-                                            DelayDepColor =
-                                                jsonArray.getJSONObject(i)
-                                                    .getString("DelayDepColor")
+                                            TrainName = jsonArray.getJSONObject(i).getString("TrainName")
+                                            TrainNumber = jsonArray.getJSONObject(i).getString("TrainNumber")
+                                            ScheduleArr = jsonArray.getJSONObject(i).getString("ScheduleArr")
+                                            ExpectedArr = jsonArray.getJSONObject(i).getString("ExpectedArr")
+                                            ExpectedArrColor = jsonArray.getJSONObject(i).getString("ExpectedArrColor")
+                                            DelayArr = jsonArray.getJSONObject(i).getString("DelayArr")
+                                            DelayArrColor = jsonArray.getJSONObject(i).getString("DelayArrColor")
+                                            ScheduleDep = jsonArray.getJSONObject(i).getString("ScheduleDep")
+                                            ExpectedDep = jsonArray.getJSONObject(i).getString("ExpectedDep")
+                                            ExpectedDepColor = jsonArray.getJSONObject(i).getString("ExpectedDepColor")
+                                            DelayDep = jsonArray.getJSONObject(i).getString("DelayDep")
+                                            DelayDepColor = jsonArray.getJSONObject(i).getString("DelayDepColor")
                                             ExpPF = jsonArray.getJSONObject(i).getString("ExpPF")
 
 
@@ -424,8 +407,7 @@ class CallLiveStationActivity : BaseClass() {
                                                 ExpectedDepColor,
                                                 DelayDep,
                                                 DelayDepColor,
-                                                ExpPF
-                                            )
+                                                ExpPF)
 
                                             objects.add(model)
 
@@ -436,13 +418,8 @@ class CallLiveStationActivity : BaseClass() {
                                         binding.tvErrro.visibility = View.GONE
                                         binding.text.text = mes
 
-                                        binding.rvLiveStation.layoutManager =
-                                            LinearLayoutManager(this@CallLiveStationActivity)
-                                        binding.rvLiveStation.adapter =
-                                            LiveStationAdapter(
-                                                this@CallLiveStationActivity,
-                                                objects
-                                            )
+                                        binding.rvLiveStation.layoutManager = LinearLayoutManager(this@CallLiveStationActivity)
+                                        binding.rvLiveStation.adapter = LiveStationAdapter(this@CallLiveStationActivity, objects)
 
                                     } else {
 
@@ -451,21 +428,17 @@ class CallLiveStationActivity : BaseClass() {
                                         binding.tvErrro.visibility = View.VISIBLE
                                         binding.tvErrro.text = first
                                     }
+
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
 
-
                             } else {
 
-                                handler.postDelayed({ //Do something after 5000ms
+                                handler.postDelayed({
 
                                     binding.progressCircular.visibility = View.GONE
-                                    Toast.makeText(
-                                        this@CallLiveStationActivity,
-                                        "Data not Available",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this@CallLiveStationActivity, R.string.please_internet, Toast.LENGTH_SHORT).show()
 
                                 }, 2000)
                             }
@@ -478,7 +451,7 @@ class CallLiveStationActivity : BaseClass() {
 
                                 Toast.makeText(
                                     this@CallLiveStationActivity,
-                                    "Data not Available",
+                                    R.string.please_internet,
                                     Toast.LENGTH_SHORT
                                 ).show()
 
@@ -493,11 +466,11 @@ class CallLiveStationActivity : BaseClass() {
                                 handler.postDelayed({ //Do something after 5000ms
 
                                     binding.progressCircular.visibility = View.GONE
+
                                     Toast.makeText(
                                         this@CallLiveStationActivity,
-                                        "404 not found",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                        R.string.please_internet,
+                                        Toast.LENGTH_SHORT).show()
 
 
                                 }, 2000)
@@ -511,7 +484,7 @@ class CallLiveStationActivity : BaseClass() {
 
                                     Toast.makeText(
                                         this@CallLiveStationActivity,
-                                        "500 server broken",
+                                        R.string.please_internet,
                                         Toast.LENGTH_SHORT
                                     ).show()
 
@@ -526,7 +499,7 @@ class CallLiveStationActivity : BaseClass() {
 
                                     Toast.makeText(
                                         this@CallLiveStationActivity,
-                                        "unknown error",
+                                        R.string.please_internet,
                                         Toast.LENGTH_SHORT
                                     ).show()
 

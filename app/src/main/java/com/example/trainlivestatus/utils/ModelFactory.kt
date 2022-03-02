@@ -9,7 +9,6 @@ import com.example.trainlivestatus.viewmodel.MainViewModel
 class ModelFactory(private val mainRespository: MainRespository) :
     ViewModelProvider.Factory {
 
-
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         return MainViewModel(mainRespository) as T

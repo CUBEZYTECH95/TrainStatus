@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.model.CategoryModel
@@ -25,14 +26,10 @@ import java.util.concurrent.TimeUnit
 
 open class BaseClass : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    // This could be moved into an abstract BaseActivity
-    // class for being re-used by several instances
     protected fun setFragment(containerId: FrameLayout, fragment: Fragment?) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -73,6 +70,8 @@ open class BaseClass : AppCompatActivity() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+
                 query.value = p0.toString()
             }
 
@@ -80,9 +79,9 @@ open class BaseClass : AppCompatActivity() {
                 // afterTextChanged
             }
         })
+
         return query
     }
-
 
     suspend fun ProgressBar.setVisible() {
         withContext(Dispatchers.Main) {
@@ -98,5 +97,7 @@ open class BaseClass : AppCompatActivity() {
             scope?.invoke()
         }
     }
+
+
 
 }

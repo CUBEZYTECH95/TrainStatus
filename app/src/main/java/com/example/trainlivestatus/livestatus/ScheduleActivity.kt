@@ -43,7 +43,6 @@ class ScheduleActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_schedule)
 
-
         binding.rvToolbar.setNavigationOnClickListener {
 
             onBackPressed()
@@ -55,7 +54,6 @@ class ScheduleActivity : AppCompatActivity() {
         firstAc = intent.getStringExtra("1a")
         secoundAc = intent.getBooleanExtra("2a", false)
         thirdAc = intent.getBooleanExtra("3a", false)
-
 
         val format1 = SimpleDateFormat("dd-MM-yyyy")
         var dt1: Date? = null
@@ -91,8 +89,7 @@ class ScheduleActivity : AppCompatActivity() {
 
                 override fun onResponse(
                     call: Call<RouteStationModel?>,
-                    response: Response<RouteStationModel?>
-                ) {
+                    response: Response<RouteStationModel?>) {
 
                     binding.progressCircular.visibility = View.GONE
 
@@ -104,8 +101,7 @@ class ScheduleActivity : AppCompatActivity() {
 
                         if (searchStationModel != null) {
 
-                            val listItemList: List<TrainBtwnStnsListItem>? =
-                                searchStationModel.trainBtwnStnsList as List<TrainBtwnStnsListItem>?
+                            val listItemList: List<TrainBtwnStnsListItem>? = searchStationModel.trainBtwnStnsList as List<TrainBtwnStnsListItem>?
 
                             if (listItemList != null && listItemList.isNotEmpty()) {
 
@@ -117,9 +113,13 @@ class ScheduleActivity : AppCompatActivity() {
 
                                         if (listItemList[i].runningFri.equals("Y")) {
                                             if (firstAc == null) {
+
                                                 filteredList.toMutableList().add(listItemList[i])
+
                                             } else {
+
                                                 if (firstAc == "First A/C") {
+
                                                     if (listItemList[i].avaiblitycache!!.jsonMember1A != null) {
                                                         filteredList.toMutableList()
                                                             .add(listItemList[i])

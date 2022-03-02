@@ -46,6 +46,8 @@
                     android:background="@drawable/white_round_bg"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
                     android:drawablePadding="@dimen/_12sdp"
                     android:fontFamily="@font/poppins_medium"
                     android:hint="@string/search_by_train_no_or_name"
@@ -64,8 +66,8 @@
                 android:id="@+id/progress_circular"
                 android:layout_width="@dimen/_18sdp"
                 android:layout_height="@dimen/_18sdp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:indeterminateTint="@color/colorYellow"
                 android:visibility="gone" />
@@ -270,7 +272,7 @@
                             android:focusable="true"
                             android:focusableInTouchMode="false"
                             android:fontFamily="@font/poppins_medium"
-                            android:hint="4-8-2021"
+                            android:hint="Departure date"
                             android:longClickable="false"
                             android:textColor="#22242B"
                             android:textSize="@dimen/_12sdp" />
@@ -322,7 +324,7 @@
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginRight="@dimen/_12sdp"
             android:background="@color/white"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:listitem="@layout/train_autocomp_item" />
 
 

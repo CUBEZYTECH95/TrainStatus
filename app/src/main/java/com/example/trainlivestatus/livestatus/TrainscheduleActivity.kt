@@ -35,10 +35,8 @@ class TrainscheduleActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_trainschedule)
 
-
         /*binding.tvStations.setText(SharedPrefs.getString(SharedPrefs.userSharedPrefData.scheduledFrom))
         binding.etTo.setText(SharedPrefs.getString(SharedPrefs.userSharedPrefData.scheduledTo))*/
-
 
         binding.rvToolbar.setNavigationOnClickListener {
 
@@ -53,8 +51,6 @@ class TrainscheduleActivity : AppCompatActivity() {
         list.add(ClassSelectionModel(null, getString(R.string.excutive_anubhuti)))
         list.add(ClassSelectionModel(null, getString(R.string.secound_seating)))
         list.add(ClassSelectionModel(null, getString(R.string.sleeper)))
-
-
 
         binding.apply {
 
@@ -195,7 +191,6 @@ class TrainscheduleActivity : AppCompatActivity() {
 
 
         }
-
 
     }
 

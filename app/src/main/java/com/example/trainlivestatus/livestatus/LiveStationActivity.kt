@@ -20,10 +20,8 @@ import com.example.trainlivestatus.utils.Validation
 class LiveStationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLiveStationBinding
-
     private var citycode: String? = null
     private var citycode1: String? = null
-    private val date: String? = null
     var cityname: String? = null
     var select: String? = null
 
@@ -114,7 +112,6 @@ class LiveStationActivity : AppCompatActivity() {
 
     }
 
-
     override fun onRestart() {
         super.onRestart()
         binding.etfrom.setText(SharedPref.getString(facebook_url))
@@ -124,10 +121,13 @@ class LiveStationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == RESULT_OK) {
+
             if (requestCode == 1) {
+
                 if (data != null) {
+
                     citycode = data.getStringExtra("citycode")
-                    citycode = citycode!!.replace("\"", "")
+                    citycode = citycode?.replace("\"", "")
                     SharedPref.putString(facebook_url, citycode)
                     binding.etfrom.setText(citycode)
                 }
@@ -146,9 +146,9 @@ class LiveStationActivity : AppCompatActivity() {
         }
     }
 
-
     @SuppressLint("NonConstantResourceId")
     fun onRadioButtonClicked(view: View) {
+
         val checked = (view as RadioButton).isChecked
         var str = ""
         when (view.getId()) {

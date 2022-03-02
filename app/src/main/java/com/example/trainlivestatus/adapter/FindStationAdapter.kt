@@ -16,10 +16,9 @@ import java.util.*
 
 class FindStationAdapter(
     var context: Activity,
-    var arrayList: List<FindStationModel>,
-    var contactListFiltered: List<FindStationModel>? = null
+    var arrayList: MutableList<FindStationModel>,
+    var contactListFiltered: MutableList<FindStationModel>? = null
 ) : RecyclerView.Adapter<FindStationAdapter.Holder>(), Filterable {
-
 
     init {
 
@@ -68,6 +67,7 @@ class FindStationAdapter(
     }
 
     override fun getItemCount(): Int {
+
         return arrayList.size
     }
 
@@ -75,6 +75,13 @@ class FindStationAdapter(
 
         return customFilter
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clear() {
+
+        arrayList.clear()
+        notifyDataSetChanged()
     }
 
     private val customFilter = object : Filter() {
@@ -111,7 +118,7 @@ class FindStationAdapter(
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(p0: CharSequence?, results: FilterResults?) {
 
-            arrayList = results?.values as List<FindStationModel>
+            arrayList = results?.values as MutableList<FindStationModel>
             notifyDataSetChanged()
         }
 

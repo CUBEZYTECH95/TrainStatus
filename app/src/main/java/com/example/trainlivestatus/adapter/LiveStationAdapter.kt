@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,7 @@ import com.example.trainlivestatus.livestatus.LiveTrainActivity
 import com.example.trainlivestatus.model.LiveModel
 
 
-class LiveStationAdapter(val context: Context, val list: List<Any?> ) :
+class LiveStationAdapter(val context: Context, val list: List<Any?>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class LiveStationHolder(itemView: LiveStation1Binding) :
@@ -119,7 +118,6 @@ class LiveStationAdapter(val context: Context, val list: List<Any?> ) :
     }
 
     override fun getItemCount(): Int {
-        Log.e("TAG", "getItemCount: ${list.size}")
         return list.size
     }
 }

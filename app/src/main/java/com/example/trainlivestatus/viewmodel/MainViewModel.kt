@@ -12,12 +12,9 @@ import com.example.trainlivestatus.repository.MainRespository
 import com.example.trainlivestatus.trainavaimodel.SeatAvailabilityModel
 import com.example.trainlivestatus.trainavaimodel.TopCalModel
 import com.example.trainlivestatus.trainavaimodel.TrainsItem
-import com.google.gson.JsonObject
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,12 +35,10 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var TopcalModelList: MutableLiveData<List<TrainsItem>> = MutableLiveData<List<TrainsItem>>()
     var monthlyAvaModel: MutableLiveData<List<SeatAvailabilityModel>> =
         MutableLiveData<List<SeatAvailabilityModel>>()
-
     var objects: MutableLiveData<Any?> = MutableLiveData<Any?>()
-
     val postData: MutableLiveData<List<NameOrCodeModelItem>> = MutableLiveData()
     val articles: MutableList<FindStationModel> = mutableListOf()
-    val ar= MutableLiveData<List<FindStationModel>>()
+    val ar = MutableLiveData<List<FindStationModel>>()
     var mon = MutableLiveData<Int>()
     var tue = MutableLiveData<Int>()
     var wed = MutableLiveData<Int>()
@@ -53,7 +48,6 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
     var sun = MutableLiveData<Int>()
     var secpnd: String? = null
     var first: String? = null
-
     var recyclerview_flag = MutableLiveData<Boolean>()
 
     companion object {
@@ -73,7 +67,6 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
         var ExpPF: String? = null
 
     }
-
 
     fun safeBreakingNewsCall(from: String?, to: String?, date: String?) {
 
@@ -266,6 +259,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
         local: String?,
         showclass: Boolean
     ) {
+
         if (TrainPays.isNetConnectionAvailable()) {
 
             recyclerview_flag.value = false
@@ -295,14 +289,15 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                         val liveStatusResponse: TopCalModel? = response.body()
 
-                        if (liveStatusResponse?.trains != null && liveStatusResponse.trains.isNotEmpty()) {
+                        if (liveStatusResponse?.trains.isNullOrEmpty()) {
 
-                            for (i in liveStatusResponse.trains.indices) {
+                            showLoadingProg.value = false
+                            recyclerview_flag.value = false
+                            errorMessage.value = "No trains available between the inputted stations"
 
-                                /*if (i == 0) {
+                        } else {
 
-                                    trainname.postValue(liveStatusResponse.trains[i]?.trainNo.toString() + "-" + liveStatusResponse.trains[i]?.trainName)
-                                }*/
+                            for (i in liveStatusResponse?.trains?.indices!!) {
 
                                 if (i == 0) {
 
@@ -322,6 +317,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                                         tue.postValue(R.color.colore_d)
                                     }
+
                                     if (!liveStatusResponse.trains[i]?.daysOfRun?.wed!!) {
                                         wed.postValue(R.color.colorGray)
                                     } else {
@@ -350,21 +346,12 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                                 }
                             }
                             TopcalModelList.postValue(liveStatusResponse.trains as List<TrainsItem>?)
-
-                        } else {
-
-                            /**
-                             * No trains available between the inputted stations
-                             */
-
-                            recyclerview_flag.value = false
-                            showLoadingProg.value = false
-                            errorMessage.value = "No trains available between the inputted stations"
-
                         }
+
 
                     } else {
 
+                        showLoadingProg.value = false
                         recyclerview_flag.value = false
 
                         when (response.code()) {
@@ -390,6 +377,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
             showLoadingProg.value = false
             errorMessage.value = "Check your Internet Connection"
         }
+
     }
 
 
@@ -436,6 +424,7 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                         } else {
 
+                            calanderLoadingProg.value = false
 
                         }
 
@@ -469,155 +458,30 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
     }
 
-    fun laststioncall(NextHours: String?, code: String?, cityname: String?, jsonIn1: String?) {
+    fun gettrainby(name: String) {
 
-        if (TrainPays.isNetConnectionAvailable()) {
+        showLoadingProg.value = true
 
-            showLoadingProg.value = true
+        val call: Call<List<NameOrCodeModelItem>> = mainRespository.searchtrainby(name)
 
-            val jsonObject = JsonObject()
-            jsonObject.addProperty("NextHours", NextHours)
-            jsonObject.addProperty("StationFromCode", code)
-            jsonObject.addProperty("fromUrl", "https://enquiry.indianrail.gov.in/crisns/AppServAnd")
-            jsonObject.addProperty("FromStation", cityname)
-            val obj = JsonObject()
-            obj.addProperty("jsonIn", jsonIn1)
-            jsonObject.addProperty("responseString", obj.toString())
-            jsonObject.addProperty("key_version", "pnr_ios_key_v1")
+        call.enqueue(object : Callback<List<NameOrCodeModelItem>> {
 
-            val call = mainRespository.finalcallstation(jsonObject)
+            override fun onResponse(
+                call: Call<List<NameOrCodeModelItem>>,
+                response: Response<List<NameOrCodeModelItem>>
+            ) {
 
-            call!!.enqueue(object : Callback<JsonObject?> {
+                showLoadingProg.value = false
 
-                override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                postData.value = response.body()
+            }
 
-                    if (response.isSuccessful) {
+            override fun onFailure(call: Call<List<NameOrCodeModelItem>>, t: Throwable) {
 
-                        val jsonObject = response.body()
+                showLoadingProg.value = false
+            }
 
-                        if (jsonObject != null) {
-
-                            val jsonObject1 = jsonObject.getAsJsonObject("pair")
-
-                            if (jsonObject1 != null) {
-
-                                first =
-                                    if (jsonObject1["first"].isJsonNull) null else jsonObject1["first"].asString
-
-                                secpnd =
-                                    if (jsonObject1["second"].isJsonNull) null else jsonObject1["second"].asString
-
-                                try {
-
-                                    val jsonObject2: JSONObject
-
-                                    if (secpnd != null && secpnd!!.isNotEmpty()) {
-
-                                        jsonObject2 = JSONObject(secpnd)
-
-                                        val jsonArray =
-                                            jsonObject2.getJSONArray("liveStationModels")
-
-                                        for (i in 0 until jsonArray.length()) {
-
-                                            TrainName =
-                                                jsonArray.getJSONObject(i).getString("TrainName")
-                                            TrainNumber =
-                                                jsonArray.getJSONObject(i).getString("TrainNumber")
-                                            ScheduleArr =
-                                                jsonArray.getJSONObject(i).getString("ScheduleArr")
-                                            ExpectedArr =
-                                                jsonArray.getJSONObject(i).getString("ExpectedArr")
-                                            ExpectedArrColor = jsonArray.getJSONObject(i)
-                                                .getString("ExpectedArrColor")
-                                            DelayArr =
-                                                jsonArray.getJSONObject(i).getString("DelayArr")
-                                            DelayArrColor = jsonArray.getJSONObject(i)
-                                                .getString("DelayArrColor")
-                                            ScheduleDep =
-                                                jsonArray.getJSONObject(i).getString("ScheduleDep")
-                                            ExpectedDep =
-                                                jsonArray.getJSONObject(i).getString("ExpectedDep")
-                                            ExpectedDepColor = jsonArray.getJSONObject(i)
-                                                .getString("ExpectedDepColor")
-                                            DelayDep =
-                                                jsonArray.getJSONObject(i).getString("DelayDep")
-                                            DelayDepColor = jsonArray.getJSONObject(i)
-                                                .getString("DelayDepColor")
-                                            ExpPF = jsonArray.getJSONObject(i).getString("ExpPF")
-
-                                            val model = LiveModel(
-                                                TrainName,
-                                                TrainNumber,
-                                                ScheduleArr,
-                                                ExpectedArr,
-                                                ExpectedArrColor,
-                                                DelayArr,
-                                                DelayArrColor,
-                                                ScheduleDep,
-                                                ExpectedDep,
-                                                ExpectedDepColor,
-                                                DelayDep,
-                                                DelayDepColor,
-                                                ExpPF
-                                            )
-
-
-                                            objects.value = model
-
-                                        }
-
-                                        /*mes = jsonObject2.getString("TitleMessage")
-                                        binding.text.setVisibility(View.VISIBLE)
-                                        binding.tvErrro.setVisibility(View.GONE)
-                                        binding.text.setText(mes)*/
-
-                                    } else {
-
-                                        /* binding.progressBar.setVisibility(View.GONE)
-                                         binding.text.setVisibility(View.GONE)
-                                         binding.tvErrro.setVisibility(View.VISIBLE)
-                                         binding.tvErrro.setText(first)*/
-                                    }
-                                } catch (e: JSONException) {
-                                    e.printStackTrace()
-                                }
-
-
-                            } else {
-
-
-                            }
-
-                        } else {
-
-                        }
-
-                    } else {
-
-                        when (response.code()) {
-
-                            404 -> errorMessage.setValue("404 not found")
-                            500 -> errorMessage.setValue("500 server broken")
-                            else -> errorMessage.setValue("unknown error")
-                        }
-                    }
-
-                }
-
-                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-
-                }
-
-
-            })
-
-        } else {
-
-            showLoadingProg.value = false
-            errorMessage.setValue("Data not Available")
-        }
-
+        })
     }
 
     fun getPost(name: String) {
@@ -636,14 +500,23 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                 }
 
         }
+
     }
 
-    @OptIn(FlowPreview::class)
+    /*suspend fun fetchnamecode(id: String): Flow<List<NameOrCodeModelItem>> {
+        return flow {
+            val comment = api.nameorcode(id, "getTrainByNameOrCode")
+            delay(2000)
+            emit(comment)
+        }.flowOn(Dispatchers.IO)
+    }*/
+
+    /*@OptIn(FlowPreview::class)
     fun getfindstationcall() {
 
         viewModelScope.launch {
 
-            mainRespository.findstationcall().debounce(600).catch {e -> Log.d("main", "getPost: ${e.message}") }.distinctUntilChanged().collect {
+            mainRespository.findstationcall().collect {
 
                 it?.forEach { it ->
 
@@ -655,13 +528,12 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
                     val stationModel = FindStationModel(citycode, cityname, citylocale)
 
                     articles.add(stationModel)
-
                     ar.value=articles
 
                 }
             }
 
-           /* mainRespository.findstationcall()
+           *//* mainRespository.findstationcall()
 
                 .catch { e ->
 
@@ -684,9 +556,9 @@ class MainViewModel constructor(private val mainRespository: MainRespository) : 
 
                     }
 
-                }*/
+                }*//*
 
         }
-    }
+    }*/
 
 }

@@ -11,29 +11,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
 import com.example.trainlivestatus.clicklistner.TrainClickListener
 import com.example.trainlivestatus.databinding.TrainNameItemBinding
+import com.example.trainlivestatus.model.FindStationModel
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchTrainAdapter(
-    val context: Context, val list: ArrayList<String>,
-    val trainClickListener: TrainClickListener
+    val context: Context, var list: ArrayList<String>,
+    private val trainClickListener: TrainClickListener,
+    private  var fList: ArrayList<String>? = null
 ) : RecyclerView.Adapter<SearchTrainAdapter.TrainNoViewHolder>(), Filterable {
 
     private var f1: String? = null
     private var f2: String? = null
     private var f3: String? = null
     private var f4: String? = null
-    var fList: List<String>? = null
 
     init {
 
-        fList = this.list
+        this.fList = list
     }
 
-
-    class TrainNoViewHolder(itemView: TrainNameItemBinding) :
-        RecyclerView.ViewHolder(itemView.root) {
-
+    class TrainNoViewHolder(itemView: TrainNameItemBinding) : RecyclerView.ViewHolder(itemView.root) {
 
         val binding: TrainNameItemBinding = itemView
 
@@ -65,7 +63,6 @@ class SearchTrainAdapter(
             val s2 = split[1]
 
             val t1 = s2.split("-").toTypedArray()
-
 
             if (t1.size == 2) {
                 if (t1[0] != null) {
@@ -121,6 +118,11 @@ class SearchTrainAdapter(
         return imageFilter
     }
 
+    fun clear() {
+
+        list.clear()
+    }
+
     private val imageFilter: Filter = object : Filter() {
 
         override fun performFiltering(constraint: CharSequence): FilterResults {
@@ -128,14 +130,15 @@ class SearchTrainAdapter(
             if (constraint.isEmpty()) {
                 filteredList.addAll(fList!!)
             } else {
-                val filteredPattern =
-                    constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+                val filteredPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
                 for (s in fList!!) {
+
                     if (s.lowercase(Locale.getDefault()).contains(filteredPattern)) {
                         filteredList.add(s)
                     }
                 }
             }
+
             val filterResults = FilterResults()
             filterResults.values = filteredList
             return filterResults
@@ -144,8 +147,9 @@ class SearchTrainAdapter(
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
 
-            list.clear()
-            list.addAll(results.values as java.util.ArrayList<String>)
+            /*list.addAll(results.values as MutableList<String>)*/
+
+            list = results.values as ArrayList<String>
             notifyDataSetChanged()
         }
     }

@@ -65,12 +65,13 @@ class TrainTimeActivity : AppCompatActivity() {
 
         binding.rvToolbar.setOnMenuItemClickListener {
 
-            when (it.itemId) {
+                when (it.itemId) {
 
-                R.id.share -> {
+                    R.id.share -> {
+
+                    }
                 }
-            }
-            true
+                true
         }
 
         val intent = intent
@@ -88,45 +89,15 @@ class TrainTimeActivity : AppCompatActivity() {
 
         }
 
+
     }
 
     @SuppressLint("SetTextI18n")
     fun topitemcall() {
 
-        mainViewModel = ViewModelProvider(
-            this,
-            ModelFactory(MainRespository(apiInterface))
-        )[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this, ModelFactory(MainRespository(apiInterface)))[MainViewModel::class.java]
 
-        mainViewModel.topseatcalander(
-            from,
-            to,
-            date,
-            "ZZ",
-            "4c266f54-988a-477d-bd6c-4981c124a80a",
-            true,
-            "en",
-            true)
-
-        mainViewModel.TopcalModelList.observe(this) {
-
-            getTrainCalender(speakfromlangcode)
-
-            for (i in it.indices) {
-
-                if (i == 0) {
-                    trainnum = it[i].trainNo
-                    trainname = it[i].trainName
-                    binding.tvtrainnum.text = "$trainnum - $trainname"
-                    getTrainCalender(speakfromlangcode)
-                }
-
-                names.add(
-                    SpinnerModel(it[i].trainNo, it[i].trainName, it[i].daysOfRun)
-                )
-                spinner(names)
-            }
-        }
+        mainViewModel.topseatcalander(from, to, date, "ZZ", "4c266f54-988a-477d-bd6c-4981c124a80a", true, "en", true)
 
         mainViewModel.errorMessage.observe(this) {
 
@@ -156,6 +127,24 @@ class TrainTimeActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.GONE
             }
         }
+
+        mainViewModel.TopcalModelList.observe(this) {
+
+            for (i in it.indices) {
+
+                if (i == 0) {
+
+                    trainnum = it[i].trainNo
+                    trainname = it[i].trainName
+                    binding.tvtrainnum.text = "$trainnum - $trainname"
+                    getTrainCalender(speakfromlangcode)
+                }
+
+                names.add(SpinnerModel(it[i].trainNo, it[i].trainName, it[i].daysOfRun))
+                spinner(names)
+            }
+        }
+
 
         mainViewModel.mon.observe(
             this
@@ -284,15 +273,7 @@ class TrainTimeActivity : AppCompatActivity() {
 
     private fun getTrainCalender(speakfromlangcode: String) {
 
-        mainViewModel.tarintimecalander(
-            trainnum,
-            from,
-            to,
-            date,
-            "1A,2A,3A,SL",
-            speakfromlangcode,
-            CommonUtil.api_key
-        )
+        mainViewModel.tarintimecalander(trainnum, from, to, date, "1A,2A,3A,SL", speakfromlangcode, CommonUtil.api_key)
 
         mainViewModel.monthlyAvaModel.observe(this) {
 
@@ -301,12 +282,12 @@ class TrainTimeActivity : AppCompatActivity() {
                 val calendar: Calendar = GregorianCalendar()
                 calendar.add(Calendar.DATE, i)
                 datelist.add(calendar.time)
-
             }
 
             val adapter = TrainTimeAdapter(this@TrainTimeActivity, it, datelist)
             binding.rvtimetable.layoutManager = LinearLayoutManager(this@TrainTimeActivity)
             binding.rvtimetable.adapter = adapter
+
         }
 
         mainViewModel.calanderLoadingProg.observe(this) {
@@ -320,11 +301,11 @@ class TrainTimeActivity : AppCompatActivity() {
                 binding.progressCircular.visibility = View.GONE
             }
         }
+
         mainViewModel.calandermessage.observe(this) {
 
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
-
 
     }
 

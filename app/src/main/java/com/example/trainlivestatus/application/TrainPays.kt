@@ -3,14 +3,9 @@ package com.example.trainlivestatus.application
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class TrainPays : Application() {
@@ -58,11 +53,6 @@ class TrainPays : Application() {
         }
 
 
-    }
-
-
-    override fun onCreate() {
-        super.onCreate()
     }
 
 

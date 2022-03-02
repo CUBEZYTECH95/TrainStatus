@@ -78,7 +78,6 @@ class TrainTimeAdapter(
 
                         a1CurrentStatus.text = it.jsonMember1A.currentStatus
 
-
                     } else {
 
                         a1CurrentStatus.visibility = View.VISIBLE

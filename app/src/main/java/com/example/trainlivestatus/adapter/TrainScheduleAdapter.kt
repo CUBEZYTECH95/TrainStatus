@@ -22,15 +22,12 @@ import com.example.trainlivestatus.model.ScheduleItem
 
 class TrainScheduleAdapter(
     val context: Context,
-    val interstnModel: InterstnModel,
-    trainNo: String?
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val interstnModel: InterstnModel,
+    trainNo: String?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var trainNo: String? = null
 
-    class TrainNameViewHolder(itemview: TrainNameViewItemBinding) :
-        RecyclerView.ViewHolder(itemview.root) {
+    class TrainNameViewHolder(itemview: TrainNameViewItemBinding) : RecyclerView.ViewHolder(itemview.root) {
 
         val binding: TrainNameViewItemBinding = itemview
     }
@@ -246,7 +243,6 @@ class TrainScheduleAdapter(
 
         return 4
     }
-
 
     override fun getItemViewType(position: Int): Int {
         return if (position == TRAIN_NAME_TYPE) TRAIN_NAME_TYPE else if (position == COACH_POSITION_TYPE) COACH_POSITION_TYPE else if (position == TRAIN_DAY_TYPE) TRAIN_DAY_TYPE else TRAIN_DETAILS_TYPE

@@ -17,7 +17,6 @@ class SharedPref {
                 ?.getSharedPreferences(sharedPrefenceName, Context.MODE_PRIVATE)
         }
 
-
         var user_id = "user_id"
         var user_phone_number = "user_phone_number"
         var user_referral_code = "user_referral_code"
@@ -68,8 +67,6 @@ class SharedPref {
             getSharedPref()?.edit()?.remove(key)?.apply()
         }
 
-
-
         fun setPoints(value: Int) {
             getSharedPref()?.edit()?.putInt(total_points, value)?.apply()
         }
@@ -78,6 +75,14 @@ class SharedPref {
             return getSharedPref()?.getInt(total_points, 0)
         }
 
+        fun screensave(key: String?, value: Boolean) {
+
+            getSharedPref()?.edit()?.putBoolean(key, value)?.apply()
+        }
+
+        fun getsacrenn(key: String?): Boolean {
+            return getSharedPref()!!.getBoolean(key, false)
+        }
 
         fun getAdsTime(key: String?): Long? {
             return getSharedPref()?.getLong(wifi, 0)

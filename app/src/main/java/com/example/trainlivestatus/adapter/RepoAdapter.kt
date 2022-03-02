@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainlivestatus.R
+import com.example.trainlivestatus.clicklistner.TrainSeatClick
 import com.example.trainlivestatus.model.NameOrCodeModelItem
 
-class RepoAdapter constructor(val context: Context) :
+class RepoAdapter constructor(val context: Context,val trainSeatClick: TrainSeatClick) :
     ListAdapter<NameOrCodeModelItem, RecyclerView.ViewHolder>(DiffUtils) {
 
 
@@ -60,17 +60,15 @@ class RepoAdapter constructor(val context: Context) :
 
         holder.itemView.setOnClickListener {
 
-            Toast.makeText(context, "${photo.C}", Toast.LENGTH_SHORT).show()
+            trainSeatClick.click(photo)
 
         }
 
     }
 
-
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val tvTrainNo: TextView = view.findViewById(R.id.tv_train_no)
-
         val tv_train_name: TextView = view.findViewById(R.id.tv_train_name)
         val tv_source: TextView = view.findViewById(R.id.tv_source)
         val tv_destination: TextView = view.findViewById(R.id.tv_destination)
