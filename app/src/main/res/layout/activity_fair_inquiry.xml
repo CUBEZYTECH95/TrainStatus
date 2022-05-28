@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        tools:context=".livestatus.FairInquiryActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.FairInquiryActivity">
 
 
         <com.google.android.material.appbar.MaterialToolbar

@@ -5,8 +5,8 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:layout_margin="@dimen/_5sdp"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:text="(JAB) YAMUNA BRIDGE AGRA"
-                        android:textSize="8sp"
+                        android:textSize="@dimen/_7sdp"
                         tools:ignore="SmallSp" />
 
                     <ImageView
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
                         android:text="(JAB) YAMUNA BRIDGE AGRA"
-                        android:textSize="8sp"
+                        android:textSize="@dimen/_7sdp"
                         tools:ignore="SmallSp" />
 
                 </LinearLayout>
@@ -84,15 +84,15 @@
             android:id="@+id/tv_train_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="JAB - BXN PASSENGER"
-            android:textSize="11sp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/poppins_medium"/>
+            android:fontFamily="@font/poppins_medium"
+            android:text="JAB - BXN PASSENGER"
+            android:textSize="@dimen/_9sdp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorGray"/>
+            android:background="@color/colorGray" />
 
     </LinearLayout>
 </layout>

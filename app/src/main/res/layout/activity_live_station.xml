@@ -5,7 +5,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".livestatus.LiveStationActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.LiveStationActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
@@ -120,7 +120,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Form"
+                        android:text="@string/form"
                         android:textColor="#868383"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -137,7 +137,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/poppins_medium"
-                        android:hint="Where from?"
+                        android:hint="@string/where_from"
                         android:longClickable="false"
                         android:textColor="#22242B"
                         android:textSize="@dimen/_12sdp"
@@ -184,7 +184,7 @@
                         android:focusable="true"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/poppins_medium"
-                        android:hint="FromStation (optional)"
+                        android:hint="@string/fromstation_optional"
                         android:longClickable="false"
                         android:textColor="#22242B"
                         android:textSize="@dimen/_12sdp"
@@ -223,7 +223,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                        android:layout_marginTop="@dimen/_10sdp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Select Hours"
+                        android:text="@string/select_hours"
                         android:textColor="#868383"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -248,7 +248,7 @@
                             android:buttonTint="#22242B"
                             android:checked="true"
                             android:onClick="onRadioButtonClicked"
-                            android:text="2 Hours"
+                            android:text="@string/_2_hours"
                             android:textSize="@dimen/sp_16"
                             tools:ignore="UsingOnClickInXml" />
 
@@ -261,7 +261,7 @@
                             android:buttonTint="#22242B"
                             android:checked="false"
                             android:onClick="onRadioButtonClicked"
-                            android:text="3 Hours"
+                            android:text="@string/_3_hours"
                             android:textSize="@dimen/sp_16"
                             tools:ignore="UsingOnClickInXml" />
 
@@ -274,7 +274,7 @@
                             android:buttonTint="#22242B"
                             android:checked="false"
                             android:onClick="onRadioButtonClicked"
-                            android:text="4 Hours"
+                            android:text="@string/_4_hours"
                             android:textSize="@dimen/sp_16"
                             tools:ignore="UsingOnClickInXml" />
 

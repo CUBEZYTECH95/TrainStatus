@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        tools:context=".livestatus.LiveTrainActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.LiveTrainActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"

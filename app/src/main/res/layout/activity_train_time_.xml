@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".livestatus.TrainTimeActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.TrainTimeActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"
@@ -22,7 +22,7 @@
             android:id="@+id/rv_lay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_below="@id/rv_toolbar">
 
             <TextView

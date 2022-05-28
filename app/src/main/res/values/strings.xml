@@ -90,4 +90,12 @@
     <string name="privacy_policy">Privacy Policy</string>
 
     <string name="mail_id">accurateweather806@gmail.com</string>
+    <string name="train_running_status_offline">Train Running Status Offline</string>
+    <string name="where_from">Where from?</string>
+    <string name="form">Form</string>
+    <string name="fromstation_optional">FromStation (optional)</string>
+    <string name="select_hours">Select Hours</string>
+    <string name="_2_hours">2 Hours</string>
+    <string name="_3_hours">3 Hours</string>
+    <string name="_4_hours">4 Hours</string>
 </resources>

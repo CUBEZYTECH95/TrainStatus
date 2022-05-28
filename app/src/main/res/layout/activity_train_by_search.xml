@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FAF6F5F5"
-        tools:context=".livestatus.TrainBySearchActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.TrainBySearchActivity">
 
         <LinearLayout
             android:id="@+id/appBarLayout"

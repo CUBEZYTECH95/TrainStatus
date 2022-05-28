@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.trainlivestatus">
+    package="trainstatus.trainbooking.pnrstatus">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
     <application
-        android:name=".application.TrainPays"
+        android:name="trainstatus.trainbooking.pnrstatus.application.TrainPays"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,7 +22,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".livestatus.SplashActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar">
 
@@ -33,75 +34,75 @@
 
         </activity>
         <activity
-            android:name=".livestatus.TrainBySearchActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.TrainBySearchActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.TopSeatCalenderActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.TopSeatCalenderActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.SettingsActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.SettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Setting_status" />
         <activity
-            android:name=".livestatus.CallLiveStationActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.CallLiveStationActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.LiveStationActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.LiveStationActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.ScheduleActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.ScheduleActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.TrainscheduleActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.TrainscheduleActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.TrainTimeActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.TrainTimeActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.SeatAvailableActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.SeatAvailableActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.LiveTrainActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.LiveTrainActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.TrainListActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.TrainListActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.IntermediatestnActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.IntermediatestnActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.SearchTrainActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.SearchTrainActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.FindStationActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.FindStationActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.RouteDetailsActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.RouteDetailsActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.FairInquiryActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.FairInquiryActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.CategoryActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.CategoryActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar.Dashboard_status" />
         <activity
-            android:name=".livestatus.IntroActivity"
+            android:name="trainstatus.trainbooking.pnrstatus.livestatus.IntroActivity"
             android:exported="false"
             android:theme="@style/Theme.TrainLiveStatus.NoActionBar">
 
@@ -112,6 +113,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="sensor"
             android:theme="@style/FinestWebViewTheme.Light" />
+
     </application>
 
 </manifest>

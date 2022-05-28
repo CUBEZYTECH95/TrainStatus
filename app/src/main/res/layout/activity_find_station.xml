@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FAF6F5F5"
-        tools:context=".livestatus.FindStationActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.FindStationActivity">
 
 
 
@@ -62,11 +62,34 @@
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/find_station_item" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_5"
+                    tools:listitem="@layout/find_station_item"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_popular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_5"
+                    tools:listitem="@layout/find_station_item"
+                    android:visibility="gone" />
+
+
+
+            </FrameLayout>
+
+
 
         </RelativeLayout>
 

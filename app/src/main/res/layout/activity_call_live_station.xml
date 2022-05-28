@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".livestatus.CallLiveStationActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.CallLiveStationActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/rv_toolbar"

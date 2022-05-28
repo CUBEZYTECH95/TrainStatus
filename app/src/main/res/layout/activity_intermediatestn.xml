@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        tools:context=".livestatus.IntermediatestnActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.IntermediatestnActivity">
 
 
         <com.google.android.material.appbar.MaterialToolbar

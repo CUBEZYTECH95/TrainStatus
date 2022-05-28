@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
 
-        applicationId "com.example.trainlivestatus"
+        applicationId "trainstatus.trainbooking.pnrstatus"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -71,7 +71,7 @@ dependencies {
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
-    // replace glide to coil image loafing..
+    // replace glide to coil image loading..
     implementation("io.coil-kt:coil:1.4.0")
 
     //retrofit
@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
 
     //Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
@@ -95,7 +95,7 @@ dependencies {
 
     implementation 'com.karumi:dexter:6.2.3'
 
-    //slide to open activity
+    //slider
     implementation "com.ncorti:slidetoact:0.8.0"
 
     //finestwebview

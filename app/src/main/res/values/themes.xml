@@ -16,6 +16,7 @@
 
 
     <style name="Theme.TrainLiveStatus.NoActionBar">
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
@@ -72,12 +73,9 @@
 
 
     <style name="dashboard_imageview">
-
         <item name="android:layout_width">@dimen/_140sdp</item>
         <item name="android:layout_height">@dimen/_140sdp</item>
         <item name="android:layout_weight">1</item>
-
-
     </style>
 
 

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/st"
-        tools:context=".livestatus.IntroActivity">
+        tools:context="trainstatus.trainbooking.pnrstatus.livestatus.IntroActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -71,6 +71,8 @@
                             android:layout_centerInParent="true"
                             android:layout_marginBottom="@dimen/_30sdp"
                             app:area_margin="8dp"
+                            app:bump_vibration="50"
+                            app:slider_locked="false"
                             app:inner_color="@color/slidetoact_white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
